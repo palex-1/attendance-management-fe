@@ -1,0 +1,36 @@
+<!--   RECOVERY first page -->
+<div class="theme-overlay wrapper">
+        
+    
+  <form class="form-forgot-pass">  
+      <div class="informations">
+          <h2>{{ "email-change.reset-title" | translate }}</h2>
+          <p>{{ "email-change.reset-message" | translate }}</p>
+      </div>
+           
+      <div class="reset-error" *ngIf="emailOwnedByAnotherUser">
+              {{ "email-change.email-owned-by-another-user" | translate }}
+      </div>
+      <div class="reset-error" *ngIf="tokenInvalid">
+            {{ "email-change.token-invalid" | translate }}
+      </div>
+   
+        
+      <button class="btn btn-lg btn-primary btn-block" (click)="completeEmailChange()" [disabled]="changeEmailInProgress">
+          <div class="button-loader" *ngIf="changeEmailInProgress"></div>
+          <span *ngIf="!changeEmailInProgress">{{ "email-change.change-email" | translate }}</span>    
+      </button>
+  
+      <section id="button-sections">
+          <p>
+            <a routerLink="/login" *ngIf="!isAuthenticated">{{ "email-change.back-to-login" | translate }} </a>
+            <a routerLink="/dashboard" *ngIf="isAuthenticated">{{ "email-change.back-to-home" | translate }} </a>
+        </p>
+      </section>
+    
+  </form>
+
+  
+  <div class="login-info">{{ "generic.copyright-note" | translate }}</div>
+  
+</div>

@@ -1,0 +1,76 @@
+
+.toast {
+    animation: snackbarIn 0.5s;
+}
+  
+  @keyframes snackbarIn {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes snackbarOut {
+    to {
+      transition: ease-in-out;
+      margin-top: -50px;
+      opacity: 0;
+    }
+  }
+
+.toast-header{
+    border-bottom: 0px;
+}
+.toast{
+    border: 0px;
+    border-radius: 0;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    width: 250px;
+    min-height: 60px;
+    max-width: 90vw;
+}
+
+.fa{
+    font-size: 1.3rem !important;
+}
+
+.error-background {
+    background-color: #dc3545;
+    color: white;
+}
+
+.success-background{
+    background-color: #28a745;
+    color: white;
+}
+
+.info-background{
+    background-color: #17a2b8;
+    color: white;
+}
+
+.warning-background {
+    background-color: #ffc107;
+    color: white;
+}
+
+button.close {
+    opacity: 1;
+    color: white;
+}
+
+.toast-header{
+    padding-bottom: 0px;
+    word-break: break-word;
+}
+
+.toast-body {
+    padding-top: 0.5rem;
+    word-break: break-word;
+}

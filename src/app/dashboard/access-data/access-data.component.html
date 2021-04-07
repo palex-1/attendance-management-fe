@@ -1,0 +1,76 @@
+
+<h3 class="mt-2 mb-3">
+    <i class="fa fa-key" aria-hidden="true"></i> {{ "label.change-password" | translate }}
+</h3>
+
+
+<div class="row">
+    <div class="col-md-9 col-xl-10">
+    <div class="card md-3">
+        <div class="card-body">
+            <form noavalidate #formChangePsw="ngForm" (ngSubmit)="changePassword(formChangePsw)">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">{{ "label.old-password" | translate }}*</label>
+                            <input type="password" class="form-control" required name="oldPassword" [(ngModel)]="oldPassword">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">{{ "label.new-password" | translate }}*</label>
+                            <input type="password" class="form-control" required maxlength="20" name="newPassword" [(ngModel)]="newPassword">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group form-black label-floating is-empty">
+                            <label class="control-label">{{ "label.repeat-new-password" | translate }}*</label>
+                            <input type="password" class="form-control" required maxlength="20" name="repeatNewPassword" [(ngModel)]="repeatNewPassword">
+                        </div>
+                    </div>
+                </div>
+
+                <small>*{{ "label.required-field" | translate }}</small>
+                <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" [disabled]="changePasswordInProgress">
+                    <span  class="spinner-button-border float-left" *ngIf="changePasswordInProgress"></span>
+                    {{ "label.update" | translate }}
+                </button>
+                <div class="clearfix"></div>
+            </form>
+            
+        </div>
+        
+    </div>
+
+
+        
+    </div>
+    <div class="col-md-3 col-xl-2 mb-3 mb-sm-3 order-first order-sm-first order-md-last profile-card-container">
+        <div class="card">
+            <div class="image-button-container">
+                    <img class="card-img-top" [src]="imgURL" alt="Profile Image">
+            </div>
+
+
+           
+            <div class="card-body">
+            <p class="card-text">
+                <strong id="profileName">
+                    {{ name }} {{ surname }}
+                </strong>
+            </p>
+            <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+            </div>
+
+            <div class="card-footer text-muted">
+                <small> {{ email }} </small>
+            </div>
+        </div>
+    </div>
+</div>

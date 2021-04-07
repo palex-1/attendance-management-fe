@@ -1,0 +1,18 @@
+
+<div class="toast fade show mb-2 {{backgroundClass}}" data-autohide="false" #toastId *ngIf="!closed">
+  <div class="toast-header {{backgroundClass}}">
+    <strong class="mr-auto">
+      <i class="fa fa-times" aria-hidden="true" *ngIf="isError()"></i>
+      <i class="fa fa-check" aria-hidden="true" *ngIf="isSuccess()"></i>
+      <i class="fa fa-info" aria-hidden="true" *ngIf="isInfo()"></i>
+      <i class="fa fa-exclamation" aria-hidden="true" *ngIf="isWarning()"></i>
+      {{messageTitle}}
+    </strong>
+    <small>{{ currentTime | date:'mediumTime' }}</small>
+    <button type="button" class="ml-2 mb-1 close" (click)="close()">&times;</button>
+  </div>
+  <div class="toast-body {{backgroundClass}}">
+    {{messageText}}
+  </div>
+</div>
+

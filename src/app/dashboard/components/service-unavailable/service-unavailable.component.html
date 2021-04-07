@@ -1,0 +1,17 @@
+<div class="serviceUnavailableBlockingModal" #serviceUnavailableBlockingModal>
+
+  <div class="centered-div">
+    <div class="centered-div-content">
+      <h1 class="opacity-minor mb-3">
+        <i class="far fa-frown fa-6" aria-hidden="true"></i><br>
+        Service Temporarily Unavailable
+      </h1>
+      <p class="opacity-minor" *ngIf="currentResourceTringToLoad!=null">
+        Server error while tring to load: {{ currentResourceTringToLoad }}
+      </p>
+      <button class="btn btn-outline-secondary {{currentResourceTringToLoad!=null ? '':'mt-3'}}" (click)="reload()">
+          Reload
+      </button>
+    </div>
+  </div>
+</div>

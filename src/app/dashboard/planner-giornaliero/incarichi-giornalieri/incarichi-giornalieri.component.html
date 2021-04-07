@@ -1,0 +1,88 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-sm-8 col-md-5 col-xl-4">
+                  <form>     
+      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Codice Incarico*
+                                        <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link">
+                                            <i class="fa fa-search"></i>
+                                          </a>  
+                                    </label>
+                                    <input type="text" class="form-control" maxlength="100">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black label-floating is-empty">
+                                    <label class="control-label">Totale Ore*</label>
+                                    <input type="text" class="form-control" maxlength="16" disabled>
+                                </div>
+                            </div>
+                        </div>
+      
+      
+                        
+                        
+                        <button type="submit" class="btn btn-danger float-right add-cursor-pointer">
+                                <span  class="loader float-left"></span>
+                            Aggiungi
+                        </button>
+                        <div class="clearfix"></div>
+                    </form>
+      
+                  </div>
+
+
+        
+            <div class="d-none d-xl-block col-xl-1"></div>
+
+            <div class="col-sm-12 col-md-7 col-xl-7">
+
+              <div class="table-responsive-md">
+                    <table class="table table-sm">
+                        <caption>Incarichi Giornalieri
+                            <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link" 
+                                            (click)="refreshData()">
+                                <i class="fas fa-sync-alt"></i>
+                              </a>  
+                        </caption>
+                        <thead>
+                            <tr>
+                              <th sortable-td [status]="0" [sortByValue]="'codiceIncarico'" [sortBy]="sortBy">
+                                    Codice Incarico
+                              </th>
+                              <th sortable-td [status]="0" [sortByValue]="'descrizioneIncarico'" [sortBy]="sortBy">
+                                  Descrizione Incarico
+                              </th>
+                              <th sortable-td [status]="0" [sortByValue]="'totalOre'" [sortBy]="sortBy">
+                                  Totale Ore
+                              </th>
+                              <th>
+                                Dettagli
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                                <td>61</td>
+                                <td>{{ "2011-04-25" }}</td>
+                                <td>127.0.0.0</td>
+                                <td>127.0.0.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+      
+                </div>
+                
+
+                <app-custom-paginator [initialRowsToShow]="1" [totalRecords]="10" 
+                    [initialSelectedPage]="1" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+      
+            </div>
+        </div>
+</div>

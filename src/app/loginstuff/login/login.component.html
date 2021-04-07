@@ -1,0 +1,57 @@
+<div class="theme-overlay wrapper">
+			
+
+		<form class="form-signin" noavalidate #form="ngForm" (ngSubmit)="authenticate(form)">  
+				 
+		  <section class="logo">
+				<a id="logo-image" >
+					<img src="./assets/images/logo.png" alt="logo" class="img-fluid" />
+				</a>
+				
+		  </section>
+			
+
+			
+			
+			<div class="auth-error" *ngIf="showLoginError()">
+				{{ "login.auth-error" | translate }}
+			</div>
+
+			<div class="auth-error" *ngIf="showConnectionError()">
+				{{ "login.connection-error" | translate }}
+			</div>
+
+			<div class="auth-error" *ngIf="showTooManyAuthenticationErrorPerAccount()">
+				{{ "login.too-many-auth-request-per-account" | translate }}
+			</div>
+			
+
+		  <!--<h2 class="form-signin-heading">Please login</h2>-->
+
+		  <input type="text" class="form-field" name="username" placeholder="{{ 'login.username' | translate }}" [(ngModel)]="username" required/>
+
+		  <input type="password" class="form-field" name="password" placeholder="{{ 'login.password' | translate }}" [(ngModel)]="password"  required/> 
+
+		   <!--<label class="checkbox">
+			<input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+		  </label>-->
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="areCurrentRequestingAuthentication"> 
+				<div  class="button-loader" *ngIf="areCurrentRequestingAuthentication"></div>
+				<span *ngIf="!areCurrentRequestingAuthentication">{{ "login.login-button" | translate }} </span>
+				
+			</button> 
+
+			<section id="button-sections">
+						<p>
+							<a href="javascript:void(0)" (click)="goToForgotPasswordPage()">
+								{{ "login.forgot-credentials" | translate }}
+							</a>
+						</p>
+			</section>
+		  
+		</form>
+
+		<div class="login-info">{{ "generic.copyright-note" | translate }}</div>
+
+	</div>

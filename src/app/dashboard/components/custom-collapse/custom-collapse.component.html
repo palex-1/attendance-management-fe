@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-header">
+    <span class="mr-2">{{ title }}</span> 
+    <a *ngIf="areCollapsedAreas" class="show-hide-button" (click)="uncollapseAreas()" title="{{ 'label.maximize' | translate }}">
+      <i class="fa fa-arrow-down" aria-hidden="true"></i>
+    </a>
+    <a *ngIf="!areCollapsedAreas" class="show-hide-button" (click)="collapseAreas()" title="{{ 'label.minimize' | translate }}">
+      <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+
+  </div>
+
+  <div class="collapse show" #collapseArea>
+    <div class="card-body">
+      
+        <ng-container *ngTemplateOutlet="collapseAreaContent ? collapseAreaContent: defaultAreaContent">
+
+        </ng-container>
+
+        <ng-template #defaultAreaContent>
+          <div></div>
+        </ng-template>
+
+    </div>
+  </div>
+
+</div>

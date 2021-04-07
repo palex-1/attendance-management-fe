@@ -1,0 +1,41 @@
+<div class="modal fade" #uploadFileModal tabindex="-1" role="dialog" aria-labelledby="uploadFileModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog moda-md" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}:</h5>
+      </div>
+
+        <div class="modal-body">
+
+
+                <div *ngIf="showLoader" class="loader-for-modal">
+                    <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+                    </span> 
+                </div>
+        
+                <div class="row"> 
+                    <div class="col-12">
+                        <app-file-input-upload [progress]="progress" (onFileUpload)="onFileUploadEvent($event)" 
+                                [fileAccepted]="fileAccepted" [multiFile]="multiFile" [responsive]="responsive">
+                        </app-file-input-upload>
+                    </div>
+                    
+                </div>
+
+        </div>
+
+        
+
+        <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDialog()">
+                    {{ "general.button.close" | translate }}
+                </button>
+        
+        </div>
+
+      </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+.profile-card-container{
+    padding-top: 0px;
+    text-align: center;
+}
+
+@media(min-width:768px){
+    .profile-card-container{
+        padding: 20px;
+        padding-top: 0px;
+    }
+}
+
+@media(max-width:768px){
+    .profile-card-container{
+        width: 250px;
+    }
+}

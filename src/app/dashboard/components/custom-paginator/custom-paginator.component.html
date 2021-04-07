@@ -1,0 +1,40 @@
+<div class="pagination-custom">
+
+  <div class="pagelinks-ref">
+      <a href="javascript:void(0)" [title]="'button.paginator-first-page'| translate" (click)="goToFirstPage()"  [class.link-disabled]="!goToFirstButtonActivated()">
+          <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+      </a>
+
+      <a href="javascript:void(0)" [title]="'button.pagination-previous'| translate" (click)="goToPreviousPage()"  
+            [class.link-disabled]="!goToFirstButtonActivated()">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+      </a>
+
+      <a href="javascript:void(0)" *ngFor="let page of currentPagesToShowInternal" (click)="changePage(page - 1)" 
+                    [className]="'pagination-custom-number '+ ( (currentSelectedPage) == (page-1) ? 'active' : 'inactive')">
+                {{page}}
+      </a>
+
+      
+      <a href="javascript:void(0)" [title]="'button.paginator-next'| translate" (click)="goToNextPage()" 
+                    [class.link-disabled]="!goToLastButtonActivated()">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+      </a>
+
+      <a href="javascript:void(0)" [title]="'button.paginator-last-page'| translate" (click)="goToLastPage()" 
+                    [class.link-disabled]="!goToLastButtonActivated()">
+          <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+      </a>
+
+  </div>
+ 
+
+  <select class="custom-select ml-2" (change)="pageSizeChanged()" [(ngModel)]="currentPageSize">
+    <option *ngFor="let i of currentRowsPagePerOption" [ngValue]="i" class="to-lower-case">{{i}} {{ "button.items-per-page" | translate | lowercase }}</option>
+  </select>
+
+  <!-- <span class="paginator-count" pagination-counter [currentPageIndex]="currentSelectedPage"
+                    [currentPageSize]="currentPageSize" [totalRecords]="totalRecordsInternal">
+  </span> -->
+
+</div>

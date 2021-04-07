@@ -1,0 +1,157 @@
+<div class="modal fade" #addTeamMemberModal tabindex="-1" role="dialog" aria-labelledby="addTeamMemberModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog  modal-xl" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.new-team-member" | translate }}:</h5>
+      </div>
+
+
+
+
+
+      <div class="modal-body">
+
+
+        <div *ngIf="showLoader" class="loader-for-modal">
+            <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+            </span> 
+        </div>
+        
+
+
+          <div class="row">
+
+
+              <div class="col-xl-9">
+                  <div class="card mb-5">
+                      <div class="card-header">
+                          <i class="fa fa-users" aria-hidden="true"></i> {{ "label.employees" | translate }}
+                          <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                              (click)="refreshNotTeamMembers()">
+                              <i class="fas fa-sync-alt"></i>
+                          </a>
+                      </div>
+
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-sm table-striped">
+                                  <thead>
+                                      <tr>
+                                          <th class="border-solid-right-table border-solid-left-table">
+                                            {{ "label.add" | translate }}
+                                          </th>
+
+                                          <th sortable-td [status]="0" [sortByValue]="'name'"
+                                              [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                              {{ "label.name" | translate }}
+                                          </th>
+                                          <th sortable-td [status]="0" [sortByValue]="'surname'"
+                                              [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                              {{ "label.surname" | translate }}
+                                          </th>
+
+                                          <th sortable-td [status]="0" [sortByValue]="'email'"
+                                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                              {{ "label.email" | translate }}
+                                          </th>
+
+                                          <th sortable-td [status]="0" [sortByValue]="'phoneNumber'"
+                                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                            {{ "label.phone-number" | translate }}
+                                          </th>
+
+                                          <th>
+                                            {{ "label.company-name" | translate }}
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngIf="currentLoadedNotTeamComponenets.length==0">
+                                          <td colspan="6" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                                      </tr>
+                                      
+                                      <tr *ngFor="let componente of currentLoadedNotTeamComponenets">
+
+                                          <td class="text-align-center border-solid-right-table border-solid-left-table">
+                                              <app-custom-checkbox [checked]="false" 
+                                                          (onStatusChange)="componenteStatusChange($event, componente)">
+
+                                              </app-custom-checkbox>
+                                          </td>
+
+                                          <td>{{ componente.nome == null ? "" : componente.nome }}</td>
+                                          <td>{{ componente.cognome == null ? "" : componente.cognome }}</td>
+                                          <td>{{ componente.email == null ? "" : componente.email }}</td>
+                                          <td>{{ componente.numero == null ? "" : componente.numero }}</td>
+                                          <td>{{ componente.nomeAzienda == null ? "" : componente.nomeAzienda }}</td>
+                                          
+                                      </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+
+                          <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                                  [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                                  (onPageChange)="changePage($event)">
+
+                          </app-custom-paginator>
+
+                      </div>
+
+
+                  </div>
+
+              </div>
+
+
+              <div class="col-xl-3 order-first order-sm-first order-md-first order-xl-last">
+                  <!-- Example DataTables Card-->
+                  <app-show-hide-area [collapseAreaContent]="collapseAreaContent" size="lg">
+                      <ng-template #collapseAreaContent>
+
+                          <app-custom-filters [filtersElements]="teamCommessaFilters" filtersColsStyle="col-md-6 col-xl-12"
+                                (filtersChanged)="filtersChanged($event)">
+
+                          </app-custom-filters>
+                          
+                          </ng-template>
+                      </app-show-hide-area>
+                  <!-- /.container-fluid-->
+              </div>
+
+          </div>
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" [disabled]="addOperationInProgress" 
+                (click)="closeAddDialog()">{{ "general.button.close" | translate }}</button>
+
+        <button type="button" class="btn btn-primary" (click)="addTeamMembers()" [disabled]="addOperationInProgress">
+                <span class="spinner-button-border float-left" *ngIf="addOperationInProgress"></span>
+                {{ "general.button.insert" | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

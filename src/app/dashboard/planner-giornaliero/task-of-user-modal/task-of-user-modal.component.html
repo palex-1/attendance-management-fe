@@ -1,0 +1,136 @@
+<div class="modal fade" #taskOfUserModal tabindex="-1" role="dialog" aria-labelledby="taskOfUserModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog  modal-xl" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.find-task" | translate }}:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+
+
+
+      <div class="modal-body">
+
+
+        <div *ngIf="showLoader" class="loader-for-modal">
+            <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+            </span> 
+        </div>
+
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-md-8 col-xl-9">
+                <div class="card mb-5">
+                    <div class="card-header">
+                        <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                            (click)="refreshWorkTask()">
+                            <i class="fas fa-sync-alt"></i>
+                        </a>
+                    </div>
+        
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+
+                                        <th sortable-td [status]="0" [sortByValue]="'taskCode'" [sortBy]="sortBy"
+                                            (onSortChange)="onSortChange($event)">
+                                            {{ "label.codice-commessa" | translate }}
+                                        </th>
+                                        <th sortable-td [status]="0" [sortByValue]="'taskDescription'" [sortBy]="sortBy"
+                                            (onSortChange)="onSortChange($event)">
+                                            {{ "label.descrizione-commessa" | translate }}
+                                        </th>
+                                        
+                                        <th>
+                                            {{ "gestione-commesse.activation-date" | translate }}
+                                        </th>
+                                        <th>
+                                            {{ "gestione-commesse.deactivation-date" | translate }}
+                                        </th>
+                                        <th>
+                                            {{ "label.billable" | translate }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="currentCommesse.length==0">
+                                        <td colspan="3" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                                    </tr>
+        
+                                    <tr *ngFor="let commessa of currentCommesse" (click)="selectTask(commessa)"
+                                                    class="add-cursor-pointer" appHighlightCustom [highlightColor]="'#dedada'">
+                                        <td>{{ commessa.taskCode }}</td>
+                                        <td>
+                                            <div class=scrollable>
+                                                {{ commessa.taskDescription | ellipsesDropperPipe: 70 }}
+                                            </div>
+                                        </td>
+                                        <td>{{ commessa.activationDate | shortDate }}</td>
+                                        <td>{{ commessa.deactivationDate==null ? '∞' : commessa.deactivationDate | shortDate }}</td>
+                                        <td>{{ commessa.billable | trueFalsePipe }}</td>
+        
+                                    </tr>
+        
+                                </tbody>
+                            </table>
+                        </div>
+        
+                        <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                            [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                            (onPageChange)="changePage($event)">
+        
+                        </app-custom-paginator>
+        
+                    </div>
+        
+        
+                </div>
+        
+            </div>
+        
+        
+            <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+                <app-show-hide-area [collapseAreaContent]="collapseAreaContentMD">
+                    <ng-template #collapseAreaContentMD>
+                        <app-custom-filters [filtersElements]="gestioneCommessaFilters"
+                                    (filtersChanged)="filtersChanged($event)">
+    
+                        </app-custom-filters>        
+                        </ng-template>
+                    </app-show-hide-area>
+                <!-- /.container-fluid-->
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

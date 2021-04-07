@@ -1,0 +1,220 @@
+<div class="modal fade" #cedolinoFileModal tabindex="-1" role="dialog" aria-labelledby="cedolinoFileModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog moda-md" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.upload-paycheck" | translate }}:</h5>
+      </div>
+
+        <div class="modal-body">
+        
+                <div class="row"> 
+                    <div class="form-group col-12 mb-3">
+                        <label>{{ "label.title" | translate }}</label>
+                        <input type="text" class="form-control" [(ngModel)]="titlePaycheckModal" maxlength="150" 
+                                        [disabled]="uploadPaycheckInProgress">
+                    </div>
+
+                    <div class="form-group col-12 mb-3">
+                        <label>{{ "label.reference-date" | translate }}*</label>
+                            
+                        <app-monthpicker #paycheckUploadDate tooltip="{{ 'label.reference-date' | translate }}"
+                                    [disabled]="uploadPaycheckInProgress"
+                                    (onSelectDate)="paycheckModalDateChanges($event)" [isAMonthpicker]="true">
+                        </app-monthpicker>
+                    </div>
+
+                    <div class="col-12">
+                        <app-file-input-upload #cedolinoFileInput [hideActionsButtons]="true" [multiFile]="false" 
+                            (onFileChoose)="fileChoosedOnModal($event)" [disabled]="uploadPaycheckInProgress" fileAccepted=".pdf" 
+                                [responsive]="true" [progress]="fileProgress" [showSupportedExtLabel]="true">
+                        </app-file-input-upload>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="checkFiscalCode" 
+                                    [checked]="checkFiscalCode" [disabled]="uploadPaycheckInProgress">
+
+                            <label class="form-check-label">{{ "label.check-cf" | translate }}</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="forceAdd" 
+                                    [checked]="forceAdd" [disabled]="uploadPaycheckInProgress">
+
+                            <label class="form-check-label">{{ "label.force-add" | translate }}</label>
+                        </div>
+                    </div>
+                    
+                </div>
+
+        </div>
+
+        
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary mr-1" (click)="closeDialog()" [disabled]="uploadPaycheckInProgress">
+                {{ "general.button.close" | translate }}
+            </button>
+            <button type="button" class="btn btn-primary" (click)="uploadPaycheck()" [disabled]="uploadPaycheckInProgress">
+                <span  class="spinner-button-border float-left" *ngIf="uploadPaycheckInProgress"></span>
+                {{ "general.action.upload" | translate }}
+            </button>
+        </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                
+              <a href="javascript:void(0)" title="{{ 'label.upload-paycheck' | translate }}" class="refresh-link mr-1"
+                  *ngIf="hasAuthority(['PAYCHECK_CREATE'])" (click)="openUploadDialog()">
+                              <i class="fa fa-plus"></i>
+              </a>
+                
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshUserPaychecks()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+                
+            </div>
+  
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'year'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.year" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'month'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.month" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'title'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.title" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'sendEmailDate'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                  {{ "label.send-email-date" | translate }}
+                              </th>
+                              <th>
+                                  {{ "label.actions" | translate }}
+                              </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="paychecks.length==0">
+                                <td colspan="6" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of paychecks">
+                                <td>{{ elem.year }}</td>
+                                <td>{{ elem.month | monthTranslate }}</td>
+                                <td>{{ elem.title }}</td>
+                                <td>{{ elem.sendEmailDate | dateFormat:'short' }}</td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" (click)="downloadPaycheck(elem)"
+                                        *ngIf="hasAuthority(['PAYCHECK_READ'])" title="{{ 'label.download' | translate}}">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+                                      <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="delete(elem)"
+                                          *ngIf="hasAuthority(['PAYCHECK_DELETE'])" title="{{ 'label.delete' | translate}}">
+                                          <i class="fa fa-trash" aria-hidden="true"></i>
+                                      </button>
+                                      
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+  
+                </div>
+  
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+  
+                </app-custom-paginator>
+  
+  
+            </div>
+  
+            
+  
+        </div>
+        
+    </div>
+  
+  
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
+            <ng-template #collapseAreaContent>
+              <div class="filter-table-form-container">
+  
+                  <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                    <div class="row">
+
+                      <div class="form-group col-md-12 mb-1">
+                          <label for="f1" class="col-form-label">{{ "label.year" | translate }}</label>
+                          <input type="number" class="form-control" name="sdsffdfd" [(ngModel)]="yearFilter">
+                      </div>
+  
+                      <div class="form-group col-md-12 mb-1">
+                        <label class="col-form-label">{{ "label.month" | translate }} *</label>
+                        <select class="form-control" [(ngModel)]="monthFilter" name="po83u821">
+                            <option value="" selected></option>
+                            <option *ngFor="let month of monthsNumber" [ngValue]="month">
+                                {{ month | monthTranslate }}
+                            </option>
+                        </select>
+                      </div>
+  
+  
+                    </div>
+                  </form>
+  
+                  <div class="text-right">
+                      <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                        {{ "button.clear-all" | translate }}
+                      </button>
+                      <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
+                        {{ "label.apply" | translate }}
+                      </button>
+                  </div>
+              </div>
+              
+  
+                        
+  
+              </ng-template>
+          </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+  </div>
+
+  

@@ -1,0 +1,27 @@
+.card {
+    display: table;
+    width: 100%;
+    border: none;
+}
+
+.card-body {
+    display: table-cell; 
+    text-align: center; 
+    color:white
+}
+
+.inner-card-content{
+    vertical-align: middle; 
+    float: right;
+    text-align: right;
+}
+.inner-card-content h1 {
+    font-weight: bold;
+}
+
+.icon-container{
+    display: inline-block;
+    text-align: center;
+    float: left;
+}
+

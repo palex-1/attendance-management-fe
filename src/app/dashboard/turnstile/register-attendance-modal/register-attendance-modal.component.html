@@ -1,0 +1,82 @@
+<div class="modal fade" #registerAttendanceModal tabindex="-1" role="dialog" aria-labelledby="registerAttendanceModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              
+                <h5 class="modal-title">{{ "label.register-attendance" | translate }}:</h5>
+
+            </div>
+            <div class="modal-body">
+      
+              <div *ngIf="showLoader" class="loader-for-modal">
+                  <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+                  </span> 
+              </div>
+      
+      
+              <form (ngSubmit)="registerAttendance()">
+                <div class="row">
+                  
+                    <div class="form-group col-md-12">
+                        <label class="col-form-label">{{ "label.employee-id" | translate }} *</label>
+                        <input type="number" class="form-control" name="kjkl-01" [(ngModel)]="employeeIdInternal" 
+                                [disabled]="addOperationInProgress" *ngIf="!continuousCicleEnabled">
+                        <input type="text" class="form-control" name="lp083a-01" [(ngModel)]="employeeIdInternal" 
+                                *ngIf="continuousCicleEnabled" #continuousCicleInput>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label class="col-form-label">{{ "label.type" | translate }} *</label>
+                        <select class="form-control" [(ngModel)]="enterType" name="hdkjgxh982id1" [disabled]="addOperationInProgress">
+                            <option value="" selected></option>
+                            <option *ngFor="let item of allAttendanceType" [ngValue]="item">
+                                {{ item | attendanceType }}
+                            </option>                            
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6" *ngIf="!continuousCicleEnabled" >
+                        <label class="col-form-label">{{ "label.date-to" | translate }}</label>
+                        <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}" 
+                                [initialValue]="attendanceTime" [disabled]="addOperationInProgress" 
+                                (onSelectDate)="onChangeDateOfAttedance($event)" [isAMonthpicker]="false" >
+                        </app-monthpicker>
+                    </div>
+
+                    <div class="col-md-6" *ngIf="!continuousCicleEnabled">
+                        <ngb-timepicker [(ngModel)]="timeOfAttendance" name="powqko0g89"></ngb-timepicker>
+                    </div>
+
+                    <div class="col-12 mt-1">
+                        <div class="form-check float-left">
+                                <input type="checkbox" class="form-check-input" id="87iut3hfdj" 
+                                        name="87iut3hfdj" [(ngModel)]="continuousCicleEnabled" [disabled]="addOperationInProgress">
+                                <label class="form-check-label" for="87iut3hfdj">
+                                    {{ "label.continuous-clicle" | translate }}
+                                </label>
+                        </div>
+                    </div>
+      
+                    <div class="col-12 mt-1" *ngIf="continuousCicleEnabled">
+                        <small>{{ "message.tip-continuous-cicle" | translate }}</small>
+                    </div>
+                    
+      
+                </div>
+                
+              </form>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="addOperationInProgress" 
+              (click)="closeDialog()">{{ "general.button.close" | translate }}</button>
+              
+              <button type="button" class="btn btn-primary" (click)="registerAttendance()" [disabled]="addOperationInProgress">
+                  <span class="spinner-button-border float-left" *ngIf="addOperationInProgress"></span>
+                  {{ "label.add" | translate }}
+              </button>
+      
+            </div>
+          </div>
+        </div>
+      </div>

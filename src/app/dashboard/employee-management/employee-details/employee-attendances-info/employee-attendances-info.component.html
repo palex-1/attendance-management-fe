@@ -1,0 +1,129 @@
+<div class="modal fade" #attedancesModal tabindex="-1" role="dialog"
+    aria-labelledby="attedancesModal" aria-hidden="true">
+
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5 class="modal-title">{{ "label.attendances-details" | translate }}:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="table-responsive attendance-table">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{ "label.turnstile-id" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.type" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.timestamp" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="currentAttendances.length==0">
+                                <td colspan="8" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of currentAttendances">
+                                
+                                <td>{{ elem.turnstile!=null ? elem.turnstile.id : '' }}</td>
+                                <td>{{ elem.type | attendanceType }}</td>
+                                <td>{{ elem.timestamp | dateFormat:'long' }}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+
+    <div class="form-group col-12 col-md-6 col-lg-5 col-xl-4 mb-3">
+        <label>{{ "label.reference-date" | translate }}*</label>
+
+        <app-monthpicker tooltip="{{ 'label.reference-date' | translate }}" [initialValue]="initialSelectedDate"
+            [disabled]="loadingData" (onSelectDate)="dateChanges($event)" [isAMonthpicker]="true">
+        </app-monthpicker>
+    </div>
+
+
+
+
+    <div class="col-12 mt-3" *ngIf="choosedDate">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            {{ "label.date" | translate }}
+                        </th>
+                        <th>
+                            {{ "label.hours-registered" | translate }}
+                        </th>
+                        <th>
+                            {{ "label.hours-of-attendances" | translate }}
+                        </th>
+                        <th>
+                            {{ "label.valid-sequence" | translate }}
+                        </th>
+                        <th>
+                            {{ "label.actions" | translate }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="attendanceLogs.length==0">
+                        <td colspan="8" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                    </tr>
+                    <tr *ngFor="let elem of attendanceLogs" appChangeBackground 
+                                [backgroundColor]="getBackgroundColorForAttendance(elem)">
+                        <td>{{ elem.date | dateFormat:'short' }}</td>
+                        <td>{{ elem.hoursRegistered | numberToHoursAndMinutes }}</td>
+                        <td>{{ elem.sumHoursOfAttendance | numberToHoursAndMinutes }}</td>
+                        <td>{{ (!elem.notAValidAttendanceSequence) | trueFalsePipe }}</td>
+                        
+                        <td class="min-width-3-button-in-table">
+                            <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button"
+                                (click)="openDetails(elem)" title="{{ 'general.action.details' | translate}}">
+                                <i class="fas fa-search"></i>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <small class="mt-2" *ngIf="choosedDate">
+            {{ "message.attendance-sequence-not-valid-info" | translate }}
+        </small>
+
+    </div>

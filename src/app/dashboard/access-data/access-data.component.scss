@@ -1,0 +1,52 @@
+@import "../../../styles.scss";
+
+input:focus{
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color: $primary; 
+}
+
+textarea:focus{
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color: $primary; 
+}
+
+.profile-card-container{
+    padding-top: 0px;
+    text-align: center;
+}
+
+@media(min-width:768px){
+    .profile-card-container{
+        padding: 20px;
+        padding-top: 0px;
+    }
+}
+
+@media(max-width:768px){
+    #myTab .nav-link{
+        font-size: 14px;
+    }
+    .profile-card-container{
+        width: 250px;
+    }
+}
+
+.image-button-container {
+    position: relative;
+}
+
+/* Make the image responsive */
+.image-button-container img {
+    width: 100%;
+    height: auto;
+}
+
+.image-button-container .btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}

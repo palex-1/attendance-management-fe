@@ -1,0 +1,55 @@
+
+    <!-- Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ "modal.logout-title" | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ "modal.logout-button-cancel" | translate }}</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="executeLogout()">
+                    {{ "modal.logout-button-confirmation" | translate }}
+                </button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<nav id="root-navbar-top" class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+        <a class="navbar-brand" [routerLink]="['/dashboard/home']">
+                <img id="dashboard-navbar-image" src="./assets/images/dashboard-navbar-icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                  {{ "label.product-name" | translate }}
+        </a>
+        <button type="button" class="navbar-toggler" type="button" (click)="hideOrShowSidebar()">
+                <span class="navbar-toggler-icon"></span>
+        </button>
+        <div  class="navbar-collapse collapse">
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+
+            <ul class="navbar-nav">
+
+                <li class="btn-group">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i>                        
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                            <button class="dropdown-item add-cursor-pointer" type="button" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt"></i>
+                                {{ "navbar.fa-user-dropdown-button" | translate }}
+                            </button>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+

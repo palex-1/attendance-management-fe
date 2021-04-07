@@ -1,0 +1,201 @@
+<div class="modal fade" #personalDocumentFileModal tabindex="-1" role="dialog" aria-labelledby="personalDocumentFileModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog moda-md" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.upload-personal-document" | translate }}:</h5>
+      </div>
+
+        <div class="modal-body">
+        
+                <div class="row"> 
+                    <div class="form-group col-12 mb-3">
+                        <label>{{ "label.document-type" | translate }}*</label>
+                        <select class="form-control" [(ngModel)]="selectedDocumentTypeId" [disabled]="uploadPersonalDocumentInProgress">
+                            <option value="" selected></option>
+                            <option *ngFor="let type of remainingDocumentType" [ngValue]="type.id">
+                                {{ type.type | personalDocumentType }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <app-file-input-upload #personalDocumentFileInput [hideActionsButtons]="true" [multiFile]="false" 
+                            (onFileChoose)="fileChoosedOnModal($event)" [disabled]="uploadPersonalDocumentInProgress || notSelectedAnyDocumentType()" 
+                                [fileAccepted]="getCurrentDocumentTypeAcceptedExtensions()" 
+                                [responsive]="true" [progress]="fileProgress" 
+                                [showSupportedExtLabel]="!notSelectedAnyDocumentType()">
+                        </app-file-input-upload>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" [(ngModel)]="editableForUserDocToAddModal" 
+                                    [disabled]="uploadPersonalDocumentInProgress" [checked]="editableForUserDocToAddModal">
+
+                            <label class="form-check-label">{{ "label.editable-by-user" | translate }}</label>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+        </div>
+
+        
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary mr-1" (click)="closeDialog()" [disabled]="uploadPersonalDocumentInProgress">
+                {{ "general.button.close" | translate }}
+            </button>
+            <button type="button" class="btn btn-primary" (click)="uploadPersonalDocument()" [disabled]="uploadPersonalDocumentInProgress">
+                <span  class="spinner-button-border float-left" *ngIf="uploadPersonalDocumentInProgress"></span>
+                {{ "general.action.upload" | translate }}
+            </button>
+        </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                
+              <a href="javascript:void(0)" title="{{ 'label.upload-document' | translate }}" class="refresh-link mr-1"
+                  *ngIf="hasAuthority(['PERSONAL_DOCUMENT_CREATE'])" (click)="openUploadDialog()">
+                              <i class="fa fa-plus"></i>
+              </a>
+                
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshUserPersonalDocument()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+                
+            </div>
+  
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{ "label.document-type-label" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'uploadDate'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.upload-date" | translate }}
+                                </th>
+                                <th>
+                                  {{ "label.editable-by-user" | translate }}
+                              </th>
+                              <th>
+                                  {{ "label.actions" | translate }}
+                              </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="personalDocuments.length==0">
+                                <td colspan="6" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of personalDocuments">
+                                <td>{{ elem.personalDocumentType!=null ? (elem.personalDocumentType.type | personalDocumentType) :'' }}</td>
+                                <td>{{ elem.uploadDate | dateFormat:'long' }}</td>
+                                <td>{{ elem.editable | trueFalsePipe }}</td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" (click)="downloadPersonalDocument(elem)"
+                                        *ngIf="hasAuthority(['PERSONAL_DOCUMENT_READ'])" title="{{ 'label.download' | translate}}">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+                                      <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="deletePersonalDocument(elem)"
+                                          *ngIf="hasAuthority(['PERSONAL_DOCUMENT_DELETE'])" title="{{ 'label.delete' | translate}}">
+                                          <i class="fa fa-trash" aria-hidden="true"></i>
+                                      </button>
+                                      
+                                      <button class="btn btn-success btn-sm add-cursor-pointer mr-1" type="button" (click)="disablePersonalDocumentEdit(elem)"
+                                          *ngIf="hasAuthority(['PERSONAL_DOCUMENT_UPDATE']) && elem.editable" title="{{ 'label.disable-edit' | translate}}">
+                                          <i class="fas fa-lock-open"></i>
+                                      </button>
+
+                                      <button class="btn btn-warning btn-sm add-cursor-pointer mr-1" type="button" (click)="enablePersonalDocumentEdit(elem)"
+                                          *ngIf="hasAuthority(['PERSONAL_DOCUMENT_UPDATE']) && !elem.editable" title="{{ 'label.enable-edit' | translate}}">
+                                          <i class="fa fa-lock" aria-hidden="true"></i>
+                                      </button>
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+  
+                </div>
+  
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+  
+                </app-custom-paginator>
+  
+  
+            </div>
+  
+            
+  
+        </div>
+        
+    </div>
+  
+  
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
+            <ng-template #collapseAreaContent>
+              <div class="filter-table-form-container">
+  
+                  <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                    <div class="row">
+
+                      <div class="form-group col-md-12 mb-1">
+                          <label for="f1" class="col-form-label">{{ "label.document-type" | translate }}</label>
+                          <select class="form-control" [(ngModel)]="documentTypeFilter" name="kjha78">
+                            <option value="" selected></option>
+                            <option *ngFor="let type of allDocumentTypes" [ngValue]="type.type">
+                                {{ type.type | personalDocumentType }}
+                            </option>
+                        </select>
+                      </div>
+  
+  
+                    </div>
+                  </form>
+  
+                  <div class="text-right">
+                      <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                        {{ "button.clear-all" | translate }}
+                      </button>
+                      <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
+                        {{ "label.apply" | translate }}
+                      </button>
+                  </div>
+              </div>
+              
+  
+                        
+  
+              </ng-template>
+          </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+  </div>

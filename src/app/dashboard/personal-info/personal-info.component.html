@@ -1,0 +1,286 @@
+<h3 class="mt-2 mb-3">
+    <i class="fa fa-info" aria-hidden="true"></i> {{  "label.personal-info" | translate }}
+</h3>
+
+
+
+
+  <div class="row">
+      <div class="col-md-9 col-xl-10">
+          <nav class="nav nav-tabs" id="myTab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-change-basic-data-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-home" aria-selected="true">
+                {{  "label.basic-data" | translate }}
+              </a>
+              <a class="nav-item nav-link" id="nav-home-address-tab" data-toggle="tab" href="#nav-home-address" role="tab" aria-controls="nav-profile" aria-selected="false">
+                {{ "label.domicile" | translate }} 
+              </a>
+              <a class="nav-item nav-link" id="nav-residence-address-tab" data-toggle="tab" href="#nav-residence-address" role="tab" aria-controls="nav-contact" aria-selected="false">
+                {{ "label.residence" | translate }}
+              </a>
+            </nav>
+            <div class="tab-content p-3" id="nav-tabContent">
+
+
+
+
+              
+              <!-- basic user data start-->
+              <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-change-basic-data-tab">
+                  <div class="card no-border-card md-3">
+                      <div class="card-body">
+                          <form>
+                             
+      
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.name" | translate }}*</label>
+                                          <input type="text" class="form-control" maxlength="50" name="pi1"   [(ngModel)]="nameField">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.surname" | translate }}*</label>
+                                          <input type="text" class="form-control" maxlength="50" name="pi2" 
+                                                         [(ngModel)]="surnameField">
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                              
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.cf" | translate }}</label>
+                                          <input type="text" class="form-control text-to-uppercase" maxlength="16" name="pi3" 
+                                                     [(ngModel)]="cfField">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.birth-date" | translate }}*</label>
+                                            
+                                          <app-monthpicker tooltip="{{ 'label.birth-date' | translate }}" [initialValue]="birthDate"
+                                                    (onSelectDate)="bornDateChanged($event)" [isAMonthpicker]="false">
+                                            </app-monthpicker>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.telephone" | translate }}</label>
+                                          <input type="text" class="form-control" maxlength="20" name="pi6" [(ngModel)]="phoneNumberField">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.hiring-date" | translate }}</label>
+                                          <input type="text" class="form-control" maxlength="16" name="pi7" disabled 
+                                                        [value]="(hiringDateField | dateFormat:'short')">
+                                      </div>
+                                  </div>
+                              </div>
+      
+
+                              
+                              
+                              <small>*{{ "generic.required-field" | translate }}</small>
+                              <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="updatePersonalInfo()"
+                                            [disabled]="updatingPersonalInfo">
+                                      <span  class="spinner-button-border float-left" *ngIf="updatingPersonalInfo"></span>
+                                  {{ "label.button-update" | translate }}
+                              </button>
+                              <div class="clearfix"></div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+              <!-- basic user data -->
+
+
+
+
+
+
+
+
+
+
+              <!-- user change password start -->
+              <div class="tab-pane fade" id="nav-home-address" role="tabpanel" aria-labelledby="nav-home-address-tab">
+                  <div class="card no-border-card md-3">
+                      <div class="card-body">
+                          <form>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.address" | translate }}*</label>
+                                          <input type="text" class="form-control" maxlength="255" name="qq15sdfwes" required [(ngModel)]="streetDomicileField">
+                                      </div>
+                                  </div>
+                              </div>
+                              
+     
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.city" | translate }}*</label>
+                                          <input type="text" class="form-control" name="qq14" maxlength="255" [(ngModel)]="cityDomicileField">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.province" | translate }}*</label>
+                                          <input type="text" name="qq1534" class="form-control" maxlength="255" [(ngModel)]="provinceDomicileField">
+                                      </div>
+                                  </div>
+                              </div>
+
+                              
+                              <div class="row">
+                                  <div class="col-md-8">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.county" | translate }}*</label>
+                                          <input type="text" class="form-control" name="qq15" maxlength="255" [(ngModel)]="nationDomicileField">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-group form-black label-floating is-empty">
+                                          <label class="control-label">{{ "label.zip-code" | translate }}*</label>
+                                          <input type="text" class="form-control" name="qq16" maxlength="10" [(ngModel)]="zipCodeDomicileField">
+                                      </div>
+                                  </div>
+                              </div>
+      
+
+                              <small>*{{ "generic.required-field" | translate }}</small>
+                              <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" 
+                                            (click)="updateDomicile()" [disabled]="updatingDomicile">
+                                  <span  class="spinner-button-border float-left" *ngIf="updatingDomicile"></span>
+                                  {{ "label.button-update" | translate }}
+                              </button>
+                              <div class="clearfix"></div>
+                          </form>
+                          
+                      </div>
+                      
+                  </div>
+                  
+              </div>
+              <!-- user change password end -->
+              
+
+
+
+
+              
+
+              <!-- email username change-->
+              <div class="tab-pane fade" id="nav-residence-address" role="tabpanel" aria-labelledby="nav-residence-address-tab">
+                  <div class="card no-border-card md-3">
+                      <div class="card-body">
+                          <form>
+                            <div class="row">
+                              <div class="col-md-12">
+                                  <div class="form-group form-black label-floating is-empty">
+                                      <label class="control-label">{{ "label.address" | translate }}*</label>
+                                      <input type="text" class="form-control" maxlength="255" name="qq28" required [(ngModel)]="streetResidenceField">
+                                  </div>
+                              </div>
+                          </div>
+                          
+ 
+                          <div class="row">
+                              <div class="col-md-8">
+                                  <div class="form-group form-black label-floating is-empty">
+                                      <label class="control-label">{{ "label.city" | translate }}*</label>
+                                      <input type="text" class="form-control" maxlength="255" name="qq21" [(ngModel)]="cityResidenceField">
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="form-group form-black label-floating is-empty">
+                                      <label class="control-label">{{ "label.province" | translate }}*</label>
+                                      <input type="text" class="form-control" maxlength="255" name="qq22" [(ngModel)]="provinceResidenceField">
+                                  </div>
+                              </div>
+                          </div>
+
+                          
+                          <div class="row">
+                              <div class="col-md-8">
+                                  <div class="form-group form-black label-floating is-empty">
+                                      <label class="control-label">{{ "label.county" | translate }}*</label>
+                                      <input type="text" class="form-control" maxlength="255" name="qq23" [(ngModel)]="nationResidenceField">
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="form-group form-black label-floating is-empty">
+                                      <label class="control-label">{{ "label.zip-code" | translate }}*</label>
+                                      <input type="text" class="form-control" maxlength="10" name="qq24" [(ngModel)]="zipCodeResidenceField">
+                                  </div>
+                              </div>
+                          </div>
+
+
+                             <small>*{{ "generic.required-field" | translate }}</small> 
+                              <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" 
+                                            [disabled]="updatingResidence" (click)="updateResidence()">
+                                  <span  class="spinner-button-border float-left" *ngIf="updatingResidence"></span>
+                                  {{ "label.button-update" | translate }}
+                              </button>
+                              <div class="clearfix"></div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+              <!-- email username change -->  
+            </div>
+
+
+          
+      </div>
+
+
+
+
+      <div class="col-md-3 col-xl-2 mb-3 mb-sm-3 order-first order-sm-first order-md-last profile-card-container">
+            <div class="card">
+                <input type="file" accept="image/*" style="display: none"  (change)="fileChange($event)" #fileChooser/>
+    
+                <div class="image-button-container">
+                        <img class="card-img-top add-cursor-pointer" [src]="imgURL" alt="Profile Image" #imageProfile>
+                        
+                        <div class="image-div-button-container">
+                            <button class="btn btn-sm btn-secondary mr-1" *ngIf="wantToUpdateProfileImage" (click)="cancelUpdateImage()">
+                                {{ "button.cancel" | translate }}
+                            </button>
+                            <button class="btn btn-sm btn-danger" *ngIf="wantToUpdateProfileImage" (click)="updateImage()">
+                                {{ "button.save" | translate }}
+                            </button>
+                        </div>
+                        
+                </div>
+    
+    
+               
+                <div class="card-body">
+                <p class="card-text">
+                    <strong id="profileName">
+                        {{ name }} {{ surname }}
+                    </strong>
+                </p>
+                <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                </div>
+    
+                <div class="card-footer text-muted">
+                    <small> {{ email }} </small>
+                </div>
+            </div>
+        </div>
+
+
+
+  </div>

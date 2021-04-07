@@ -1,0 +1,60 @@
+<div class="container">
+
+        <h3 class="mt-2 mb-3">
+                <i class="fa fa-id-badge" aria-hidden="true"></i> {{ "label.welcome-without-sex" | translate }} {{ nameAndSurname }}
+        </h3>
+
+
+
+
+
+        <div class="row vertical-line-container mt-5">
+
+
+                <div class="col-md-6 col-xl-4 mb-1">
+                        <app-vertical-align-card icon="fa-plane fa-3x" [stringValue]="vacationDays"
+                                [title]="'label.vacation-days' | translate" color="#a7a7a7">
+
+                        </app-vertical-align-card>
+                </div>
+
+
+                <div class="col-md-6 col-xl-4 mb-1">
+                        <app-vertical-align-card icon="fa-hourglass-half fa-3x"
+                                [stringValue]="leaveHours" [title]="'label.leave-hours' | translate" color="#a5a5a5">
+
+                        </app-vertical-align-card>
+                </div>
+
+
+                <!-- <div class="col-md-6 col-xl-4 mb-1">
+                       
+                </div> -->
+
+                <div class="col-12 text-gray-color">
+                        <span>
+                                {{ "label.data-updated-on" | translate }} {{ lastUpdateDate | dateFormat:'long' }}
+                        </span> 
+                </div>
+                 
+        </div>
+
+
+
+        <div class="row mt-4">
+
+            
+            <div class="col-12 col-md-8 col-lg-7 col-xl-6">
+                
+                <app-pie-chart #pieChartRef>
+
+                </app-pie-chart>
+             </div>
+
+        </div>
+
+
+
+        
+
+</div>

@@ -1,0 +1,40 @@
+@import "../../../../styles.scss"; 
+
+#dashboard-navbar-image{
+    border-radius: 4px;
+}
+
+#root-navbar-top{
+    background-color: #fff !important;
+}
+
+#root-navbar-top a{
+    color: $stronger-primary;
+}
+
+.btn-group:hover{
+    background-color: #f8f8f8 !important;
+}
+
+.btn-group a:hover{
+    color: $primary !important;
+}
+
+.dropdown-menu .dropdown-item{
+    color: $stronger-primary;
+ }
+
+.dropdown-menu .dropdown-item:active{
+   background-color: $primary;
+   color: #f8f8f8;
+   outline: none;
+}
+
+.dropdown-menu .dropdown-item:focus{
+    outline: none;
+ }
+
+ .modal-footer button{
+    cursor: pointer;
+ }
+

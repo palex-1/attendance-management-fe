@@ -1,0 +1,114 @@
+<h3 class="mt-2 mb-3">
+    <a class="go-back-button mr-2" [routerLink]="['/dashboard/employeeManagement']" title="{{ 'label.back' | translate }}">
+      <i class="fas fa-caret-square-left"></i>
+    </a>
+
+    <i class="fa fa-user" aria-hidden="true"></i> {{ "label.employee-details" | translate }}
+  </h3>
+  
+  <div class="row">
+    <div class="col-md-9 col-xl-10">
+      <ul class="nav nav-tabs">
+  
+        <li class="nav-item">
+          <a class="nav-link active" href="#user-all-details-tab" aria-selected="true" role="tab" 
+              data-toggle="tab" (click)="selectTab(1)">
+            {{ "label.information" | translate }}
+          </a>
+        </li>
+      
+        <li class="nav-item">
+          <a class="nav-link" href="#team-user-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(2)">
+            {{ "label.team" | translate }}
+          </a>
+        </li>
+        
+        <li class="nav-item" *ngIf="hasAuthority(['PERSONAL_DOCUMENT_READ'])">
+          <a class="nav-link" href="#employee-paycheck-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(3)">
+            {{ "label.paychecks" | translate }}
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="hasAuthority(['PERSONAL_DOCUMENT_READ'])">
+          <a class="nav-link" href="#app-employee-personal-document-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(4)">
+            {{ "label.documents" | translate }}
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#attendances-user-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(5)">
+              {{ "label.attendances" | translate }}
+            </a>
+          </li>
+        
+      </ul>
+      
+      
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="user-all-details-tab" role="tabpanel" aria-labelledby="user-all-details-tab">
+          <app-basic-employee-info *ngIf="tabSelected==1"></app-basic-employee-info>
+        </div>
+      
+        <div class="tab-pane fade" id="team-user-tab" role="tabpanel" aria-labelledby="team-user-tab">
+          <app-employee-teams *ngIf="tabSelected==2"></app-employee-teams>
+        </div>
+
+        <div class="tab-pane fade" id="employee-paycheck-tab" role="tabpanel" 
+                  aria-labelledby="employee-paycheck-tab" *ngIf="hasAuthority(['PERSONAL_DOCUMENT_READ'])">
+          <app-employee-paycheck *ngIf="tabSelected==3"></app-employee-paycheck>
+        </div>
+
+        <div class="tab-pane fade" id="app-employee-personal-document-tab" role="tabpanel" 
+                  aria-labelledby="app-employee-personal-document-tab" *ngIf="hasAuthority(['PERSONAL_DOCUMENT_READ'])">
+          <app-employee-personal-document *ngIf="tabSelected==4"></app-employee-personal-document>
+        </div>
+
+        <div class="tab-pane fade" id="attendances-user-tab" role="tabpanel" 
+                  aria-labelledby="attendances-user-tab">
+          <app-employee-attendances-info *ngIf="tabSelected==5"></app-employee-attendances-info>
+        </div>
+        
+        
+      </div>
+    </div>
+
+
+
+    <div class="col-md-3 col-xl-2 mb-3 mb-sm-3 order-first order-sm-first order-md-last profile-card-container">
+      <div class="card">
+          <div class="image-button-container">
+                  <img class="card-img-top" [src]="imgURL" alt="Profile Image">
+          </div>
+
+
+         
+          <div class="card-body">
+          <p class="card-text">
+              <strong id="profileName">
+                  {{ name }} {{ surname }}
+              </strong>
+          </p>
+          <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+          </div>
+
+          <div class="card-footer text-muted">
+              <small class="d-block"> {{ email }} </small>
+              <small>
+                  <button class="btn btn-sm btn-danger" (click)="generateEmployeeBadge()">
+                      {{ "label.badge" | translate }}
+                  </button>
+              </small>
+              
+          </div>
+      </div>
+  </div>
+  </div>
+ 
+ 
+ 
+
+
+  
+
+
+

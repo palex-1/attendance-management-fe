@@ -1,0 +1,218 @@
+<div class="modal fade" #addNewCommessaModal tabindex="-1" role="dialog" aria-labelledby="addNewCommessaModalLabel"
+    aria-hidden="true" *ngIf="hasAuthority(['INCARICO_CREATE'])">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewCommessaModalLabel">{{ "gestione-commesse.add-new-commessa" |
+                    translate }}:</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="codice-commessa0" class="col-form-label">{{ "gestione-commesse.codice-commessa"
+                                | translate }}: *</label>
+                            <input type="text" class="form-control" id="codice-commessa0" name="cca" [disabled]="addOperationInProgress"
+                                [(ngModel)]="codiceCommessaToAdd" maxlength="25">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="piva-commessa0" class="col-form-label">{{ "gestione-commesse.piva-commessa" |
+                                translate }}:</label>
+                            <input type="text" class="form-control" id="piva-commessa0" name="pica" [disabled]="addOperationInProgress"
+                                [(ngModel)]="pivaCommessaToAdd" maxlength="16">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label">{{ "gestione-commesse.activation-date" | translate }}: *</label>
+                            
+                            <app-monthpicker tooltip="{{ 'gestione-commesse.activation-date' | translate }}" 
+                                    [initialValue]="dataAttivazioneCommessaToAdd" [disabled]="addOperationInProgress"
+                                    (onSelectDate)="activationDateToAddChanged($event)" [isAMonthpicker]="false">
+                            </app-monthpicker>
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label">{{ "gestione-commesse.deactivation-date" | translate }}:</label>
+                            <app-monthpicker tooltip="{{ 'gestione-commesse.deactivation-date' | translate }}" 
+                                    [initialValue]="dataDisattivazioneCommessaToAdd" [disabled]="addOperationInProgress"
+                                    (onSelectDate)="deactivationDateToAddChanged($event)" [isAMonthpicker]="false">
+                            </app-monthpicker>
+
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            <label for="descrizione-commessa0" class="col-form-label">{{
+                                "gestione-commesse.descrizione-commessa" | translate }}: *</label>
+                            <textarea class="form-control" id="descrizione-commessa0" name="dca" [disabled]="addOperationInProgress"
+                                [(ngModel)]="descrizioneCommessaToAdd" maxlength="1000"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="fatturabileCheck0" name="fca" [(ngModel)]="fatturabileCheckCommessaToAdd"
+                            [checked]="fatturabileCheckCommessaToAdd" [disabled]="addOperationInProgress">
+                        <label class="form-check-label" for="fatturabileCheck0">{{ "label.billable" |
+                            translate }}</label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="lqa8912iuasz" [(ngModel)]="isEnabledForAllUsersToAdd"
+                            [checked]="isEnabledForAllUsersToAdd" [disabled]="addOperationInProgress" id="isEnabledForAllUsersToAdd787">
+                        <label class="form-check-label" for="isEnabledForAllUsersToAdd787">
+                            {{ "label.is-enabled-for-all-user" | translate }}
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="kjhsd4sf76598" [checked]="isAbsenceTaskToAdd"
+                            [(ngModel)]="isAbsenceTaskToAdd" [disabled]="addOperationInProgress" id="addOperationInProgress787">
+                        <label class="form-check-label" id="addOperationInProgress787">
+                            {{ "label.is-absence-task" | translate }}
+                        </label>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="addOperationInProgress"
+                    (click)="closeAddDialog()">{{ "general.button.close" | translate }}</button>
+                <button type="button" class="btn btn-primary" (click)="addNewCommessa()" [disabled]="addOperationInProgress">
+                    <span class="spinner-button-border float-left" *ngIf="addOperationInProgress"></span>
+                    {{ "general.button.insert" | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 class="mt-2 mb-3">
+    <i class="fa fa-briefcase" aria-hidden="true"></i> {{ "label.work-tasks-management" | translate }}
+</h3>
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                <a href="javascript:void(0)" title="{{ 'gestione-commesse.add-new-commessa' | translate }}" class="refresh-link mr-1"
+                    *ngIf="hasAuthority(['INCARICO_CREATE'])" (click)="openAddDialog()">
+                                <i class="fa fa-plus"></i>
+                </a>
+
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshCommesse()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'taskCode'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.codice-commessa" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'taskDescription'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.descrizione-commessa" | translate }}
+                                </th>
+                                
+                                <th>
+                                    {{ "gestione-commesse.activation-date" | translate }}
+                                </th>
+                                <th>
+                                    {{ "gestione-commesse.deactivation-date" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.billable" | translate }}
+                                </th>
+                                <th>
+                                    {{ "general.azioni" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="currentCommesse.length==0">
+                                <td colspan="3" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+
+                            <tr *ngFor="let commessa of currentCommesse">
+                                <td>{{ commessa.taskCode }}</td>
+                                <td>
+                                    <div class=scrollable>
+                                        {{ commessa.taskDescription | ellipsesDropperPipe: 70 }}
+                                    </div>
+                                </td>
+                                <td>{{ commessa.activationDate | shortDate }}</td>
+                                <td>{{ commessa.deactivationDate==null ? '∞' : commessa.deactivationDate | shortDate }}</td>
+                                <td>{{ commessa.billable | trueFalsePipe }}</td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="deleteIncarico(commessa.taskCode)"
+                                        *ngIf="hasAuthority(['INCARICO_DELETE'])" title="{{ 'label.delete' | translate }}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                    <!-- <button class="btn btn-warning btn-sm add-cursor-pointer mr-1" type="button" (click)="deactivateIncarico(commessa.taskCode)"
+                                        *ngIf="hasAuthority(['INCARICO_UPDATE'])" title="{{ 'general.action.deactivate' | translate }}">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                    </button> -->
+
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="opendDetails(commessa)"
+                                        *ngIf="commessa.currentUserCanSeeDetails" title="{{ 'general.action.details' | translate}}">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
+            <ng-template #collapseAreaContent>
+
+
+                    <app-custom-filters [filtersElements]="gestioneCommessaFilters" (filtersChanged)="filtersChanged($event)">
+
+                    </app-custom-filters>
+
+
+                </ng-template>
+            </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+</div>

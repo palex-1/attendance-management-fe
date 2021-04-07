@@ -1,0 +1,122 @@
+<div class="modal fade" #addViewEditTurnstileModal tabindex="-1" role="dialog" aria-labelledby="addViewEditTurnstileModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              
+                <h5 class="modal-title" *ngIf="createDialogEnabled">{{ "label.creation-turnstile" | translate }}:</h5>
+                <h5 class="modal-title" *ngIf="editDialogEnabled">{{ "label.details-turnstile" | translate }}:</h5>
+
+            </div>
+            <div class="modal-body">
+      
+              <div *ngIf="showLoader" class="loader-for-modal">
+                  <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+                  </span> 
+              </div>
+      
+      
+              <form>
+                <div class="row">
+                  
+                    <div class="form-group col-md-12">
+                        <label class="col-form-label">{{ "label.title" | translate }} *</label>
+                        <input type="text" class="form-control" name="trew5-01" [(ngModel)]="title" maxlength="100">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                            <label class="col-form-label">{{ "label.position" | translate }} *</label>
+                            <input type="text" class="form-control" name="43df3-01" [(ngModel)]="position" maxlength="200">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                          <label class="col-form-label">{{ "label.description" | translate }} *</label>
+                          <textarea type="text" class="form-control" name="dfd-01" [(ngModel)]="description" maxlength="1000">
+                          </textarea>
+                    </div>
+      
+                    <div class="form-group col-12">
+                        <label class="col-form-label">{{ "label.type" | translate }} *</label>
+                        <select class="form-control" [(ngModel)]="type" name="po83uds85621" [disabled]="editDialogEnabled">
+                            <option value="" selected></option>
+                            <option *ngFor="let item of allTurnstileType" [ngValue]="item">
+                                {{ item | turnstileType }}
+                            </option>                            
+                        </select>
+                    </div>
+
+                    <!-- <div class="col-12" *ngIf="editDialogEnabled">
+
+                            <div class="row" *ngIf="!credentialHidden">
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">{{ "label.client-id" | translate }}</label>
+                                    <input type="text" class="form-control" name="r56rtetr-01" 
+                                            [(ngModel)]="clientId" (change)="resetClientId()">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label class="col-form-label">
+                                        {{ "label.client-secret" | translate }}
+                                        <a href="javascript:void(0)" title="{{ 'label.request-new-secret' | translate }}" 
+                                                class="refresh-link" (click)="changeTurnstileSecret()">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </a>
+                                    </label>
+                                    <input type="text" class="form-control" name="34sxczdw4s-01" 
+                                            [(ngModel)]="clientSecret" (change)="resetClientSecret()">
+                                </div>
+                            </div>
+    
+                        </div> -->
+
+
+                    <div class="col-12">
+                        <div class="clearfix">
+                            <div class="form-check float-left">
+                                <input type="checkbox" class="form-check-input" id="87iut3hfdj" 
+                                        name="uslev-12" [(ngModel)]="enabled">
+                                <label class="form-check-label" for="87iut3hfdj">{{ "label.enabled" | translate }}</label>
+                            </div>
+
+                            <!-- <a href="javascript:void(0)" title="{{ 'label.show-credentials' | translate }}" 
+                                    *ngIf="editDialogEnabled && credentialHidden" (click)="showCredentials()" class="float-right">
+                                <i class="fa fa-eye"></i>
+                            </a>
+
+                            <a href="javascript:void(0)" title="{{ 'label.hide-credentials' | translate }}" 
+                                    *ngIf="editDialogEnabled && !credentialHidden" (click)="hideCredentials()" class="float-right">
+                                <i class="fa fa-eye-slash"></i>
+                            </a> -->
+
+                        </div>
+
+                        
+                    </div>
+      
+
+                    
+      
+                </div>
+                
+              </form>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="updateOperationInProgress || addOperationInProgress" 
+              (click)="closeDialog()">{{ "general.button.close" | translate }}</button>
+              
+              <button type="button" class="btn btn-primary" (click)="updateTurnstile()" [disabled]="updateOperationInProgress" 
+                  *ngIf="editDialogEnabled && hasAuthority(['TURNSTILE_UPDATE'])">
+                  <span class="spinner-button-border float-left" *ngIf="updateOperationInProgress"></span>
+                  {{ "general.button.update" | translate }}
+              </button>
+      
+              <button type="button" class="btn btn-primary" (click)="addNewTurnstile()" [disabled]="addOperationInProgress" 
+                  *ngIf="createDialogEnabled && hasAuthority(['TURNSTILE_CREATE'])">
+                  <span class="spinner-button-border float-left" *ngIf="addOperationInProgress"></span>
+                  {{ "label.add" | translate }}
+              </button>
+      
+            </div>
+          </div>
+        </div>
+      </div>

@@ -1,0 +1,107 @@
+<div class="modal fade" #workedHoursDetailsModal tabindex="-1" role="dialog" aria-labelledby="workedHoursDetailsModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.employee" | translate}}: {{ title }}</h5>
+      </div>
+
+
+
+
+
+      <div class="modal-body">
+
+
+        <div *ngIf="showLoader" class="loader-for-modal">
+            <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+            </span> 
+        </div>
+        
+
+
+          <div class="row">
+
+              <div class="col-12">
+                  <div class="card mb-2">
+                      <div class="card-header">
+                          <i class="fa fa-clock-o" aria-hidden="true"></i> {{ "label.worked-hours" | translate }}
+                          <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                              (click)="refreshData()">
+                              <i class="fas fa-sync-alt"></i>
+                          </a>
+                      </div>
+
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-sm table-striped">
+                                  <thead>
+                                      <tr>
+                                        <th sortable-td [status]="0" [sortByValue]="'day'" [sortBy]="sortBy"
+                                                    (onSortChange)="onSortChange($event)">
+                                            {{ "label.date" | translate }}
+                                        </th>
+                                        <th sortable-td [status]="0" [sortByValue]="'workedHours'" [sortBy]="sortBy" 
+                                                    (onSortChange)="onSortChange($event)">
+                                            {{ "label.hours" | translate }}
+                                        </th>
+                                        <th sortable-td [status]="0" [sortByValue]="'smartworked'" [sortBy]="sortBy" 
+                                                    (onSortChange)="onSortChange($event)">
+                                            {{ "label.smartworked" | translate }}
+                                        </th>
+                                      </tr>
+                                  </thead>
+
+                                  <tbody>
+                                      <tr *ngIf="currentLoadedData.length==0">
+                                          <td colspan="6" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                                      </tr>
+                                      
+                                      <tr *ngFor="let elem of currentLoadedData">
+                                            <td>{{ elem.day | dateFormat:'short' }}</td>
+                                            <td>{{ elem.workedHours }}</td>
+                                            <td>{{ elem.smartworked | trueFalsePipe }}</td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+
+                          </div>
+
+                          <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                                  [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                                  (onPageChange)="changePage($event)">
+
+                          </app-custom-paginator>
+
+                      </div>
+
+
+                  </div>
+
+              </div>
+
+
+          </div>
+
+
+
+
+      </div>
+
+
+
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDialog()">
+            {{ "general.button.close" | translate }}
+        </button>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

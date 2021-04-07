@@ -1,0 +1,232 @@
+<div id="myModal" #myModal class="modal" *ngIf="blockContent">
+
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ "modal.logout-title" | translate }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal">{{ "modal.logout-button-cancel" | translate }}</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="executeLogout()">
+                    {{ "modal.logout-button-confirmation" | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="wrapper" #wrapper class="toggled">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="my-sidebar-nav-custom">
+
+            <div class="sidebar-header">
+                <span class="d-block">{{ "label.username" | translate }}: {{ username }}</span>
+                <!-- <span>{{ "label.role" | translate }}: {{ permissionGroup | permissionGroupLabelPipe }}</span> -->
+
+            </div>
+
+
+            <li routerLinkActive="active">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/home']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fa fa-home" aria-hidden="true"></i> {{ "sidebar.top-link-home" | translate }}
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#pageSubmenu0" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-user" aria-hidden="true"></i> {{ "sidebar.top-link-profile" | translate }}
+                </a>
+                <ul class="collapse list-unstyled submenu-list-second-level" id="pageSubmenu0">
+                    <li routerLinkActive="active">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/accessData']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                            {{ "sidebar.secondary-link-profile.access-data" | translate }}
+                        </a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/personalInformation']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                            {{ "sidebar.secondary-link-profile.personal-information" | translate }}
+                        </a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/documentiPersonali']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="far fa-file-alt"></i> {{ "label.personal-documents" | translate }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li routerLinkActive="active">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/todayPlanner']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fas fa-tachometer-alt"></i> {{ "breadcrumb.todayPlanner" | translate }}
+                </a>
+            </li>
+
+            <li routerLinkActive="active">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/myExpenseReport']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fas fa-clipboard-list"></i> {{ "label.my-expense-report" | translate }}
+                </a>
+            </li>
+
+            <li routerLinkActive="active" *ngIf="hasAuthority(['INCARICO_READ'])">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/taskManage']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    {{ "sidebar.gestione-commesse-accessi" | translate }}
+                </a>
+            </li>
+
+
+            <li routerLinkActive="active" *ngIf="hasAuthority(['USER_PROFILE_READ'])">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/employeeManagement']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fa fa-users" aria-hidden="true"></i> {{ "label.employees" | translate }}
+                </a>
+            </li>
+
+
+            <li routerLinkActive="active" *ngIf="hasAuthority(['SEDE_LAVORATIVA_READ'])">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/sediLavorative']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fas fa-building" aria-hidden="true"></i> {{ "sidebar.sediLavorative" | translate }}
+                </a>
+            </li>
+
+
+
+
+            <li *ngIf="hasAuthority(['REPORT_READ', 'TASK_COMPLETION_LOCK_READ', 'MANAGE_EXPENSE_REPORT'])">
+                <a href="#pageSubmenuIdjhfdf" data-toggle="collapse" aria-expanded="false">
+                    <i class="fas fa-file-archive"></i> {{ "label.reportings" | translate }}
+                </a>
+                <ul class="collapse list-unstyled submenu-list-second-level" id="pageSubmenuIdjhfdf">
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['REPORT_READ'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/reports']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="far fa-file-excel"></i> {{ "label.monthly-reports" | translate }}
+                        </a>
+                    </li>
+
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['MANAGE_EXPENSE_REPORT'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/expenseReports']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fas fa-clipboard-list"></i> {{ "label.expense-report" | translate }}
+                        </a>
+                    </li>
+
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['TASK_COMPLETION_LOCK_READ'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/taskCompletionLock']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fas fa-lock"></i> {{ "label.task-completion-lock" | translate }}
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+            
+
+
+            <li *ngIf="hasAuthority(['MANAGE_GLOBAL_CONFIGURATIONS','USER_LEVEL_READ','TURNSTILE_READ'])">
+                <a href="#pageSubmenuSett4" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-cogs" aria-hidden="true"></i> {{ "label.generals" | translate }}
+                </a>
+                <ul class="collapse list-unstyled submenu-list-second-level" id="pageSubmenuSett4">
+
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['MANAGE_GLOBAL_CONFIGURATIONS'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/settings']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                            {{ "sidebar.top-link-settings" | translate }}
+                        </a>
+                    </li>
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['USER_LEVEL_READ'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/usersLevels']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-certificate" aria-hidden="true"></i> {{ "label.user-levels" | translate }}
+                        </a>
+                    </li>
+
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['TURNSTILE_READ'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/turnstile']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-minus-circle" aria-hidden="true"></i> {{ "label.turnstile" | translate }}
+                        </a>
+                    </li>
+
+                    <li routerLinkActive="active" *ngIf="hasAuthority(['COMPANY_READ'])">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/companies']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-building" aria-hidden="true"></i> {{ "label.companies" | translate }}
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li>
+                <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false">
+                    <i class="fa fa-tasks" aria-hidden="true"></i> {{ "sidebar.top-link-logs" | translate }}
+                </a>
+                <ul class="collapse list-unstyled submenu-list-second-level" id="pageSubmenu3">
+                    <li routerLinkActive="active">
+                        <a routerLinkActive="active" [routerLink]="['/dashboard/accessLogs']"
+                            (click)="handleButtonClickedOnSidebar()">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            {{ "sidebar.secondary-link-logs-accessi" | translate }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <li routerLinkActive="active" *ngIf="false">
+                <a routerLinkActive="active" [routerLink]="['/dashboard/guide']"
+                    (click)="handleButtonClickedOnSidebar()">
+                    <i class="fa fa-book" aria-hidden="true"></i> {{ "sidebar.top-link-guida" | translate }}
+                </a>
+            </li>
+
+            
+            <div class="line"></div>
+
+            <li id="logout-sidebar">
+
+                <a href="#logoutModal" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt"></i>
+                    {{ "sidebar.logout-button" | translate }}
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <!-- /#sidebar-wrapper -->
+</div>
+<!-- /#wrapper -->

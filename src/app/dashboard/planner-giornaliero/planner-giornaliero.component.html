@@ -1,0 +1,271 @@
+<div class="row mt-2">
+
+
+  <div class="inline-flex ml-15px">
+
+    <ngb-datepicker [displayMonths]="displayMonths" [navigation]="navigation" [showWeekNumbers]="showWeekNumbers"
+      outsideDays="hidden" [dayTemplate]="customDay" (select)="onDateSelection($event)" (navigate)="onMonthChange($event)">
+    </ngb-datepicker>
+
+
+    <ng-template #customDay let-date let-currentMonth="currentMonth" let-selected="selected" let-disabled="disabled"
+      let-focused="focused">
+      <span class="custom-day" [class.hidden]="date.month !== currentMonth"
+                   [class.not-employeed]="isNonAssunto(date)"
+                      appChangeBackground [backgroundColor]="getColorOfDay(date.day)">
+        {{ date.day }}
+      </span>
+    </ng-template>
+
+  </div>
+
+
+  <div class="inline-flex ml-15px ml-md-4 mt-2 mt-md-0">
+      <app-custom-collapse [title]="'planner-giornaliero.legend-title' | translate" [collapseAreaContent]="incarichiLegend" 
+            initialCollapse="true" class="mb-3">
+        <ng-template #incarichiLegend>
+            <div class='my-legend'>
+                <!-- <div class='legend-title'>{{ "planner-giornaliero.legend-title" | translate }}</div> -->
+                <div class='legend-scale'>
+                    <ul class='legend-labels'>
+                      <li><span class="straordinario"></span>{{ "planner-giornaliero.staordinario" | translate }}</li>
+                      <li><span class="lavorato"></span>{{ "planner-giornaliero.lavorato" | translate }}</li>
+                      
+                      
+
+                      <li *ngFor="let item of specialTasksConfigs">
+                        <span appChangeBackground backgroundColor="{{item.hexColor}}"></span>
+                        {{ item.name | workDayType }}
+                      </li>
+
+                      <li><span class="multiple-task-in-day"></span>{{ "label.multiple-data" | translate }}</li>
+
+                    </ul>
+
+                    
+          
+                </div>
+            </div>
+        </ng-template>
+      </app-custom-collapse>
+
+    
+
+  </div>
+
+</div>
+
+
+
+
+
+<div class="mt-4">
+
+  <h5>
+    {{ "label.task-details-selected-day" | translate }}: {{ currentSelectedDay | dateFormat:'short' }}
+  </h5>
+
+  <app-custom-collapse [title]="'label.task-management' | translate " [collapseAreaContent]="incarichiGiornalieri"
+    class="mb-3">
+    <ng-template #incarichiGiornalieri>
+      <div class="row">
+        <div class="col-sm-8 col-md-5 col-xl-4">
+          <form>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Codice Incarico*
+                    <a href="javascript:void(0)" title="{{ 'label.find-task' | translate }}" class="refresh-link" 
+                            (click)="openFindEnabledTaskDialog()">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </label>
+                  <input type="text" class="form-control" name="taskCodeToAdd123" [(ngModel)]="taskCodeToAdd">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                  <label class="control-label">Totale Ore*</label>
+                  <input type="number" step="1" class="form-control" name="r34e2132" [(ngModel)]="totalHoursTaskToAdd">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" [checked]="currentTaskToAddSmartWorked" 
+                            name="y91iu937rt" (click)="switchSmartworked()">
+                    <label class="custom-control-label" (click)="switchSmartworked()">
+                      {{ "label.smartworked" | translate }}
+                    </label>
+                </div>
+              </div>
+
+              
+
+            </div>
+
+
+
+
+            <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="addWorkTask()"
+                  [disabled]="addTaskOperationInProgress">
+              <span  class="spinner-button-border float-left" *ngIf="addTaskOperationInProgress"></span>
+              {{ "label.add" | translate }}
+            </button>
+            <div class="clearfix"></div>
+          </form>
+
+        </div>
+
+
+
+        <div class="d-none d-xl-block col-xl-1"></div>
+
+        <div class="col-sm-12 col-md-7 col-xl-7">
+
+          <div class="table-responsive-md">
+            <table class="table table-sm table-striped">
+              <caption>{{ "label.daily-tasks" | translate }}
+                <a href="javascript:void(0)" title="{{ 'label.table-update' | translate }}" class="refresh-link"
+                  (click)="refreshCompletedTaskOfDay()">
+                  <i class="fas fa-sync-alt"></i>
+                </a>
+              </caption>
+              <thead>
+                <tr>
+                  <th sortable-td [status]="0" [sortByValue]="'codiceIncarico'" [sortBy]="sortBy">
+                    {{ "label.task-code" | translate }}
+                  </th>
+                  <th sortable-td [status]="0" [sortByValue]="'descrizioneIncarico'" [sortBy]="sortBy">
+                    {{ "label.task-description" | translate }}
+                  </th>
+                  <th sortable-td [status]="0" [sortByValue]="'totalOre'" [sortBy]="sortBy">
+                    {{ "label.hours" | translate }}
+                  </th>
+                  <th sortable-td [status]="0" [sortByValue]="'smartworked'" [sortBy]="sortBy">
+                      {{ "label.smartworked" | translate }}
+                  </th>
+                  <th>
+                    {{ "label.delete" | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="currentLoadedTasks.length==0">
+                    <td colspan="5" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                </tr>
+
+                <tr *ngFor="let item of currentLoadedTasks">
+                  <td>{{ item.taskCode==null ? '': item.taskCode.taskCode }}</td>
+                  <td>{{ item.taskCode==null ? '': (item.taskCode.taskDescription | ellipsesDropperPipe:25) }}</td>
+                  <td>{{ item.workedHours }}</td>
+                  <td>{{ item.smartworked | trueFalsePipe }}</td>
+                  <td>
+                      <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="deleteCompletedTask(item)"
+                          *ngIf="canDeleteCompletedTask(item)" title="{{ 'label.delete' | translate }}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+
+          <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+
+          </app-custom-paginator>
+
+        </div>
+      </div>
+    </ng-template>
+  </app-custom-collapse>
+
+
+
+  <app-custom-collapse [title]="'label.food-voucher-request' | translate " [collapseAreaContent]="foodVoucherRequest"
+            class="mb-3" *ngIf="foodVoucherAreEnabled">
+    <ng-template #foodVoucherRequest>
+
+      <div class="row">
+          <div class="col-md-12">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" [checked]="isInCurrentDayFoodVoucherRequested" 
+                        name="dsfdsfdsffds" (click)="switchFoodVoucherRequest()">
+                <label class="custom-control-label" (click)="switchFoodVoucherRequest()">
+                  {{ "label.food-voucher-request" | translate }}
+                </label>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="saveFoodVoucherRequestChanges()"
+                  [disabled]="savingFoodVoucherRequests">
+              <span  class="spinner-button-border float-left" *ngIf="savingFoodVoucherRequests"></span>
+              {{ "label.save" | translate }}
+            </button>
+          </div>
+          
+      </div>
+        
+
+
+    </ng-template>
+  </app-custom-collapse>
+
+
+
+  <app-custom-collapse [title]="'label.work-transfer-request' | translate" [collapseAreaContent]="workTransferRequest"
+    class="mb-3">
+    <ng-template #workTransferRequest>
+  
+      <div class="row">
+        <div class="col-md-12 mb-1">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" [checked]="isSelectedWorkTransferNational"
+              name="diueycw87r6" (click)="switchWorkTransferNationalRequest()">
+            <label class="custom-control-label" (click)="switchWorkTransferNationalRequest()">
+              {{ "label.national-transfer" | translate }}
+            </label>
+          </div>
+        </div>
+  
+        <div class="col-md-12">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" [checked]="isSelectedWorkTransferInternational"
+                name="uvybo874s" (click)="switchWorkTransferInternationalRequest()">
+              <label class="custom-control-label" (click)="switchWorkTransferInternationalRequest()">
+                {{ "label.international-transfer" | translate }}
+              </label>
+            </div>
+          </div>
+
+
+        <div class="col-md-12">
+          <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3"
+            (click)="saveWorkTransferRequestChanges()" [disabled]="savingWorkTransferRequests">
+            <span class="spinner-button-border float-left" *ngIf="savingWorkTransferRequests"></span>
+            {{ "label.save" | translate }}
+          </button>
+        </div>
+  
+      </div>
+  
+  
+  
+    </ng-template>
+  </app-custom-collapse>
+
+
+</div>
+
+
+
+
+<app-task-of-user-modal #findEnabledTaskOfUser (onTaskSelect)="selectedTask($event)">
+</app-task-of-user-modal>
+

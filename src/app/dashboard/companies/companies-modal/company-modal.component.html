@@ -1,0 +1,54 @@
+<div class="modal fade" #companyModal tabindex="-1" role="dialog" aria-labelledby="companyModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.company" | translate }}:</h5>
+      </div>
+      <div class="modal-body">
+
+        <div *ngIf="showLoader" class="loader-for-modal">
+            <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+            </span> 
+        </div>
+
+
+        <form>
+          <div class="row">
+            
+              <div class="form-group col-md-12">
+                  <label class="col-form-label">{{ "label.name" | translate }} *</label>
+                  <input type="text" class="form-control" name="uslev-01" [(ngModel)]="name" maxlength="255">
+              </div>
+
+              <div class="form-group col-md-12">
+                <label class="col-form-label">{{ "label.description" | translate }} *</label>
+                <input type="text" class="form-control" name="uslev-gfdfdg" [(ngModel)]="description" maxlength="499">
+            </div>
+
+
+
+          </div>
+          
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="updateOperationInProgress" 
+        (click)="closeDialog()">{{ "general.button.close" | translate }}</button>
+        
+        <button type="button" class="btn btn-primary" (click)="updateNewCompany()" [disabled]="updateOperationInProgress" 
+            *ngIf="editModeEnabled && hasAuthority(['COMPANY_UPDATE'])">
+            <span class="spinner-button-border float-left" *ngIf="updateOperationInProgress"></span>
+            {{ "general.button.update" | translate }}
+        </button>
+
+        <button type="button" class="btn btn-primary" (click)="addNewCompany()" [disabled]="addOperationInProgress" 
+            *ngIf="addModeEnabled && hasAuthority(['COMPANY_CREATE'])">
+            <span class="spinner-button-border float-left" *ngIf="addOperationInProgress"></span>
+            {{ "label.add" | translate }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,269 @@
+<div class="modal fade" *ngIf="hasAuthority(['REPORT_CREATE'])" #monthlyReportModal tabindex="-1" role="dialog" aria-labelledby="monthlyReportModal" 
+        aria-hidden="true" >
+  <div class="modal-dialog moda-md" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.generate-report" | translate }}:</h5>
+      </div>
+
+        <div class="modal-body">
+        
+                <div class="row"> 
+
+                    <div class="form-group col-12 mb-3">
+                        <label>{{ "label.reference-date" | translate }}*</label>
+                            
+                        <app-monthpicker #monthPickerModal tooltip="{{ 'label.reference-date' | translate }}"
+                                    [disabled]="generatingReport"
+                                    (onSelectDate)="reportModalDateChanges($event)" [isAMonthpicker]="true">
+                        </app-monthpicker>
+                    </div>
+
+                </div>
+
+        </div>
+
+        
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary mr-1" (click)="closeDialog()" [disabled]="generatingReport">
+                {{ "general.button.close" | translate }}
+            </button>
+            <button type="button" class="btn btn-primary" (click)="generateReport()" [disabled]="generatingReport">
+                <span  class="spinner-button-border float-left" *ngIf="generatingReport"></span>
+                {{ "label.generate" | translate }}
+            </button>
+        </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="modal fade" #reportModalDetails tabindex="-1" role="dialog" aria-labelledby="reportModalDetails" 
+        aria-hidden="true" >
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "label.report-details" | translate }}:</h5>
+      </div>
+
+        <div class="modal-body">
+        
+                <div class="row">
+                
+                    <div class="form-group col-md-6">
+                        <label>{{ "label.year" | translate }}</label>
+                        <input type="number" class="form-control" [value]="yearDetailsModal">
+                    </div>
+                
+                    <div class="form-group col-md-6">
+                        <label>{{ "label.month" | translate }}</label>
+                        <input type="number" class="form-control" [value]="monthDetailsModal">
+                    </div>
+                
+                    <div class="form-group col-12">
+                        <label>{{ "label.status" | translate }}</label>
+                        <input type="text" class="form-control" [value]="statusDetailsModal | reportStatusPipe">
+                    </div>
+                
+                    <div class="form-group col-12">
+                        <label>{{ "label.logs" | translate }}</label>
+                        <textarea class="form-control" [value]="logsDetailsModal" style="height: 200px; font-size: 12px;">
+                        </textarea>
+                    </div>
+
+                    <div class="col-12" *ngIf="deletedDetaildModal">
+                        <b>{{ "message.report-is-deleted" | translate }}</b>
+                    </div>
+                </div>
+
+        </div>
+
+        
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary mr-1" (click)="closeDialogDetails()">
+                {{ "general.button.close" | translate }}
+            </button>
+        </div>
+
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 class="mt-2 mb-3">
+        <i class="far fa-file-excel"></i> {{ "label.monthly-reports" | translate }}
+</h3>
+
+
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                
+              <a href="javascript:void(0)" title="{{ 'label.generate-report' | translate }}" class="refresh-link mr-1"
+                  *ngIf="hasAuthority(['REPORT_CREATE'])" (click)="openCreateDialog()">
+                              <i class="fa fa-plus"></i>
+              </a>
+                
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshReports()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+                
+            </div>
+  
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'year'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.year" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'month'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.month" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'status'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.status" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.logs" | translate }}
+                                </th>
+                                <th  *ngIf="showDeletedColumn()">
+                                    {{ "label.deleted" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.actions" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="reports.length==0">
+                                <td colspan="8" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of reports">
+                                <td>{{ elem.year }}</td>
+                                <td>{{ getMonthValue(elem.month) }}</td>
+                                <td>{{ elem.status | reportStatusPipe }}</td>
+                                <td>{{ elem.logs | ellipsesDropperPipe: 70 }}</td>
+                                <td *ngIf="showDeletedColumn()">
+                                    {{ elem.deleted | trueFalsePipe }}
+                                </td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-success btn-sm add-cursor-pointer mr-1" type="button" (click)="download(elem)"
+                                        *ngIf="hasAuthority(['REPORT_READ']) && canBeDownloaded(elem)" title="{{ 'label.download' | translate}}">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+                                    
+                                    <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="delete(elem)"
+                                        *ngIf="hasAuthority(['REPORT_DELETE']) && canBeDeleted(elem)" title="{{ 'label.delete' | translate}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="openDialogDetails(elem)"
+                                        *ngIf="hasAuthority(['REPORT_READ'])" title="{{ 'label.open-details' | translate}}">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+  
+                </div>
+  
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+  
+                </app-custom-paginator>
+  
+  
+            </div>
+  
+            
+  
+        </div>
+        
+    </div>
+  
+  
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContentULC342">
+            <ng-template #collapseAreaContentULC342>
+              <div class="filter-table-form-container">
+  
+                  <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                    <div class="row">
+                    
+                        <div class="form-group col-md-12 mb-1">
+                            <label class="col-form-label">{{ "label.year" | translate }}</label>
+                            <input type="number" class="form-control" name="fdfdsa2319f" [(ngModel)]="yearFilter">
+                        </div>
+                        <div class="form-group col-md-12 mb-1">
+                            <label class="col-form-label">{{ "label.month" | translate }}</label>
+                            <input type="number" class="form-control" name="yug7szkdjey871" [(ngModel)]="monthFilter">
+                        </div>
+
+
+                        <div class="form-group col-md-12 mb-1">
+                            <label class="col-form-label">{{ "label.include-deleted" | translate }}</label>
+                            <select class="form-control" [(ngModel)]="includeDeletedFilter" name="po83u85dd621">
+                                <option [ngValue]="true">{{ true | trueFalsePipe }}</option>
+                                <option [ngValue]="false">{{ false | trueFalsePipe }}</option>
+                            </select>
+                        </div>
+                    
+                    </div>
+                  </form>
+  
+                  <div class="text-right">
+                      <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                        {{ "button.clear-all" | translate }}
+                      </button>
+                      <button type="submit" class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
+                        {{ "label.apply" | translate }}
+                      </button>
+                  </div>
+              </div>
+              
+  
+                        
+  
+              </ng-template>
+          </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+  </div>
+
+  
+

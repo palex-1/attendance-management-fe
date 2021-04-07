@@ -1,0 +1,46 @@
+<h3 class="mt-2 mb-3">
+  <a class="go-back-button mr-2" [routerLink]="['/dashboard/taskManage']" title="{{ 'label.back' | translate }}">
+    <i class="fas fa-caret-square-left"></i>
+  </a>
+  <i class="fa fa-briefcase" aria-hidden="true"></i> {{codiceCommessa}}
+</h3>
+
+
+<ul class="nav nav-tabs">
+
+  <li class="nav-item">
+    <a class="nav-link active" href="#info-commessa-info-tab" aria-selected="true" role="tab" 
+        data-toggle="tab" (click)="selectTab(1)">
+      {{ "label.information" | translate }}
+    </a>
+  </li>
+
+  <li class="nav-item" *ngIf="canSeeTeamArea()">
+    <a class="nav-link" href="#info-commessa-team-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(2)">
+      {{ "label.team" | translate }}
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="#app-work-task-summary-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(3)">
+      {{ "label.summary" | translate }}
+    </a>
+  </li>
+
+</ul>
+
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="info-commessa-info-tab" role="tabpanel" aria-labelledby="info-commessa-info-tab">
+    <app-dettagli-commessa *ngIf="tabSelected==1"></app-dettagli-commessa>
+  </div>
+
+  <div class="tab-pane fade" id="info-commessa-team-tab" role="tabpanel" aria-labelledby="info-commessa-team-tab" *ngIf="canSeeTeamArea()">
+    <app-team-commessa *ngIf="tabSelected==2"></app-team-commessa>
+  </div>
+
+  <div class="tab-pane fade" id="app-work-task-summary-tab" role="tabpanel" aria-labelledby="app-work-task-summary-tab">
+      <app-work-task-summary *ngIf="tabSelected==3"></app-work-task-summary>
+  </div>
+  
+</div>

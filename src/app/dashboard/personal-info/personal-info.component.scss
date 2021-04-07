@@ -1,0 +1,78 @@
+.breadcrumb .breadcrumb-item{
+    color: #1f5584;
+}
+
+
+.nav-tabs .nav-link{
+    color: #1966b7;
+}
+
+.nav-tabs .nav-link:focus{
+    color: #1f5584;
+}
+
+.nav-tabs .nav-link:hover{
+    color: #1f5584;
+}
+
+input:focus{
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color:#1966b7; 
+}
+
+textarea:focus{
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color:#1966b7; 
+}
+
+.profile-card-container{
+    padding-top: 0px;
+    text-align: center;
+}
+
+@media(min-width:768px){
+    .profile-card-container{
+        padding: 20px;
+        padding-top: 0px;
+    }
+}
+
+@media(max-width:768px){
+    #myTab .nav-link{
+        font-size: 14px;
+    }
+    .profile-card-container{
+        width: 250px;
+    }
+}
+
+.image-button-container {
+    position: relative;
+}
+
+.image-button-container{
+    min-height: 100px;
+}
+
+/* Make the image responsive */
+.image-button-container img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+}
+
+.image-button-container .image-div-button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+@media(max-width:768px){
+    #myTab .nav-link{
+        font-size: 14px;
+    }
+}

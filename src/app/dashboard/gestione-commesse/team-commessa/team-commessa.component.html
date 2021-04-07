@@ -1,0 +1,227 @@
+<div class="modal fade" #teamComponentDetails tabindex="-1" role="dialog" 
+            aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ "label.info-team-component" | translate }}</h5>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="updateOperationInProgress" class="loader-for-modal">
+                    <!-- 
+                        <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+                        </span> 
+                    -->
+                </div>
+
+                <form>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">{{ "label.name" | translate }}</label>
+                            <input type="text" class="form-control" 
+                                    name="a1" [ngModel]="nomeComponenteSelected" [disabled]="true">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">{{ "label.surname" | translate }}</label>
+                            <input type="text" class="form-control" name="a2" [ngModel]="cognomeComponenteSelected" [disabled]="true">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">{{ "label.email" | translate }}</label>
+                            <input type="text" class="form-control" name="a3" [ngModel]="emailComponenteSelected" 
+                                [disabled]="true">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">{{ "label.phone-number" | translate }}</label>
+                            <input type="text" class="form-control" name="a4" [ngModel]="numTelefonoComponenteSelected" 
+                                [disabled]="true">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">{{ "label.company-name" | translate }}</label>
+                            <input type="text" class="form-control" name="a5" [ngModel]="companyNameComponenteSelected" 
+                                [disabled]="true">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label">{{ "label.role" | translate }}</label>
+                            <select class="custom-select" *ngIf="canUpdateTeamComponentRole()" 
+                                    [(ngModel)]="roleComponenteSelected" name="a9">
+                                <option *ngFor="let role of allRoles" [value]="role">
+                                    {{ role | ruoloTeamTranslate}}
+                                </option>
+                            </select>
+
+                            <input type="text" class="form-control" name="a8" *ngIf="!canUpdateTeamComponentRole()"
+                                [value]="roleComponenteSelected | ruoloTeamTranslate" [disabled]="true">
+
+                        </div>
+                        
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="updateOperationInProgress">
+                    {{ "general.button.close" | translate }}
+                </button>
+                <button type="button" class="btn btn-primary" (click)="updateCurrentSelectedTeamComponentRole()" 
+                        [disabled]="updateOperationInProgress" *ngIf="canUpdateTeamComponentRole()">
+                    <span class="spinner-button-border float-left" *ngIf="updateOperationInProgress"></span>
+                    {{ "general.button.update" | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                <i class="fa fa-users" aria-hidden="true"></i> {{ "label.team-component" | translate }}
+                <a href="javascript:void(0)" title="{{ 'gestione-commessa.add-new-team-component' | translate }}" class="refresh-link mr-1"
+                    *ngIf="hasUpdatePermission()" (click)="openAddDialog()">
+                                <i class="fa fa-plus"></i>
+                </a>
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshTeamMembers()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.name'"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.name" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.surname'"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.surname" | translate }}
+                                </th>
+
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.email'"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.email" | translate }}
+                                </th>
+
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.phoneNumber'"
+                                  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                  {{ "label.phone-number" | translate }}
+                                </th>
+
+                                <th>
+                                    {{ "label.role" | translate }}
+                                </th>
+
+                                <th>
+                                  {{ "label.company-name" | translate }}
+                                </th>
+                                
+                                <th>
+                                    {{ "general.azioni" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="componentiTeam.length==0">
+                                <td colspan="8" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let componente of componentiTeam">
+                                <td>{{ getNomeComponente(componente) }}</td>
+                                <td>{{ getCognomeComponente(componente) }}</td>
+                                <td>{{ getEmailComponente(componente) }}</td>
+                                <td>{{ getNumeroComponente(componente) }}</td>
+                                <td>{{ componente.ruolo | ruoloTeamTranslate}}</td>
+                                <td>{{ getNomeAziendaComponente(componente) }}</td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="deleteComponente(componente)"
+                                        *ngIf="canDeleteComponente(componente)" title="{{ 'label.delete' | translate}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button class="btn btn-secondary btn-sm add-cursor-pointer" type="button" (click)="openDetails(componente)"
+                                        *ngIf="authoritiesService.hasAuthority(['TEAM_INCARICO_UPDATE'])" title="{{ 'general.action.edit' | translate}}">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                        [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                        (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <!-- Example DataTables Card-->
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
+            <ng-template #collapseAreaContent>
+
+                <app-custom-filters [filtersElements]="teamCommessaFilters" (filtersChanged)="filtersChanged($event)">
+
+                </app-custom-filters>
+                
+                </ng-template>
+            </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-add-team-member-modal #addMemberModalRef 
+            *ngIf="hasUpdatePermission()" (onSaveClick)="onAddNewMembers($event)">
+
+</app-add-team-member-modal>
+

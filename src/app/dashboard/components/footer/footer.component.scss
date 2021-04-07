@@ -1,0 +1,32 @@
+@import "../../../../styles.scss"; 
+
+footer.sticky-footer {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 56px;
+    background-color: #fff;
+    line-height: 55px; 
+}
+
+footer.sticky-footer small{
+    color: $stronger-primary !important;
+}
+
+@media(max-width: 350px){
+    footer.sticky-footer small{
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 992px) {
+    footer.sticky-footer {
+      width: calc(100% - 200px);
+      width: -o-calc(100% -200px); /* opera */
+      width: -webkit-calc(100% -200px); /* google, safari */
+      width: -moz-calc(100% -200px); /* firefox */
+      margin-left: 200px;
+
+ } }
+

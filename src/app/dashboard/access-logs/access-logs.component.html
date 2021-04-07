@@ -1,0 +1,80 @@
+
+<h3 class="mt-2 mb-3">
+    <i class="fa fa-tasks" aria-hidden="true"></i> {{ "logUserAccess.table-title" | translate }}
+</h3>
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshAccesLogs()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'successfullyLoginLogsPK.userAgent'"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "logUserAccess.table-user-agent" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'successfullyLoginLogsPK.loginDate'"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "logUserAccess.table-access-date" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'successfullyLoginLogsPK.ip'" 
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "logUserAccess.table-ip" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="userAccess.length==0">
+                                <td colspan="3" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let access of userAccess">
+                                <td>{{ access.userAgent == null ? "" : access.userAgent }}</td>
+                                <td>{{ access.loginDate | dateFormat }}</td>
+                                <td>{{ access.ip == null ? "" : access.ip }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                    (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
+            <ng-template #collapseAreaContent>
+
+                    <app-custom-filters [filterChangeOnApply]="true" [filtersElements]="accessLogsFilter" (filtersChanged)="filtersChanged($event)">
+
+                    </app-custom-filters>
+                        
+
+                </ng-template>
+            </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+</div>

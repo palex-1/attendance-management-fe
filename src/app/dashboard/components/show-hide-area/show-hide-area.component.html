@@ -1,0 +1,29 @@
+<div class="card mb-5">
+    <div class="card-header">
+      <i [class]="iconClassInternal" aria-hidden="true"></i> {{ "label.filters" | translate }}
+      <a *ngIf="checkScreen() && areCollapsedAreas" class="show-hide-button"
+        (click)="uncollapseAreas()">
+        {{ "button.show" | translate }}
+      </a>
+      <a *ngIf="checkScreen() && !areCollapsedAreas" class="show-hide-button"
+        (click)="collapseAreas()">
+        {{ "button.hide" | translate }}
+      </a>
+
+    </div>
+
+    <div class="collapse show" #collapseArea>
+      <div class="card-body">
+        
+          <ng-container *ngTemplateOutlet="collapseAreaContent ? collapseAreaContent: defaultAreaContent">
+
+          </ng-container>
+
+          <ng-template #defaultAreaContent>
+            <div></div>
+          </ng-template>
+
+      </div>
+    </div>
+
+  </div>

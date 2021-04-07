@@ -1,0 +1,335 @@
+
+
+
+<app-custom-collapse [title]="'label.usernameoremail' | translate " [collapseAreaContent]="usernameDataCollapseArea" class="mb-3">
+    <ng-template #usernameDataCollapseArea>
+        <form>
+                              
+        
+          <div class="row">
+              <div class="col-md-5">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.usernameoremail" | translate }}*</label>
+                      <input type="text" class="form-control" maxlength="255" name="pi1refd" [(ngModel)]="usernameField" [disabled]="!canEditUserData">
+                  </div>
+              </div>
+          
+
+          </div>
+
+          
+          <small>*{{ "generic.required-field" | translate }}</small>
+          <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="updateUsernameInfo()"
+                        [disabled]="updatingUsernameInfo" *ngIf="canEditUserData">
+                  <span  class="spinner-button-border float-left" *ngIf="updatingUsernameInfo"></span>
+              {{ "label.button-update" | translate }}
+          </button>
+          <div class="clearfix"></div>
+      </form>
+    </ng-template>
+</app-custom-collapse>
+
+
+
+
+
+
+
+
+
+
+
+
+<app-custom-collapse [title]="'label.basic-data' | translate " [collapseAreaContent]="basicDataCollapseArea" class="mb-3">
+    <ng-template #basicDataCollapseArea>
+        <form>
+                              
+        
+          <div class="row">
+              <div class="col-md-5">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.name" | translate }}*</label>
+                      <input type="text" class="form-control" maxlength="50" name="pi1"   [(ngModel)]="nameField" [disabled]="!canEditUserData">
+                  </div>
+              </div>
+              <div class="col-md-5">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.surname" | translate }}*</label>
+                      <input type="text" class="form-control" maxlength="50" name="pi2"  [disabled]="!canEditUserData" 
+                                    [(ngModel)]="surnameField">
+                  </div>
+              </div>
+          
+              <div class="form-group col-md-2">
+                  <label class="control-label">{{ "label.sex" | translate }} *</label>
+                  <select class="form-control" [(ngModel)]="sexField" name="sexFiels5628" [disabled]="!canEditUserData">
+                      <option value="" selected></option>
+                      <option value="M">{{ "label.male" | translate }}</option>
+                      <option value="F">{{ "label.female" | translate }}</option>
+                  </select>
+              </div>
+          
+              <div class="col-md-8">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.cf" | translate }}</label>
+                      <input type="text" class="form-control text-to-uppercase" maxlength="16" name="pi3" 
+                          [disabled]="!canEditUserData" [(ngModel)]="cfField">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.birth-date" | translate }}*</label>
+                        
+                      <app-monthpicker tooltip="{{ 'label.birth-date' | translate }}" [initialValue]="birthDate"
+                                (onSelectDate)="bornDateChanged($event)" [isAMonthpicker]="false"  [disabled]="!canEditUserData">
+                      </app-monthpicker>
+                  </div>
+              </div>
+
+          
+              <div class="col-md-8">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.telephone" | translate }}</label>
+                      <input type="text" class="form-control" maxlength="20" name="pi6" [disabled]="!canEditUserData"
+                              [(ngModel)]="phoneNumberField">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.hiring-date" | translate }}*</label>
+                      <app-monthpicker tooltip="{{ 'label.hiring-date' | translate }}" [initialValue]="dateOfEmployment"
+                                (onSelectDate)="employmentDateChanged($event)" [isAMonthpicker]="false"  [disabled]="!canEditUserData">
+                      </app-monthpicker>
+                  </div>
+              </div>
+          </div>
+
+
+          
+          
+          <small>*{{ "generic.required-field" | translate }}</small>
+          <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="updatePersonalInfo()"
+                        [disabled]="updatingPersonalInfo" *ngIf="canEditUserData">
+                  <span  class="spinner-button-border float-left" *ngIf="updatingPersonalInfo"></span>
+              {{ "label.button-update" | translate }}
+          </button>
+          <div class="clearfix"></div>
+      </form>
+    </ng-template>
+</app-custom-collapse>
+
+
+
+
+
+
+
+
+<app-custom-collapse [title]="'label.domicile' | translate " [collapseAreaContent]="domicileCollapseArea">
+  <ng-template #domicileCollapseArea>
+      <form>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.address" | translate }}*</label>
+                      <input type="text" class="form-control" maxlength="255" name="qq15sdfwes" [disabled]="!canEditUserData" 
+                          [(ngModel)]="streetDomicileField">
+                  </div>
+              </div>
+          </div>
+          
+
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.city" | translate }}*</label>
+                      <input type="text" class="form-control" name="qq14" maxlength="255" [disabled]="!canEditUserData"
+                       [(ngModel)]="cityDomicileField">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.province" | translate }}*</label>
+                      <input type="text" name="qq1534" class="form-control" maxlength="255" [disabled]="!canEditUserData"
+                        [(ngModel)]="provinceDomicileField">
+                  </div>
+              </div>
+          </div>
+
+          
+          <div class="row">
+              <div class="col-md-8">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.county" | translate }}*</label>
+                      <input type="text" class="form-control" name="qq15" maxlength="255" [disabled]="!canEditUserData"
+                          [(ngModel)]="nationDomicileField">
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="form-group form-black label-floating is-empty">
+                      <label class="control-label">{{ "label.zip-code" | translate }}*</label>
+                      <input type="text" class="form-control" name="qq16" maxlength="10" [disabled]="!canEditUserData"
+                        [(ngModel)]="zipCodeDomicileField">
+                  </div>
+              </div>
+          </div>
+
+
+          <small>*{{ "generic.required-field" | translate }}</small>
+          <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" 
+                        (click)="updateDomicile()" [disabled]="updatingDomicile" *ngIf="canEditUserData">
+              <span  class="spinner-button-border float-left" *ngIf="updatingDomicile"></span>
+              {{ "label.button-update" | translate }}
+          </button>
+          <div class="clearfix"></div>
+      </form>
+  </ng-template>
+</app-custom-collapse>
+
+
+
+
+
+
+
+
+
+<app-custom-collapse [title]="'label.residence' | translate " [collapseAreaContent]="residenceCollapseArea">
+  <ng-template #residenceCollapseArea>
+      <form>
+          <div class="row">
+            <div class="col-md-12">
+                <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">{{ "label.address" | translate }}*</label>
+                    <input type="text" class="form-control" maxlength="255" name="qq28" [disabled]="!canEditUserData"
+                         [(ngModel)]="streetResidenceField">
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">{{ "label.city" | translate }}*</label>
+                    <input type="text" class="form-control" maxlength="255" name="qq21" [disabled]="!canEditUserData"
+                        [(ngModel)]="cityResidenceField">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">{{ "label.province" | translate }}*</label>
+                    <input type="text" class="form-control" maxlength="255" name="qq22" [disabled]="!canEditUserData"
+                          [(ngModel)]="provinceResidenceField">
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">{{ "label.county" | translate }}*</label>
+                    <input type="text" class="form-control" maxlength="255" name="qq23" [disabled]="!canEditUserData"
+                          [(ngModel)]="nationResidenceField">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">{{ "label.zip-code" | translate }}*</label>
+                    <input type="text" class="form-control" maxlength="10" name="qq24" [disabled]="!canEditUserData"
+                           [(ngModel)]="zipCodeResidenceField">
+                </div>
+            </div>
+        </div>
+
+
+           <small>*{{ "generic.required-field" | translate }}</small> 
+            <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" *ngIf="canEditUserData"
+                          [disabled]="updatingResidence" (click)="updateResidence()">
+                <span  class="spinner-button-border float-left" *ngIf="updatingResidence"></span>
+                {{ "label.button-update" | translate }}
+            </button>
+            <div class="clearfix"></div>
+        </form>
+  </ng-template>
+</app-custom-collapse>
+
+
+
+
+
+
+
+
+<app-custom-collapse [title]="'label.other-infos' | translate " [collapseAreaContent]="otherInfoCollapseArea">
+    <ng-template #otherInfoCollapseArea>
+        <form>
+            <div class="row">
+              <div class="col-md-6">
+                  <label class="control-label">{{ "label.level" | translate }} *</label>
+                  <select class="form-control" [(ngModel)]="levelIdField" name="786218" [disabled]="!canEditUserData">
+                      <option value="" selected></option>
+                      <option *ngFor="let elem of levels" [ngValue]="elem.id">
+                        {{ elem.level }}
+                      </option>
+                  </select>
+
+              </div>
+          
+  
+              <div class="form-group col-md-6">
+                  <label class="control-label">{{ "label.company" | translate }} *</label>
+                  <select class="form-control" [(ngModel)]="companyIdField" name="companyIdField345" [disabled]="!canEditUserData">
+                      <option value="" selected></option>
+                      <option *ngFor="let elem of companies" [ngValue]="elem.id">
+                        {{ elem.name }}
+                      </option>
+                  </select>
+              </div>
+
+              <div class="form-group col-md-6">
+                    <label class="control-label">{{ "label.hours-to-work" | translate }} *</label>
+                    <input type="number" class="form-control" name="878hgfg5jh" [disabled]="!canEditUserData"
+                          [(ngModel)]="workedHoursField">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label">{{ "label.remaining-vacation-days" | translate }} *</label>
+                    <input type="number" class="form-control" name="jhbao19ibv" [disabled]="!canEditUserData"
+                          [(ngModel)]="vacationDaysField" step="0.01">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label">{{ "label.remaining-leave-hours" | translate }} *</label>
+                    <input type="number" class="form-control" name="lpao92174vfd" [disabled]="!canEditUserData"
+                          [(ngModel)]="leaveHoursField">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label">{{ "label.employment-office" | translate }}</label>
+                    <select class="form-control" [(ngModel)]="employmentOfficeField" name="lkdjs982173mssd8923">
+                        <option *ngFor="let elem of employmentOffices" [ngValue]="elem">
+                          {{ elem }}
+                        </option>
+                    </select>
+                </div>
+
+          </div> 
+  
+  
+             <small class="d-block">*{{ "generic.required-field" | translate }}</small> 
+             <small class="d-block">{{ "message.note-vacation-days-schedule" | translate }}</small> 
+             
+              <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" *ngIf="canEditUserData"
+                            [disabled]="updatingOtherInfo" (click)="updateOtherInfo()">
+                  <span  class="spinner-button-border float-left" *ngIf="updatingOtherInfo"></span>
+                  {{ "label.button-update" | translate }}
+              </button>
+              <div class="clearfix"></div>
+          </form>
+    </ng-template>
+  </app-custom-collapse>
+
+
+

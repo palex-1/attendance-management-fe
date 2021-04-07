@@ -1,0 +1,16 @@
+<div class="card order-card" #cardRef>
+        <div class="card-block">
+            <h6 class="m-b-20 card-title" *ngIf="cardTitle!=null">
+                <i *ngIf="titleIconClass!=null" class="fa {{titleIconClass}}"></i> {{cardTitle}}
+            </h6>
+            <h2 class="text-right">
+              <i *ngIf="iconClass!=null" class="fa {{iconClass}} float-left"></i>
+              <span>
+                <b class="d-block" *ngIf="leftIconValue!=null">{{leftIconValue}}</b>
+                <span class="float-right subtitle-class" *ngIf="subtitle!=null">{{subtitle}}</span>
+              </span>
+              
+            </h2>
+        </div>
+    </div>
+    

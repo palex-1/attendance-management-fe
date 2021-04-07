@@ -1,0 +1,141 @@
+@import "../../../../styles.scss"; 
+
+.dropdown-content {
+    position: absolute;
+    background-color: white;
+    max-width: 280px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+  }
+
+.dropdown-list{
+    width: 100%;
+    position: relative;
+}
+.inner-list{
+    max-height: 257px;
+    min-width: 240px;
+    position: absolute;
+}
+
+
+input:focus{
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.datepicker td span {
+    display: block;
+    width: 51px;
+    height: 54px;
+    line-height: 54px;
+    float: left;
+    margin: 2px;
+    cursor: pointer;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.table-condensed th {
+    padding: 4px 5px;
+}
+.table-condensed td{
+    padding: 0px;
+}
+.datepicker td, .datepicker th {
+    text-align: center;
+    max-width: 20px;
+    width: 20px;
+    height: 25px;
+    max-height: 25px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.datepicker th.dow{
+    max-width: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.datepicker {
+    width: 230px;
+}
+
+.datepicker th.next, .datepicker th.prev {
+    font-size: 21px;
+}
+
+.datepicker thead{
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.datepicker {
+    top: 0;
+    left: 0;
+    padding: 4px 5px;
+    margin-top: 1px;
+}
+
+.datepicker table {
+    width: 100%;
+    min-width: 230px;
+    margin: 0;
+    border-spacing: 0;
+}
+
+
+.datepicker th.switch {
+    width: 145px;
+}
+
+
+.datepicker thead tr:first-child{
+    cursor: pointer;
+}
+.datepicker thead tr:first-child th:hover {
+    background: #eeeeee;
+}
+
+.datepicker td span:hover {
+    background: #eeeeee;
+}
+
+.datepicker td span.active{
+    background-color: $primary;
+    color: white;
+}
+
+.day:hover{
+    background-color: $stronger-primary;
+    color: white !important;;
+}
+.day:active{
+    background-color: $stronger-primary;
+    color: white !important;;
+}
+.active-day{
+    background-color: $primary;
+    color: white !important;
+}
+
+.day{
+    cursor: pointer;
+}
+.new{
+    color:gray;
+}
+.old {
+    color:gray;
+}

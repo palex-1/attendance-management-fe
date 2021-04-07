@@ -1,0 +1,245 @@
+<div class="modal fade" #expenseDetailsModal tabindex="-1" role="dialog" aria-labelledby="expenseDetailsModal"
+    aria-hidden="true">
+    <div class="modal-dialog moda-md" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5 class="modal-title">{{ "label.expense-details" | translate }}</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label class="col-form-label">{{ "label.description" | translate }}</label>
+                        <textarea class="form-control" [(ngModel)]="descriptionOfCurrentSelectedExpense"
+                            style="height: 190px" readonly>
+
+                        </textarea>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="col-form-label">{{ "label.amount" | translate }}</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control"
+                                [(ngModel)]="amountOfCurrentSelectedExpense" readonly>
+                            <div class="input-group-append">
+                                <span class="input-group-text">{{ "default.currency" | translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <div class="float-left">
+                            <b>{{ acceptedOfCurrentSelectedExpense==null ? ('label.not-processed'| translate): 
+                                    acceptedOfCurrentSelectedExpense==true ? ('label.accepted' | translate) : 
+                                    ('label.refused'| translate) }}
+                            </b>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-1" data-dismiss="modal">
+                    {{ "general.button.close" | translate }}
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<h3 class="mt-2 mb-3">
+    <a class="go-back-button mr-2" [routerLink]="['/dashboard/myExpenseReport']" title="{{ 'label.back' | translate }}">
+        <i class="fas fa-caret-square-left"></i>
+    </a>
+
+    <span *ngIf="!creationModeEnabled">{{ "label.expense-report-details" | translate }}</span>
+    <span *ngIf="creationModeEnabled">{{ "label.new-expense-report" | translate }}</span>
+</h3>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="form-group col-md-6 col-xl-4">
+                <label class="col-form-label">{{ "label.title" | translate }} *</label>
+                <input type="text" class="form-control" [(ngModel)]="title" maxlength="1500">
+            </div>
+
+            <div class="form-group col-md-6 col-xl-4">
+                <label class="col-form-label">{{ "label.date" | translate }} *</label>
+                <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}"
+                    [initialValue]="dateOfExpence" (onSelectDate)="onChangeDateOfExpence($event)"
+                    [isAMonthpicker]="false">
+                </app-monthpicker>
+            </div>
+
+            <div class="form-group col-md-6 col-xl-4">
+                <label class="col-form-label">{{ "label.location" | translate }} *</label>
+                <input type="text" class="form-control" [(ngModel)]="location" maxlength="1500">
+            </div>
+
+            <div class="form-group col-md-6 col-xl-4" *ngIf="!creationModeEnabled">
+                <label class="col-form-label">{{ "label.status" | translate }}</label>
+                <input type="text" class="form-control" [value]="status | expenseReportStatusPipe" disabled>
+            </div>
+
+            <div class="form-group col-12" *ngIf="!creationModeEnabled && isProcessedCurrentExpense">
+                <label class="col-form-label">{{ "label.notes" | translate }} *</label>
+                <textarea class="form-control" [value]="notes" style="height: 190px">
+
+                </textarea>
+            </div>
+
+
+
+            <div class="col-md-12" *ngIf="!creationModeEnabled && !isBlockedEditing">
+                <button class="btn btn-primary float-right mt-2 d-block" (click)="updateReportDetails()">
+                    <span class="spinner-button-border float-left" *ngIf="updatingReportInProgress"></span>
+                    {{ "label.save" | translate }}
+                </button>
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="row">
+            <div class="col-12 mt-3" *ngIf="!creationModeEnabled && !isBlockedEditing">
+                <h5>{{ "label.add-expense" | translate }}:</h5>
+            </div>
+
+            <div class="col-md-12" *ngIf="!isBlockedEditing">
+                <div class="row">
+                    <div class="form-group col-md-8">
+                        <label class="col-form-label">{{ "label.description" | translate }} *</label>
+                        <textarea class="form-control" [(ngModel)]="description" maxlength="10000" style="height: 90px">
+
+                                    </textarea>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="col-form-label">{{ "label.amount" | translate }} *</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" [(ngModel)]="amount">
+                            <div class="input-group-append">
+                                <span class="input-group-text">{{ "default.currency" | translate }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="col-form-label">{{ "label.receipt" | translate }} *</label>
+                        <app-file-input-upload #expenseElemFileInput [hideActionsButtons]="true" [multiFile]="false"
+                            (onFileChoose)="fileChoosedOnDetails($event)" fileAccepted=".pdf,.jpg,.jpeg,.jfif,.png"
+                            [responsive]="true" [progress]="fileProgress" [showSupportedExtLabel]="true">
+                        </app-file-input-upload>
+                    </div>
+
+                    <!-- <div class="col-md-4"></div> -->
+
+                    <div class="col-md-12" *ngIf="!creationModeEnabled">
+                        <button class="btn btn-primary float-right mt-2 d-block" (click)="addNewExpense()">
+                            <span class="spinner-button-border float-left" *ngIf="addingExpenseInProgress"></span>
+                            {{ "label.add" | translate }}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-12" *ngIf="creationModeEnabled">
+                <button class="btn btn-primary float-right mt-2 d-block" (click)="createExpenseReport()">
+                    <span class="spinner-button-border float-left" *ngIf="creatingExpenseInProgress"></span>
+                    {{ "label.create" | translate }}
+                </button>
+            </div>
+
+
+
+            <div class="col-md-12 mt-2" *ngIf="!creationModeEnabled">
+                <b>{{ "label.expenses" | translate }}:</b>
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {{ "label.description" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.amount" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.accepted" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.actions" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="expenses.length==0">
+                                <td colspan="5" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+
+                            <tr *ngFor="let elem of expenses">
+                                <td>{{ elem.description | ellipsesDropperPipe: 70 }}</td>
+                                <td>{{ elem.amount }} {{ "default.currency" | translate }}</td>
+                                <td>
+                                    {{ elem.accepted==null ? ('label.not-processed' | translate): (elem.accepted | trueFalsePipe) }}
+                                </td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="downloadExpenseElement(elem)"
+                                        title="{{ 'label.download' | translate}}">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="openDetailsDialog(elem)" title="{{ 'label.open-details' | translate}}">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+
+                                    <button *ngIf="!isBlockedEditing"
+                                        class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="deleteExpenseElement(elem)" title="{{ 'label.delete' | translate}}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>

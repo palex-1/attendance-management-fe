@@ -1,0 +1,172 @@
+<h3 class="mt-2 mb-3">
+    <i class="fas fa-clipboard-list"></i> {{ "label.my-expense-report" | translate }}
+</h3>
+
+
+
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+
+                <a href="javascript:void(0)" title="{{ 'label.create-new-report-expense' | translate }}"
+                    class="refresh-link mr-1" (click)="createNewReport()">
+                    <i class="fa fa-plus"></i>
+                </a>
+
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshReports()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'title'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.title" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'dateOfExpence'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.date" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'amount'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.amount" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'amountAccepted'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.accepted-amount" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'status'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.status" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'location'" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.location" | translate }}
+                                </th>
+                                <th>
+                                    {{ "label.actions" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="reports.length==0">
+                                <td colspan="8" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of reports">
+                                <td>{{ elem.title | ellipsesDropperPipe: 80 }}</td>
+                                <td>{{ elem.dateOfExpence | dateFormat:'short' }}</td>
+                                <td>{{ elem.amount }}</td>
+                                <td>{{ elem.amountAccepted }}</td>
+                                <td>{{ elem.status | expenseReportStatusPipe }}</td>
+                                <td>{{ elem.location | ellipsesDropperPipe: 70 }}</td>
+
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="openExpenseDetails(elem)" title="{{ 'label.details' | translate}}">
+                                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="delete(elem)" *ngIf="canBeDeleted(elem)"
+                                        title="{{ 'label.delete' | translate}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()"
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]"
+                    (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContentMY_EXP">
+            <ng-template #collapseAreaContentMY_EXP>
+                <div class="filter-table-form-container">
+
+                    <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                        <div class="row">
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label class="col-form-label">{{ "label.title" | translate }}</label>
+                                <input type="text" class="form-control" name="klsdj9r87837bs" [(ngModel)]="titleFilter">
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label class="col-form-label">{{ "label.location" | translate }}</label>
+                                <input type="text" class="form-control" name="xcaouer9732wq"
+                                    [(ngModel)]="locationFilter">
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label class="col-form-label">{{ "label.status" | translate }}</label>
+                                <select class="form-control" [(ngModel)]="statusFilter" name="ksdjhfr807la927">
+                                    <option *ngFor="let status of allStatuses" [ngValue]="status">
+                                        {{ status | expenseReportStatusPipe }}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.date-from" | translate }}</label>
+                                <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}"
+                                    [initialValue]="dateFromFilter" (onSelectDate)="onChangeDateFromFilter($event)"
+                                    [isAMonthpicker]="false">
+                                </app-monthpicker>
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.date-to" | translate }}</label>
+                                <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}"
+                                    [initialValue]="dateToFilter" (onSelectDate)="onChangeDateToFilter($event)"
+                                    [isAMonthpicker]="false">
+                                </app-monthpicker>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                            {{ "button.clear-all" | translate }}
+                        </button>
+                        <button type="submit" class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case"
+                            (click)="filtersChanged()">
+                            {{ "label.apply" | translate }}
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+            </ng-template>
+        </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+</div>

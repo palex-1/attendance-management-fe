@@ -1,0 +1,30 @@
+.invalid-feedback {
+    display: block;
+    position: absolute;
+    margin-top: 0.1rem;
+}
+
+.invalid-input-custom {
+    border-color: #dc3545;
+}
+
+select.invalid-input-custom::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #dc3545;
+}
+
+select.invalid-input-custom::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #dc3545;
+}
+select.invalid-input-custom:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #dc3545;
+}
+select.invalid-input-custom::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #dc3545;
+}
+select.invalid-input-custom:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #dc3545;
+}

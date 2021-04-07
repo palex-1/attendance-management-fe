@@ -1,0 +1,31 @@
+<h3 class="mt-2 mb-3">
+  <i class="far fa-file-alt"></i> {{ "label.personal-documents" | translate }}
+</h3>
+
+<ul class="nav nav-tabs">
+
+  <li class="nav-item">
+    <a class="nav-link active" href="#cedolino-tab-id" aria-selected="true" role="tab" 
+        data-toggle="tab">
+      {{ "label.paychecks" | translate }}
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="#personal-document-id-tab" aria-selected="false" role="tab" data-toggle="tab">
+      {{ "label.documents" | translate }}
+    </a>
+  </li>
+
+</ul>
+
+
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="cedolino-tab-id" role="tabpanel" aria-labelledby="cedolino-tab-id">
+    <app-my-paychecks></app-my-paychecks>
+  </div>
+
+  <div class="tab-pane fade" id="personal-document-id-tab" role="tabpanel" aria-labelledby="personal-document-id-tab">
+    <app-my-personal-documents></app-my-personal-documents>
+  </div>
+</div>

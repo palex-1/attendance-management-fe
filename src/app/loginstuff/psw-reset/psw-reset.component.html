@@ -1,0 +1,94 @@
+<!--   RECOVERY first page -->
+<div class="theme-overlay wrapper" *ngIf="isResetPasswordCompleted() == false">
+        
+    
+  <form class="form-forgot-pass"  noavalidate #form="ngForm" (ngSubmit)="resetPassword(form)">  
+           
+      <div class="informations">
+          <h2>{{ "pswreset.reset-title" | translate }}</h2>
+          <p>{{ "pswreset.reset-message" | translate }}</p>
+          
+      </div>
+      
+      
+      <div class="reset-error" *ngIf="showAuthorizationTokenErrorMessage()" >
+              {{ "pswreset.token-error" | translate }}
+      </div>
+      
+      <div class="reset-error" *ngIf="showPasswordDoNotMatchError()" >
+              {{ "pswreset.password-do-not-match-error" | translate }}
+      </div>
+
+      <div class="reset-error" *ngIf="showPasswordInvalidError()" >
+          {{ "pswreset.invalid-password-reset" | translate }}
+      </div>
+
+      <div class="reset-error" *ngIf="showServiceUnavailableError()" >
+        {{ "pswreset.service-unavailable" | translate }}
+      </div>
+
+      <div class="reset-error" *ngIf="showPasswordAlreadyUsedMessage()" >
+        {{ "pswreset.password-already-used" | translate }}
+      </div>
+        
+      <div class="reset-error" *ngIf="showInternalServerError()" >
+          {{ "pswrecovery.internal-error" | translate }}
+      </div>
+
+
+      <input type="password" class="form-field" name="password" [(ngModel)]="password" placeholder="{{ 'pswreset.insert-password-field' | translate }}"/>
+      
+      <input type="password" class="form-field" name="repeat_password" [(ngModel)]="repeat_password" placeholder="{{ 'pswreset.inser-repeat-password-field' | translate }}"/>
+
+   
+        
+      <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" [disabled]="isPasswordResetInProgress()">
+          <div  class="button-loader" *ngIf="isPasswordResetInProgress()"></div>
+          <span *ngIf="!isPasswordResetInProgress()">{{ "pswreset.reset-button" | translate }}</span>
+      </button>
+  
+      <section id="button-sections">
+          <p><a href="javascript:void(0)" (click)="goToLogin()"> {{ "pswreset.back-to-login" | translate }} </a></p>
+          
+  </section>
+    
+  </form>
+  
+
+  
+  <div class="login-info">{{ "generic.copyright-note" | translate }}</div>
+  
+</div>
+  
+  
+  
+  
+      
+  <!--   RECOVERY RESULT page -->
+  
+  
+  <div class="theme-overlay wrapper" *ngIf="isResetPasswordCompleted()">
+          
+  
+      <form class="form-forgot-pass">  
+               
+  
+        <!--<h2 class="form-signin-heading">Please login</h2>-->
+  
+          <div class="informations">
+              <h2>{{ "pswreset.updated-credential" | translate }}</h2>
+              <hr>
+              <p>{{ "pswreset.reset-completed-instructions" | translate }}</p>
+              <hr>
+          </div>
+          
+  
+          <section id="button-sections">
+              <p><a routerLink="/login">{{ "label.go-to-login" | translate }} </a></p>
+          </section>
+        
+      </form>
+  
+      <div class="login-info"> {{ "generic.copyright-note" | translate }} </div>
+  
+    </div>

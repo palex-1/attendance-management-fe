@@ -1,0 +1,87 @@
+<!--   RECOVERY first page -->
+<div class="theme-overlay wrapper" *ngIf="isResetPasswordCompleted() == false">
+        
+    
+    <form class="form-forgot-pass"  noavalidate #form="ngForm" (ngSubmit)="recoverPasswordUsingEmail(form)">  
+             
+        <div class="informations">
+            <h2>{{ "pswrecovery.reset-title" | translate }}</h2>
+            <p>{{ "pswrecovery.reset-message" | translate }}</p>
+            
+        </div>
+        
+        
+        <div class="reset-error" *ngIf="isNotValidEmailMessage()" >
+                {{ "pswrecovery.email-error" | translate }}
+        </div>
+        
+        <div class="reset-error" *ngIf="thereAreConnectionErrors()" >
+                {{ "pswrecovery.connection-error" | translate }}
+        </div>
+        
+        <div class="reset-error" *ngIf="showTooManyRequestErrors()" >
+                {{ "pswrecovery.too-many-request" | translate }}
+        </div>
+
+        <div class="reset-error" *ngIf="showInternalError()" >
+                {{ "pswrecovery.internal-error" | translate }}
+        </div>
+        
+        
+        
+
+
+        <div class="form-group">
+            <input type="text" class="form-field" name="email" [(ngModel)]="email" placeholder="{{ 'pswrecovery.email-field' | translate }}"/>
+        </div>
+     
+          
+        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="isPasswordRecoveryInProgress()">
+            <div  class="button-loader" *ngIf="isPasswordRecoveryInProgress()"></div>
+            <span *ngIf="!isPasswordRecoveryInProgress()">{{ "pswrecovery.send-email" | translate }}</span>
+        </button>
+    
+        <section id="button-sections">
+            <p><a href="javascript:void(0)" (click)="goToLogin()"> {{ "pswreset.back-to-login" | translate }} </a></p>
+    </section>
+      
+    </form>
+    
+ 
+    
+    <div class="login-info">{{ "generic.copyright-note" | translate }}</div>
+    
+</div>
+    
+    
+    
+    
+        
+    <!--   RECOVERY RESULT page -->
+    
+    
+    <div class="theme-overlay wrapper" *ngIf="isResetPasswordCompleted()">
+            
+    
+        <form class="form-forgot-pass">  
+                 
+    
+          <!--<h2 class="form-signin-heading">Please login</h2>-->
+    
+            <div class="informations">
+                <h2>{{ "pswrecovery.check-email-message" | translate }}</h2>
+                <hr>
+                <p>{{ "pswrecovery.check-email-instructions" | translate }}</p>
+                <hr>
+            </div>
+            
+    
+            <section id="button-sections">
+                <p><a routerLink="/login"> {{ "pswrecovery.back-to-login" | translate }} </a></p>
+            </section>
+          
+        </form>
+    
+        <div class="login-info"> {{ "generic.copyright-note" | translate }} </div>
+    
+      </div>

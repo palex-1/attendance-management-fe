@@ -1,0 +1,56 @@
+<div class="theme-overlay wrapper">
+			
+
+  <form class="form-signin" noavalidate #form="ngForm" (ngSubmit)="authenticate(form)">  
+       
+    <div class="informations mt-2">
+      <h2><i class="fa fa-lock" aria-hidden="true"></i> {{ "label.otp-code" | translate }}</h2>
+      <p>{{ "message.otp-message" | translate }}</p>
+      
+    </div>
+
+
+    
+    <div class="auth-error" *ngIf="otpExpired">
+      {{ "message.otp-expired" | translate }}
+    </div>
+
+    <div class="auth-error" *ngIf="otpInvalid">
+      {{ "message.otp-invalid" | translate }}
+    </div>
+
+    <div class="auth-error" *ngIf="connectionError">
+      {{ "login.connection-error" | translate }}
+    </div>
+
+    <div class="auth-error" *ngIf="tooManyOTPRequestPerAccount">
+      {{ "message.too-many-otp-request" | translate }}
+    </div>
+    
+
+    <!--<h2 class="form-signin-heading">Please login</h2>-->
+
+    <input type="text" class="form-field" name="otp" placeholder="{{ 'label.otp' | translate }}"
+       [(ngModel)]="otp" required/>
+
+
+    <button class="btn btn-lg btn-primary btn-block mb-1" type="submit" [disabled]="areCurrentRequestingAuthentication"> 
+      <div  class="button-loader" *ngIf="areCurrentRequestingAuthentication"></div>
+      <span *ngIf="!areCurrentRequestingAuthentication">{{ "label.login" | translate }} </span>
+      
+    </button> 
+
+    <section id="button-sections">
+        <p>
+            {{ "message.otp-not-received" | translate }} 
+          <a href="javascript:void(0)" (click)="goToLoginPage()">
+            {{ "label.request-new-code" | translate }}
+          </a>
+        </p>
+  </section>
+    
+  </form>
+
+  <div class="login-info">{{ "generic.copyright-note" | translate }}</div>
+
+</div>

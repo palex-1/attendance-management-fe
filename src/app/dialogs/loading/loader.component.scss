@@ -1,0 +1,47 @@
+.loaderModal{
+    display: none;
+    z-index: 1029;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    background-color: #ffffffd1;
+    transition: opacity .50s linear;
+}
+
+.centered-div {
+  position: absolute;
+  margin: auto;
+  top: 0rem;
+  right: 0px;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: table;
+}
+
+.spinner-border{
+    width: 5rem;
+    height: 5rem;
+}
+
+.centered-div-content {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+@media(min-width: 992px){
+    .spinner-border{
+        // margin-left: 100px;
+    }
+}

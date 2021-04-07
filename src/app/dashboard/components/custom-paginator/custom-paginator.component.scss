@@ -1,0 +1,56 @@
+
+@import "../../../../styles.scss"; 
+
+
+.pagination-custom {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    margin-top: 0.25em;
+  }
+  
+  .pagination-custom a {
+    color: black;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: background-color .3s;
+    min-width: 2em;
+    min-height: 2em;
+    display: inline-block;
+}
+  
+  .pagination-custom a.active {
+    background-color: $primary;
+    color: white;
+  }
+
+  .pagination-custom a:hover:not(.active) {
+      background-color: #ddd;
+  }
+
+  .pagination-custom-number.active:hover{
+    background-color: $stronger_primary !important;
+  }
+
+.custom-select{
+    max-width: 176px;
+    margin-bottom: 0.25rem;
+}
+
+.pagelinks-ref{
+    display: inline-block;
+    margin-bottom: 0.25rem;
+    max-width: 100%;
+}
+
+.link-disabled {
+  outline: 0;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  cursor: default!important;
+}
+
+.link-disabled:hover{
+  background-color: unset !important;
+}

@@ -1,0 +1,117 @@
+@import "../../../styles.scss";
+
+.wrapper {
+    margin-top: 100px;
+    margin-bottom: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+@media (max-height: 700px) {
+ .wrapper {
+    margin-top: 40px;
+    margin-bottom: 80px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+} 
+
+
+
+.informations {
+    width: 100%;
+    font-size: 85%;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.reset-error {
+    width: 100%;
+    font-size: 85%;
+    color: crimson;
+    margin-bottom: 10px;
+  }
+
+
+.form-forgot-pass {
+max-width: 420px;
+padding: 15px 35px 30px;
+margin: 0 auto;
+background-color: #fff;
+border: 1px solid rgba(0, 0, 0, 0.1);
+box-shadow: 0 0 40px #3B3B3B;
+border-radius: 10px;
+}
+.form-forgot-pass .form-forgot-pass-heading,
+.form-forgot-pass {
+margin-bottom: 10px;
+}
+.form-forgot-pass {
+font-weight: normal;
+}
+.form-forgot-pass .form-control {
+position: center;
+font-size: 16px;
+height: auto;
+padding: 10px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+.form-forgot-pass .form-control:focus {
+z-index: 2;
+}
+.form-forgot-pass input[type="text"] {
+margin-bottom: 20px;
+margin-top: 10px;
+border-bottom-left-radius: 0;
+border-bottom-right-radius: 0;
+border: none;
+background-color: #fff;
+outline: none;
+border-bottom: 1px solid #ccc;
+font-size: 120%;
+width: 100%;
+
+}
+
+
+.form-forgot-pass button[type="submit"]{
+margin-top: 10px;
+cursor: pointer;
+}
+
+input:-webkit-autofill {
+box-shadow: 0 0 0 30px white inset;
+}
+
+.form-forgot-pass input:focus{
+border-bottom: 1px solid $primary;
+}
+
+.login-info {
+color: #fff;
+font-size: 85%;
+margin-top: 16px;
+text-align: center;
+}
+
+#button-sections{
+    margin-top: 20px;	
+}
+
+#button-sections a{
+    margin-top: 20px;
+    color: $primary;
+}
+
+.links_switch_username_email{
+    color: $primary;
+}
+
+
+
+.button-loader {
+	margin-left: auto;
+    margin-right: auto;
+}

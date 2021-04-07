@@ -1,0 +1,60 @@
+<div class="modal fade" #addSettingModal tabindex="-1" role="dialog" aria-labelledby="addSettingModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ "label.setting" | translate }}:</h5>
+            </div>
+            <div class="modal-body">
+      
+              <div *ngIf="showLoader" class="loader-for-modal">
+                  <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+                  </span> 
+              </div>
+      
+      
+              <form>
+                <div class="row">
+                  
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label">{{ "label.area" | translate }}</label>
+                        <input type="text" class="form-control" name="SKDGFOKHDS" [disabled]="disabledAreaEdit"
+                                    [(ngModel)]="area" maxlength="50">
+                    </div>
+      
+                    <div class="form-group col-md-6">
+                          <label class="col-form-label">{{ "label.key" | translate }}</label>
+                          <input type="text" class="form-control" name="jhg8O3W" [disabled]="disabledKeyEdit"
+                                    [(ngModel)]="key" maxlength="50">
+                    </div>
+      
+                    <div class="form-group col-md-12">
+                          <label class="col-form-label">{{ "label.value" | translate }}</label>
+                          <input type="text" class="form-control" name="jdsh87r23" [(ngModel)]="value">
+                    </div>
+      
+      
+                </div>
+                
+              </form>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="addOrUpdateOperationInProgress" 
+              (click)="closeDialog()">{{ "general.button.close" | translate }}</button>
+              
+              <button type="button" class="btn btn-primary" (click)="updateSetting()" [disabled]="addOrUpdateOperationInProgress" 
+                  *ngIf="editMode">
+                  <span class="spinner-button-border float-left" *ngIf="addOrUpdateOperationInProgress"></span>
+                  {{ "general.button.update" | translate }}
+              </button>
+      
+              <button type="button" class="btn btn-primary" (click)="addSetting()" [disabled]="addOrUpdateOperationInProgress" 
+                  *ngIf="createMode">
+                  <span class="spinner-button-border float-left" *ngIf="addOrUpdateOperationInProgress"></span>
+                  {{ "label.add" | translate }}
+              </button>
+      
+            </div>
+          </div>
+        </div>
+      </div>

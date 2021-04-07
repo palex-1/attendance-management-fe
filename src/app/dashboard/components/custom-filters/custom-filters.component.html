@@ -1,0 +1,44 @@
+<div class="filter-table-form-container">
+
+  <form #form="ngForm" (ngSubmit)="filterChanged()">
+    <div class="row">
+      <div class="form-group {{filtersColsStyle}}" *ngFor="let filter of filtersElements">
+
+        <label class="col-form-label">{{ filter.i18nKeyLabel | translate }}</label>
+
+        <input type="text" *ngIf="isTxtFilterType(filter)" class="form-control"
+          name="{{filter.name}}" [(ngModel)]="filter.value" (change)="filterChanged(filter)">
+
+
+
+        <select class="custom-select" *ngIf="isSelectFilterType(filter)" (change)="filterChanged(filter)"
+          [(ngModel)]="filter.value" name="{{filter.name}}">
+          <option *ngFor="let option of filter.options" [value]="option.label">
+            {{ option.label }}
+          </option>
+        </select>
+
+
+          <app-monthpicker *ngIf="isCalendarFilterType(filter)" placeholder="{{ 'general.date-placeholder' | translate }}" [initialValue]="filter.value"
+                    (onSelectDate)="onChangeDateFilter($event, filter)" [isAMonthpicker]="false" >
+          </app-monthpicker>
+
+
+      </div>
+
+    </div>
+
+
+  </form>
+
+  <div class="text-right">
+    <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+      {{ "button.clear-all" | translate }}
+    </button>
+    <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="applyFilters()" *ngIf="filterChangeOnApply">
+      {{ "label.apply" | translate }}
+    </button>
+  </div>
+
+
+</div>

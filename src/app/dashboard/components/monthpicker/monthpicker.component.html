@@ -1,0 +1,158 @@
+
+<div class="custom-dropdown" (clickOutside)="hideContentList()">
+
+    
+
+  <div class="input-with-icon">
+      <i class="fa fa-calendar"></i>
+      <input type="text" placeholder="{{placeholder}}" [(ngModel)]="inputValue" [disabled]="disabled"
+            class="form-control" (click)="showContentList()" (keyup)="onTypeValue()" (change)="inputValueChanged()">
+  </div>
+
+
+
+
+
+
+
+  <div class="dropdown-list" *ngIf="showContentListB">
+    <div class="inner-list dropdown-content">
+
+
+    <div class="datepicker">
+
+        
+        <div class="datepicker-days" style="display: block;" *ngIf="showDays">
+          <table class=" table-condensed">
+            <thead>
+              <tr>
+                <th class="prev" (click)="moveToPrevMonth()">‹</th>
+                <th colspan="5" class="switch" (click)="switchToMonthPicker()">
+                    <ng-container *ngIf="selectedMonth==0">{{ "label.jan" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==1">{{ "label.feb" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==2">{{ "label.mar" | translate }}</ng-container> 
+                    <ng-container *ngIf="selectedMonth==3">{{ "label.apr" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==4">{{ "label.may" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==5">{{ "label.jun" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==6">{{ "label.jul" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==7">{{ "label.aug" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==8">{{ "label.sep" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==9">{{ "label.oct" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==10">{{ "label.nov" | translate }}</ng-container>
+                    <ng-container *ngIf="selectedMonth==11">{{ "label.dec" | translate }}</ng-container>
+                    
+                    {{ selectedYear }}
+
+                </th>
+                <th class="next" (click)="moveToNextMonth()">›</th>
+              </tr>
+              <tr>
+                <th class="dow">{{ "label.mo" | translate }}</th>
+                <th class="dow">{{ "label.tw" | translate }}</th>
+                <th class="dow">{{ "label.we" | translate }}</th>
+                <th class="dow">{{ "label.th" | translate }}</th>
+                <th class="dow">{{ "label.fr" | translate }}</th>
+                <th class="dow">{{ "label.sa" | translate }}</th>
+                <th class="dow">{{ "label.su" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let week of currentWeekDays">
+                <td class="day" *ngFor="let day of week" [ngClass]="{'old': day.isOldMonth, 'new': day.isNewMonth, 
+                                          'active-day': isThisDaySelected(day)}" (click)="selectThisDay(day)">
+                  {{ day.value }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> 
+
+
+
+
+        <div class="datepicker-months" *ngIf="showMonth">
+          <table class="table-condensed">
+            <thead>
+              <tr>
+                <th class="prev" (click)="moveToPreviousYear()">‹</th>
+                <th colspan="5" class="switch" (click)="showYear()">{{selectedYear}}</th>
+                <th class="next" (click)="moveToNextYear()">›</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="7">
+                  <span [class]="selectedMonth==0 ? ' active':''" (click)="selectMonth(0)">
+                    {{ "label.jan" | translate }}
+                  </span>
+                  <span [class]="selectedMonth==1 ? ' active':''" (click)="selectMonth(1)">
+                    {{ "label.feb" | translate }}
+                  </span>
+                    <span [class]="selectedMonth==2 ? ' active':''" (click)="selectMonth(2)">
+                      {{ "label.mar" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==3 ? ' active':''" (click)="selectMonth(3)">
+                      {{ "label.apr" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==4 ? ' active':''" (click)="selectMonth(4)">
+                      {{ "label.may" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==5 ? ' active':''" (click)="selectMonth(5)">
+                      {{ "label.jun" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==6 ? ' active':''" (click)="selectMonth(6)">
+                      {{ "label.jul" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==7 ? ' active':''" (click)="selectMonth(7)">
+                      {{ "label.aug" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==8 ? ' active':''" (click)="selectMonth(8)">
+                      {{ "label.sep" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==9 ? ' active':''" (click)="selectMonth(9)">
+                      {{ "label.oct" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==10 ? ' active':''" (click)="selectMonth(10)">
+                      {{ "label.nov" | translate }}
+                    </span>
+                    <span [class]="selectedMonth==11 ? ' active':''" (click)="selectMonth(11)">
+                      {{ "label.dec" | translate }}
+                    </span>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="datepicker-years" *ngIf="!showMonth && !showDays">
+            <table class="table-condensed">
+              <thead>
+                <tr>
+                  <th class="prev" (click)="goToPrevYears()">‹</th>
+                  <th colspan="5" class="switch">{{firstYear}}-{{lastYear}}</th>
+                  <th class="next" (click)="goToNextYears()">›</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="7">
+                    <span *ngFor="let year of currentYearBlock" [class]="selectedYear==year ? 'active':''" (click)="selectYear(year)">{{year}}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
+    </div>
+      
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+</div>

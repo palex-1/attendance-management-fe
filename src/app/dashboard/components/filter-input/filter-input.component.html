@@ -1,0 +1,18 @@
+
+<div class="custom-dropdown" clickOutside (clickOutside)="hideContentList()">
+
+  <div class="input-with-icon">
+    <i class="fa fa-search" aria-hidden="true"></i>
+    <input type="text" placeholder="{{inputPlaceholder}}" [(ngModel)]="inputValue" 
+      (change)="filterElements()" (keyup)="filterElements()" class="form-control" (click)="showContentList()">
+  </div>
+  <div class="dropdown-list" *ngIf="showContentListB">
+    <div class="inner-list dropdown-content">
+
+      <a *ngFor="let elem of listToShow" href="javascript:void(0)" (click)="selectItem(elem)">
+        {{elem.value}}
+      </a>
+
+    </div>
+  </div>
+</div>

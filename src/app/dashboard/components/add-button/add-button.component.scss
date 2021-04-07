@@ -1,0 +1,37 @@
+@import "../../../../styles.scss"; 
+
+.add-button-bottom-right {
+    width: 70px;
+    height: 70px;
+    background-color: $primary;
+    border-radius: 50%;
+    box-shadow: 0 6px 10px 0 #666;
+    transition: all 0.1s ease-in-out;
+    font-size: 45px;
+    color: white !important;
+    text-align: center;  
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    cursor: pointer;
+    z-index: 1;
+ }
+
+ @media(max-width: 991px){
+    .add-button-bottom-right {
+        right: 30px;
+        bottom: 30px
+    }
+}
+
+ @media(max-width: 767px){
+    .add-button-bottom-right {
+        right: 20px;
+        bottom: 20px
+    }
+}
+  
+ .add-button-bottom-right:hover {
+    box-shadow: 0 6px 14px 0 #666;
+    transform: scale(1.05);
+ }

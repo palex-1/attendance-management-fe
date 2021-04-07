@@ -1,0 +1,17 @@
+<label [class]="labelClasses">{{ label }}</label>
+<select [(ngModel)]="value" [class]="selectClasses + ' form-control '+ (canShowErrors && invalidField && showValidationErrorInternal ? 'invalid-input-custom':'')" >
+  <ng-container *ngTemplateOutlet="optionsTemplate ? optionsTemplate : defaultOptionsTemplate">
+
+  </ng-container>
+
+</select>
+
+<div class="invalid-feedback" *ngIf="canShowErrors && showValidationErrorInternal && fieldIsNull">
+    {{ "message.mandatory-field" | translate }}
+</div>
+
+<ng-template #defaultOptionsTemplate>
+    <option *ngFor="let elem of elemList">
+        {{elem}}
+    </option>
+</ng-template>

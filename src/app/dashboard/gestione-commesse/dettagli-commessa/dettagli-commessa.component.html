@@ -1,0 +1,128 @@
+
+
+<div class="card">
+
+    <div class="card-header">
+        <i class="fa fa-info" aria-hidden="true"></i> {{ "label.information" | translate }}
+    </div>
+
+    <div class="card-body">
+
+
+
+
+        <form>
+
+            <div class="row">
+
+                <div class="form-group col-md-4">
+                    <label for="codice-commessa2" class="col-form-label">{{ "gestione-commesse.codice-commessa" | translate }}:</label>
+                    <input type="text" class="form-control" id="codice-commessa2" name="cca" [(ngModel)]="codiceCommessaDetails" maxlength="25"
+                        [disabled]="!currentUserCanEditCommessa">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="piva-commessa2" class="col-form-label">{{ "gestione-commesse.piva-commessa" | translate }}:</label>
+                    <input type="text" class="form-control" id="piva-commessa2" name="pica" [(ngModel)]="pivaCommessaDetails" maxlength="16"
+                        [disabled]="!currentUserCanEditCommessa">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="project-manager" class="col-form-label">
+                        {{ "label.project-manager" | translate }}:
+                    </label>
+                    <input type="text" class="form-control" id="project-manager" name="project-manager" [ngModel]="nameSurnameProjectManager"
+                        [disabled]="true">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="delivery-manager" class="col-form-label">
+                        {{ "label.delivery-manager" | translate }}:
+                    </label>
+                    <input type="text" class="form-control" id="delivery-manager" name="delivery-manager" [ngModel]="nameSurnameDeliveryManager"
+                        [disabled]="true">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="qa-reviewer" class="col-form-label">
+                        {{ "label.qa-reviewer" | translate }}:
+                    </label>
+                    <input type="text" class="form-control" id="qa-reviewer" name="qa-reviewer" [ngModel]="nameSurnameQAReviewer" [disabled]="true">
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="account-manager" class="col-form-label">
+                        {{ "label.account-manager" | translate }}:
+                    </label>
+                    <input type="text" class="form-control" id="account-manager" name="account-manager" [ngModel]="nameSurnameAccountManager"
+                        [disabled]="true">
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">{{ "gestione-commesse.activation-date" | translate }}:</label>
+
+                    <app-monthpicker placeholder="{{ 'gestione-commesse.activation-date' | translate }}" [initialValue]="dataAttivazioneCommessaDetails"
+                            (onSelectDate)="onChangeAttivazioneCommessa($event)" [isAMonthpicker]="false" [disabled]="true">
+                    </app-monthpicker>
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">{{ "gestione-commesse.deactivation-date" | translate }}:</label>
+
+                    <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}" [initialValue]="dataDisattivazioneCommessaDetails"
+                            (onSelectDate)="onChangeDisattivazioneCommessa($event)" [isAMonthpicker]="false" [disabled]="!currentUserCanEditCommessa">
+                    </app-monthpicker>
+
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label">{{ "gestione-commesse.descrizione-commessa" | translate }}:</label>
+                    <textarea class="form-control" name="dca" [(ngModel)]="descrizioneCommessaDetails" maxlength="1000"
+                        [disabled]="!currentUserCanEditCommessa"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="fatturabileCheck0" name="fca" 
+                    [(ngModel)]="fatturabileCheckCommessaDetails" [disabled]="!currentUserCanEditCommessa"
+                        [checked]="fatturabileCheckCommessaDetails == true">
+                <label class="form-check-label" for="fatturabileCheck0">
+                    {{ "label.billable" |translate }}
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="ftyjhiuewi53" 
+                    [ngModel]="isEnabledForAllUserCheckCommessaDetails" disabled
+                        [checked]="isEnabledForAllUserCheckCommessaDetails == true">
+                <label class="form-check-label" >
+                    {{ "label.is-enabled-for-all-user" |translate }}
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="kjhsdf76598" 
+                    [ngModel]="isAbsenceTask" disabled
+                        [checked]="isAbsenceTask == true">
+                <label class="form-check-label" >
+                    {{ "label.is-absence-task" |translate }}
+                </label>
+            </div>
+            
+
+            <button type="button" class="btn btn-danger float-right mt-3" (click)="updateCommessa()"
+                        *ngIf="currentUserCanEditCommessa" [disabled]="updateOperationInProgress">
+                <span class="spinner-button-border float-left" *ngIf="updateOperationInProgress"></span>
+                {{ "general.button.update" | translate }}
+            </button>
+
+        </form>
+
+
+
+    </div>
+
+</div>

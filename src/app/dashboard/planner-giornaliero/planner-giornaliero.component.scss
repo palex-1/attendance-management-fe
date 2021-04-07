@@ -1,0 +1,112 @@
+[data-toggle="collapse"] .dropdown-button:before {  
+    content: "\f077";
+  }
+  
+  [data-toggle="collapse"].collapsed .dropdown-button:before {
+    content: "\f078";
+  }
+  .dropdown-button{
+      float: right;
+  }
+
+
+  .card-link{
+    color: black;
+  }
+  a.card-link.collapsed{
+    color: #536979;
+  }
+  .card-link:hover{
+    color: black;
+  }
+
+  .custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    border-radius: 1rem;
+    display: inline-block;
+    width: 1.95rem;
+  }
+  .custom-day.focused {
+    color: white;
+  }
+  span.custom-day.ng-star-inserted.bg-primary{
+    color: white !important;
+  }
+  .custom-day:hover{
+    opacity: 0.75;
+  }
+  .weekend {
+    background-color: #f0ad4e;
+    border-radius: 1rem;
+    color: white !important;
+  }
+
+  .not-employeed {
+    color: grey !important;
+  }
+  .lavorato{
+    background-color: #28a745;
+    color: white !important;
+  }
+  .straordinario{
+    background-color: #17a2b8;
+    color: white !important;
+  }
+.multiple-task-in-day{
+  background-color: #FC0FC0;
+    color: white !important;
+}
+
+  .hidden {
+    display: none;
+  }
+
+
+  .my-legend{
+    margin-top: -10px;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
+  .my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+    }
+  .my-legend .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+    }
+  .my-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+    }
+  .my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+    }
+  .my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+    }
+  .my-legend a {
+    color: #777;
+    }
+
+    .ml-15px{
+      margin-left: 15px;
+    }

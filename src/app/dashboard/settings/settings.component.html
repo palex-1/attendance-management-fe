@@ -1,0 +1,146 @@
+<h3 class="mt-2 mb-3">
+    <i class="fa fa-cogs" aria-hidden="true"></i> {{ "label.settings" | translate }}
+</h3>
+
+
+<div class="row">
+
+
+        <div class="col-md-8 col-xl-9">
+            <div class="card mb-5">
+                <div class="card-header">
+                    
+                  <a href="javascript:void(0)" title="{{ 'label.add-setting' | translate }}" class="refresh-link mr-1"
+                        (click)="openCreateDialog()">
+                                  <i class="fa fa-plus"></i>
+                  </a>
+                    
+                    <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                        (click)="refreshConfigurations()">
+                        <i class="fas fa-sync-alt"></i>
+                    </a>
+                    
+                </div>
+      
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped">
+                            <thead>
+                                <tr>
+                                    <th sortable-td [status]="0" [sortByValue]="'settingArea'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                        {{ "label.area" | translate }}
+                                    </th>
+                                    <th>
+                                        {{ "label.details" | translate }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="areasLabels.length==0">
+                                    <td colspan="4" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                                </tr>
+                                <tr *ngFor="let elem of areasLabels">
+                                    <td>{{ elem.value }}</td>
+    
+                                    <td class="min-width-3-button-in-table">
+                                        <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" (click)="openDetails(elem)"
+                                            title="{{ 'label.info' | translate}}">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </button>
+
+                                        <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="deleteConfig(elem)"
+                                            title="{{ 'label.delete' | translate}}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        
+                                     </td>
+                                </tr>
+                            </tbody>
+                        </table>
+      
+                    </div>
+      
+                    <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                        [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                        (onPageChange)="changePage($event)">
+      
+                    </app-custom-paginator>
+      
+      
+                </div>
+      
+                
+      
+            </div>
+            
+        </div>
+      
+      
+        <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+            <app-show-hide-area [collapseAreaContent]="collapseAreaContentGSDUIO">
+                <ng-template #collapseAreaContentGSDUIO>
+                  <div class="filter-table-form-container">
+      
+                      <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                        <div class="row">
+                        
+                            <div class="form-group col-md-12 mb-1">
+                                <label class="col-form-label">{{ "label.area" | translate }}</label>
+                                <input type="text" class="form-control" name="kjsdyr587sh" [(ngModel)]="areaFilter">
+                            </div>
+                        
+                        </div>
+                      </form>
+      
+                      <div class="text-right">
+                          <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                            {{ "button.clear-all" | translate }}
+                          </button>
+                          <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
+                            {{ "label.apply" | translate }}
+                          </button>
+                      </div>
+                  </div>
+                  
+      
+                            
+      
+                  </ng-template>
+              </app-show-hide-area>
+            <!-- /.container-fluid-->
+
+            <div class="logo-image-container">
+                <div class="card">
+                    <input type="file" accept="image/*" style="display: none" (change)="fileChange($event)" #fileChooser/>
+        
+                    <div class="image-button-container">
+                            <img class="card-img-top add-cursor-pointer" [src]="imgURL" alt="Logo Image" #imageLogo>
+                            
+                            <div class="image-div-button-container">
+                                <button class="btn btn-sm btn-secondary mr-1" *ngIf="wantToUpdateLogoImage" (click)="cancelUpdateImage()">
+                                    {{ "button.cancel" | translate }}
+                                </button>
+                                <button class="btn btn-sm btn-danger" *ngIf="wantToUpdateLogoImage" (click)="updateImage()">
+                                    {{ "button.save" | translate }}
+                                </button>
+                            </div>
+                            
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <small> {{ "label.company-logo" | translate }} </small>
+                    </div>
+
+                </div>
+            </div>
+            
+
+
+        </div>
+      </div>
+    
+
+
+<app-setting-add-edit-modal #addSettingModalComp (onAddUpdateComplete)="refreshConfigurations()">
+
+</app-setting-add-edit-modal>

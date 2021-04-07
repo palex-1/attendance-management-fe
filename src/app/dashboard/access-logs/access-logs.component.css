@@ -1,0 +1,68 @@
+.breadcrumb .breadcrumb-item{
+    color: #1f5584;
+}
+
+#paginator-row .pagination-nav .page-item a{
+	color: #1f5584;
+}
+
+#paginator-row .form-control{
+	color: #1f5584 !important;
+}
+
+
+#paginator-row{
+	margin-top: 15px;
+}
+#paginator-row .pagination-nav{
+	float: right;
+}
+
+@media(max-width:576px){
+	#paginator-row .pagination-nav{
+		float: left;
+		margin-top: 10px;
+	}
+}
+
+.form-control:focus {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color:#1966b7; 
+    outline: 0;
+}
+
+.paginatorContenitore{
+	 margin-top: 15px;
+}
+
+.paginatorContenuto{
+	font-size: 0.9em;
+}
+
+@media(max-width:767px){
+	.paginatorContenuto{
+		font-size: 0.8em;
+	}
+}
+
+td{
+	max-width: 300px;
+}
+
+
+.calendar-form-control {
+	display: block;
+    width: 70%;
+    height: calc(2.25rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
