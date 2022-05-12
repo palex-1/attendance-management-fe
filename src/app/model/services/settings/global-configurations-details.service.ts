@@ -72,14 +72,14 @@ export class GlobalConfigurationDetailsService implements ResetableService {
   }
 
   loadInitialInformation(routeParams: Params, forceReload: boolean = false): Observable<boolean> {
-    if (this.dataAreLoaded && !forceReload&& routeParams.area==this.currentArea) {
+    if (this.dataAreLoaded && !forceReload&& routeParams['area']==this.currentArea) {
       return of(true);
     }
-    if(routeParams.area!=this.currentArea){
+    if(routeParams['area']!=this.currentArea){
         this.reset();
     }
 
-    this.currentArea = routeParams.area;
+    this.currentArea = routeParams['area'];
 
     return Observable.create(
       (observer) => {

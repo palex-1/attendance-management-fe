@@ -4,4 +4,5 @@ export class GlobalConfigurationDTO {
 	public settingKey ?: string;
 	public settingValue ?: string;
 	public visible ?: boolean;
+	public secret ?: boolean;
 }

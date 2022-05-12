@@ -1,0 +1,15 @@
+version: "3.1"
+services:
+ 
+
+  attendance-management-frontend:
+    image: gestione-dipendenti/attendance-management-fe:1.0.0
+    container_name: attendance-management-frontend
+    restart: always
+    environment:
+      # replace API_URL with the correct url
+      - API_URL=http://localhost:8080
+      - DEBUG=false
+    ports:
+      - "8081:80"
+

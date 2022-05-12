@@ -1,173 +1,181 @@
 <h3 class="mt-2 mb-3">
-  <i class="fa fa-users" aria-hidden="true"></i> {{ "label.employees" | translate }}
+    <i class="fa fa-users" aria-hidden="true"></i> {{ "label.employees" | translate }}
 </h3>
 
 
 <div class="row">
 
 
-  <div class="col-md-8 col-xl-9">
-      <div class="card mb-5">
-          <div class="card-header">
-              
-            <a href="javascript:void(0)" title="{{ 'label.add-employee' | translate }}" class="refresh-link mr-1"
-                *ngIf="hasAuthority(['USER_PROFILE_CREATE'])" (click)="openAddDialog()">
-                            <i class="fa fa-plus"></i>
-            </a>
-              
-              <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
-                  (click)="refreshEmployees()">
-                  <i class="fas fa-sync-alt"></i>
-              </a>
-              
-          </div>
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
 
-          <div class="card-body">
-              <div class="table-responsive">
-                  <table class="table table-sm table-striped">
-                      <thead>
-                          <tr>
-                              <th sortable-td [status]="0" [sortByValue]="'id'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                  {{ "label.id" | translate }}
-                              </th>
-                              <th sortable-td [status]="0" [sortByValue]="'name'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                  {{ "label.name" | translate }}
-                              </th>
-                              <th sortable-td [status]="0" [sortByValue]="'surname'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                  {{ "label.surname" | translate }}
-                              </th>
-                              <th sortable-td [status]="0" [sortByValue]="'sex'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                  {{ "label.sex" | translate }}
-                              </th>
-                              <th sortable-td [status]="0" [sortByValue]="'email'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                {{ "label.email" | translate }}
-                            </th>
-                            <th sortable-td [status]="0" [sortByValue]="'phoneNumber'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                {{ "label.phone-number" | translate }}
-                            </th>
-                            <th sortable-td [status]="0" [sortByValue]="'fiscalCode'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                {{ "label.fiscal-code" | translate }}
-                            </th>
-                            <th>
-                                {{ "label.actions" | translate }}
-                            </th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr *ngIf="employees.length==0">
-                              <td colspan="3" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
-                          </tr>
-                          <tr *ngFor="let elem of employees">
-                              <td>{{ elem.id }}</td>
-                              <td>{{ elem.name }}</td>
-                              <td>{{ elem.surname }}</td>
-                              <td>{{ elem.sex }}</td>
-                              <td>{{ elem.email }}</td>
-                              <td>{{ elem.phoneNumber }}</td>
-                              <td>{{ elem.cf }}</td>
-                              <td class="min-width-3-button-in-table">
-                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="openDetails(elem)"
-                                        *ngIf="hasAuthority(['USER_PROFILE_READ'])" title="{{ 'general.action.details' | translate}}">
+                <a href="javascript:void(0)" title="{{ 'label.add-employee' | translate }}" class="refresh-link mr-1"
+                    *ngIf="hasAuthority(['USER_PROFILE_CREATE'])" (click)="openAddDialog()">
+                    <i class="fa fa-plus"></i>
+                </a>
+
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshEmployees()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'id'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.id" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'name'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.name" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'surname'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.surname" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'sex'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.sex" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'email'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.email" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'phoneNumber'"
+                                    class="min-width-table-column" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
+                                    {{ "label.phone-number" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'fiscalCode'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.fiscal-code" | translate }}
+                                </th>
+                                <th class="min-width-table-column">
+                                    {{ "label.actions" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="employees.length==0">
+                                <td colspan="3" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of employees">
+                                <td>{{ elem.id }}</td>
+                                <td>{{ elem.name }}</td>
+                                <td>{{ elem.surname }}</td>
+                                <td>{{ elem.sex }}</td>
+                                <td>{{ elem.email }}</td>
+                                <td>{{ elem.phoneNumber }}</td>
+                                <td>{{ elem.cf }}</td>
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="openDetails(elem)" *ngIf="hasAuthority(['USER_PROFILE_READ'])"
+                                        title="{{ 'general.action.details' | translate}}">
                                         <i class="fas fa-external-link-alt"></i>
                                     </button>
 
-                                    <button class="btn btn-success btn-sm add-cursor-pointer mr-1" type="button" (click)="disableUserProfile(elem)"
-                                          *ngIf="hasAuthority(['USER_PROFILE_UPDATE']) && !elem.accountDisabled" title="{{ 'label.disable-account' | translate}}">
-                                          <i class="fas fa-lock-open"></i>
-                                      </button>
+                                    <button class="btn btn-success btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="disableUserProfile(elem)"
+                                        *ngIf="hasAuthority(['USER_PROFILE_UPDATE']) && !elem.accountDisabled"
+                                        title="{{ 'label.disable-account' | translate}}">
+                                        <i class="fas fa-lock-open"></i>
+                                    </button>
 
-                                      <button class="btn btn-warning btn-sm add-cursor-pointer mr-1" type="button" (click)="enableUserProfile(elem)"
-                                          *ngIf="hasAuthority(['USER_PROFILE_UPDATE']) && elem.accountDisabled" title="{{ 'label.enable-account' | translate}}">
-                                          <i class="fa fa-lock" aria-hidden="true"></i>
-                                      </button>
+                                    <button class="btn btn-warning btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="enableUserProfile(elem)"
+                                        *ngIf="hasAuthority(['USER_PROFILE_UPDATE']) && elem.accountDisabled"
+                                        title="{{ 'label.enable-account' | translate}}">
+                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                    </button>
 
-                               </td>
-                          </tr>
-                      </tbody>
-                  </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-              </div>
-
-              <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
-                  [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
-                  (onPageChange)="changePage($event)">
-
-              </app-custom-paginator>
-
-
-          </div>
-
-
-      </div>
-
-  </div>
-
-
-  <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
-      <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
-          <ng-template #collapseAreaContent>
-            <div class="filter-table-form-container">
-
-                <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
-                  <div class="row">
-
-                    <div class="form-group col-md-12 mb-1">
-                        <label for="f1" class="col-form-label">{{ "label.name" | translate }}</label>
-                        <input type="text" class="form-control"  
-                            name="207e32f8" [(ngModel)]="nameFilter">
-                    </div>
-
-                    <div class="form-group col-md-12 mb-1">
-                        <label for="f1" class="col-form-label">{{ "label.surname" | translate }}</label>
-                        <input type="text" class="form-control" 
-                            name="1d2ded49" [(ngModel)]="surnameFilter">
-                    </div>
-
-                    <div class="form-group col-md-12 mb-1">
-                        <label for="f1" class="col-form-label">{{ "label.email" | translate }}</label>
-                        <input type="text" class="form-control" 
-                            name="e61d75ea" [(ngModel)]="emailFilter">
-                    </div>
-
-                    <div class="form-group col-md-12 mb-1">
-                        <label for="f1" class="col-form-label">{{ "label.phone-number" | translate }}</label>
-                        <input type="text" class="form-control"
-                            name="f08a9c52" [(ngModel)]="phoneNumberFilter">
-                    </div>
-
-                    <div class="form-group col-md-12 mb-1">
-                        <label for="f1" class="col-form-label">{{ "label.fiscal-code" | translate }}</label>
-                        <input type="text" class="form-control" 
-                            name="e302929b" [(ngModel)]="fiscalCodeFilter">
-                    </div>
-
-
-
-                  </div>
-                </form>
-
-                <div class="text-right">
-                    <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
-                      {{ "button.clear-all" | translate }}
-                    </button>
-                    <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
-                      {{ "label.apply" | translate }}
-                    </button>
                 </div>
-            </div>
-            
 
-                      
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()"
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]"
+                    (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContent">
+            <ng-template #collapseAreaContent>
+                <div class="filter-table-form-container">
+
+                    <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                        <div class="row">
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.name" | translate }}</label>
+                                <input type="text" class="form-control" name="207e32f8" [(ngModel)]="nameFilter">
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.surname" | translate }}</label>
+                                <input type="text" class="form-control" name="1d2ded49" [(ngModel)]="surnameFilter">
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.email" | translate }}</label>
+                                <input type="text" class="form-control" name="e61d75ea" [(ngModel)]="emailFilter">
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.phone-number" | translate }}</label>
+                                <input type="text" class="form-control" name="f08a9c52" [(ngModel)]="phoneNumberFilter">
+                            </div>
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.fiscal-code" | translate }}</label>
+                                <input type="text" class="form-control" name="e302929b" [(ngModel)]="fiscalCodeFilter">
+                            </div>
+
+
+
+                        </div>
+                    </form>
+
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                            {{ "button.clear-all" | translate }}
+                        </button>
+                        <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
+                            {{ "label.apply" | translate }}
+                        </button>
+                    </div>
+                </div>
+
+
+
 
             </ng-template>
         </app-show-hide-area>
-      <!-- /.container-fluid-->
-  </div>
+        <!-- /.container-fluid-->
+    </div>
 </div>
 
 
 
-<app-add-new-employee #addMemberModalRef *ngIf="hasAuthority(['USER_PROFILE_CREATE'])" 
-        (onSaveClick)="onAddNewEmployee($event)">
+<app-add-new-employee #addMemberModalRef *ngIf="hasAuthority(['USER_PROFILE_CREATE'])"
+    (onSaveClick)="onAddNewEmployee($event)">
 
 </app-add-new-employee>

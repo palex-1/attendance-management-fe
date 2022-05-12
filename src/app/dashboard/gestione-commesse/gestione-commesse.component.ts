@@ -35,6 +35,7 @@ export class GestioneCommesseComponent implements OnInit {
   fatturabileCheckCommessaToAdd: boolean = true;
   isEnabledForAllUsersToAdd: boolean = false;
   isAbsenceTaskToAdd: boolean = false;
+  totalBudgetToAdd: number = 0
 
   public sortBy = new OrderEvent();
 
@@ -107,6 +108,7 @@ export class GestioneCommesseComponent implements OnInit {
     this.fatturabileCheckCommessaToAdd = true;
     this.isEnabledForAllUsersToAdd = false;
     this.isAbsenceTaskToAdd = false;
+    this.totalBudgetToAdd = 0
   }
 
   addNewCommessa(){
@@ -120,18 +122,28 @@ export class GestioneCommesseComponent implements OnInit {
     taskToAdd.isEnabledForAllUsers = this.isEnabledForAllUsersToAdd;
     taskToAdd.isAbsenceTask = this.isAbsenceTaskToAdd;
 
+
     if(taskToAdd.taskCode==null  || taskToAdd.taskCode.length < 1 
         || taskToAdd.taskDescription==null || taskToAdd.taskDescription.length < 1 || taskToAdd.isAbsenceTask==null
         || taskToAdd.activationDate==null || taskToAdd.billable==null || taskToAdd.isEnabledForAllUsers==null){
           this.notifier.notifyWarningWithI18nAndStandardTitle("generic.missing-data-to-continue");
           return;
     }
+        
+    if(taskToAdd.isAbsenceTask){
+        taskToAdd.totalBudget = 0
+    }else{
+        if(this.totalBudgetToAdd==null){
+          this.notifier.notifyWarningWithI18nAndStandardTitle("generic.missing-data-to-continue");
+          return;
+        }
+        taskToAdd.totalBudget = this.totalBudgetToAdd
+    }
     
     if(taskToAdd.deactivationDate!=null && taskToAdd.deactivationDate<taskToAdd.activationDate){
       this.notifier.notifyErrorWithI18nAndStandardTitle("message.activation-date-after-deactivation");
       return;
     }
-
 
     this.executeAddIncarico(taskToAdd);
   }

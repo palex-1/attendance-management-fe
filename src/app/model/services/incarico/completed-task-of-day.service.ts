@@ -23,8 +23,9 @@ import { MessageNotifierService } from 'src/app/dialogs/notifications/message-no
 import { FoodVoucherRequestDTO } from '../../dtos/incarico/food-voucher-request.model';
 import { BooleanDTO } from '../../dtos/boolean-dto.model';
 import { WorkTransferRequestDTO } from '../../dtos/incarico/work-transfer-request-dto.model';
+import { StringUtils } from 'src/app/util/string/string-utils';
 
-const DEFAULT_PAGE_SIZE: number = 3;
+const DEFAULT_PAGE_SIZE: number = 4;
 
 @Injectable()
 export class CompletedTaskOfDayService implements ResetableService {
@@ -370,12 +371,13 @@ export class CompletedTaskOfDayService implements ResetableService {
   }
 
   addNewWorkedTask(taskCodeToAdd: string, currentTaskToAddSmartWorked: boolean, totalHoursTaskToAdd: number, 
-          currentSelectedDay: Date): Observable<GenericResponse<CompletedTaskDTO>>{
+          currentSelectedDay: Date, activityDescription: string): Observable<GenericResponse<CompletedTaskDTO>>{
     let form = {
       workedHours: totalHoursTaskToAdd,
       day: currentSelectedDay,
       smartworked: currentTaskToAddSmartWorked,
-      taskCode: taskCodeToAdd
+      taskCode: taskCodeToAdd,
+      activityDescription: StringUtils.trim(activityDescription)
     }
 
     return this.datasource.makePostJsonObject<GenericResponse<CompletedTaskDTO>>(

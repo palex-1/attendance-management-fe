@@ -60,9 +60,9 @@ export class FileInputUploadComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges){
-    if(changes.progress!=null && changes.progress!=undefined){
-        if(changes.progress.currentValue!=null){
-          this.updatePercentDone(changes.progress.currentValue)
+    if(changes['progress']!=null && changes['progress']!=undefined){
+        if(changes['progress'].currentValue!=null){
+          this.updatePercentDone(changes['progress'].currentValue)
         }
     }
   }

@@ -134,7 +134,8 @@ export class UserLevelsService implements ResetableService {
 
 
   addNewUserLevel(level: UserLevelDTO): Observable<GenericResponse<UserLevelDTO>>{
-    return this.datasource.makePostJsonObject(this.backendUrlsSrv.getAddUserLevelUrl(), level)
+    return this.datasource.makePostJsonObject<GenericResponse<UserLevelDTO>>
+      (this.backendUrlsSrv.getAddUserLevelUrl(), level)
     .pipe(
         map(
           (res: GenericResponse<UserLevelDTO>)=>{
@@ -146,7 +147,8 @@ export class UserLevelsService implements ResetableService {
   }
 
   updateUserLevel(level: UserLevelDTO) {
-    return this.datasource.makePutJsonObject(this.backendUrlsSrv.getUpdateUserLevelUrl(), level);
+    return this.datasource.makePutJsonObject<GenericResponse<UserLevelDTO>>
+          (this.backendUrlsSrv.getUpdateUserLevelUrl(), level);
   }
 
   deleteUserLevel(level: UserLevelDTO) {

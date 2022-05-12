@@ -28,13 +28,15 @@
                     <table class="table table-sm table-striped">
                         <thead>
                             <tr>
-                                <th sortable-td [status]="0" [sortByValue]="'name'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'name'" class="min-width-table-column"
+                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.name" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'description'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'description'" class="min-width-table-column"
+                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.description" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.actions" | translate }}
                                 </th>
                             </tr>
@@ -48,9 +50,9 @@
                                 <td>{{ elem.description }}</td>
 
                                 <td class="min-width-3-button-in-table">
-                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" (click)="openEditDialog(elem)"
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="openEditDialog(elem)"
                                         *ngIf="hasAuthority(['COMPANY_UPDATE'])" title="{{ 'label.update' | translate}}">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                        <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                                     </button>
                                       <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="delete(elem)"
                                           *ngIf="hasAuthority(['COMPANY_DELETE']) && !elem.isRoot" title="{{ 'label.delete' | translate}}">

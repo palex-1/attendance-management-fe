@@ -27,7 +27,7 @@ export class GuideComponent implements OnInit {
   private openFile(myPdfUrl) {
     const y = ( window.innerHeight / 2) - 300;
     const x = ( window.innerWidth / 2) - 400;
-    console.log()
+    //console.log()
     window.open(myPdfUrl, '_blank', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=800' + ', height=600' + ', top=' + y + ', left=' + x);
   }
 

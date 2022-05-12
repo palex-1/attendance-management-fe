@@ -24,7 +24,7 @@ export class WorkTaskSummaryResolver extends AbstractResolver{
         return this.workTaskSummaryService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.workTaskSummaryService.reset();
         
         return super.resolve(route, state);

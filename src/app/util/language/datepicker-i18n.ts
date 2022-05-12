@@ -1,3 +1,4 @@
+import { TranslationWidth } from '@angular/common';
 import { Injectable} from '@angular/core';
 import {NgbDatepickerI18n, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +22,7 @@ const I18N_VALUES = {
 // Define custom service providing the months and weekdays translations
 @Injectable()
 export class CustomDatepickerI18n extends NgbDatepickerI18n {
+  
 
   constructor(private translate: TranslateService) {
     super();
@@ -32,6 +34,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   getMonthShortName(month: number): string {
     return I18N_VALUES[this.currentLanguage].months[month - 1];
   }
+
   getMonthFullName(month: number): string {
     return this.getMonthShortName(month);
   }
@@ -41,6 +44,23 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
         return `${date.day}-${date.month}-${date.year}`;
       }
       return `${date.year}-${date.month}-${date.day}`;
+  }
+
+  getWeekdayLabel(weekday: number, width?: TranslationWidth): string {
+    if(width===null || width===undefined){
+      return this.getWeekdayShortName(weekday)
+    }
+    let weekdayLabel = this.getWeekdayShortName(weekday);
+
+    if(weekdayLabel===null || weekdayLabel===undefined){
+      return '';
+    }
+
+    if(weekdayLabel.length<width){
+      return weekdayLabel;
+    }
+
+    return weekdayLabel.substring(0, width)
   }
 
   get currentLanguage(): string{

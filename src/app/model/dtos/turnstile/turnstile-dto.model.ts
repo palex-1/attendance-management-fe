@@ -7,4 +7,5 @@ export class TurnstileDTO {
 	public clientId ?: string;
 	public clientSecret ?: string;
 	public type ?: string;
+	public authToken ?: string;
 }

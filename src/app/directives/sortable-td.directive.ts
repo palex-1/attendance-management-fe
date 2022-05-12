@@ -39,8 +39,8 @@ export class SortableTdDirective implements OnInit, OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges){
-      if(changes.sortBy){
-        if(changes.sortBy.currentValue.getSortBy() != this.orderEvent.getSortBy()){
+      if(changes['sortBy']){
+        if(changes['sortBy'].currentValue.getSortBy() != this.orderEvent.getSortBy()){
           //if arrive a sort event not for me i reset my status
           this.resetStatus();
         }

@@ -15,6 +15,7 @@ import { StandardErrorCode } from 'src/app/util/standard-error-code';
 import { TicketDownloadService } from 'src/app/model/services/system/ticket-download.service';
 import { TicketDownloadDTO } from 'src/app/model/dtos/ticket-download.dto';
 import { CustomConfirmationService } from 'src/app/dialogs/confirmation/custom-confirmation.service';
+import { StringDTO } from 'src/app/model/dtos/string-dto.model';
 
 declare const $: any;
 
@@ -72,7 +73,7 @@ export class EmployeePaycheckComponent implements OnInit {
 
     this.employeePaychecksService.deletePaycheck(paycheck)
     .subscribe(
-      (succ: GenericResponse<TicketDownloadDTO>) => {
+      (succ: GenericResponse<StringDTO>) => {
         this.loader.endLoading();
         this.notifier.notifySuccessWithI18nAndStandardTitle("message.paycheck-successfully-deleted")
         this.refreshUserPaychecks();

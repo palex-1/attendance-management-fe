@@ -8,4 +8,5 @@ export class UserProfileContractDTO {
 	public employmentOffice ?: string;
 	public vacationDays ?: number;
 	public leaveHours ?: number;
+	public hourlyCost ?: number;
 }

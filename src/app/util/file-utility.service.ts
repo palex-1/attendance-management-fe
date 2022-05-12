@@ -9,15 +9,9 @@ export class FileUtilityService {
 
 
   createAndDownloadBlobFile(fileContent: Blob, filename) {
-    if (navigator.msSaveBlob) 
-    { 
-      navigator.msSaveBlob(fileContent, filename);
-    } 
-    else
-    {
-      var link = document.createElement('a');
+    var link = document.createElement('a');
       // Browsers that support HTML5 download attribute
-      if (link.download !== undefined) 
+      if (link.download !== undefined && link.download!==null) 
       {
           var url = URL.createObjectURL(fileContent);
           link.setAttribute('href', url);
@@ -27,7 +21,6 @@ export class FileUtilityService {
           link.click();
           document.body.removeChild(link);
       }
-    }
   }
 
   extractContentTypeOrUseDefault(data: HttpResponse<any>, defaultContentType: string) {

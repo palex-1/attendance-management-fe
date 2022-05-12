@@ -4,7 +4,6 @@ import { MessageNotifierService } from 'src/app/dialogs/notifications/message-no
 import { ChainExceptionHandler } from 'src/app/util/exceptions/chain-exception-handler.service';
 import { GlobalConfigurationDetailsService } from 'src/app/model/services/settings/global-configurations-details.service';
 import { GlobalConfigurationAreaService } from 'src/app/model/services/settings/global-configuration-area.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare const $: any;
 
@@ -31,6 +30,8 @@ export class SettingAddEditModalComponent implements OnInit {
   area: string = '';
   key: string = '';
   value: string = '';
+  valueToEdit: string = '';
+  isSecret: boolean = false;
 
   constructor(private notifier: MessageNotifierService, private exceptionHandler: ChainExceptionHandler,
                 private globalConfigurationDetailsService: GlobalConfigurationDetailsService,
@@ -45,6 +46,8 @@ export class SettingAddEditModalComponent implements OnInit {
     this.area = '';
     this.key = '';
     this.value = '';
+    this.valueToEdit = '';
+    this.isSecret = false;
     this.createMode = false;
     this.editMode = false;
   }
@@ -72,11 +75,13 @@ export class SettingAddEditModalComponent implements OnInit {
     $(this.addSettingModal.nativeElement).modal({backdrop: 'static', keyboard: false})
   }
 
-  openEditDialogWithAreaAndKeyLocked(area: string, key: string, value: string){
+  openEditDialogWithAreaAndKeyLocked(area: string, key: string, value: string, isSecret: boolean){
     this.resetAllFields();
     this.area = area;
     this.key = key;
     this.value = value;
+    this.valueToEdit = value;
+    this.isSecret =  isSecret
     this.disabledAreaEdit = true;
     this.disabledKeyEdit = true;
     this.createMode = false;
@@ -103,10 +108,10 @@ export class SettingAddEditModalComponent implements OnInit {
 
     this.addOrUpdateOperationInProgress = true;
 
-    this.globalConfigurationAreaService.createSetting(this.area, this.key, this.value).subscribe(
+    this.globalConfigurationAreaService.createSetting(this.area, this.key, this.value, this.isSecret).subscribe(
       succ=>{
         this.addOrUpdateOperationInProgress = false;
-        this.notifier.notifySuccessWithI18nAndStandardTitle("message.succesffully-added-config");
+        this.notifier.notifySuccessWithI18nAndStandardTitle("message.successfully-added-config");
         this.onAddUpdateComplete.emit();
         this.closeDialog();
       },
@@ -115,6 +120,10 @@ export class SettingAddEditModalComponent implements OnInit {
         this.exceptionHandler.manageErrorWithLongChain(err.status)
       }
     );
+  }
+
+  valueNotUpdated(){
+    return this.valueToEdit===this.value;
   }
 
   updateSetting(){

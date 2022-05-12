@@ -15,6 +15,7 @@ import { ExpenseReportDetailsDTO } from '../../dtos/expenses/expense-report-deta
 import { ExpenseReportElementDTO } from '../../dtos/expenses/expense-report-element-dto.model';
 import { DateUtils } from 'src/app/util/dates/date-utils';
 import { UserProfileDTO } from '../../dtos/profile/user-profile.dto';
+import { TicketDownloadDTO } from "../../dtos/ticket-download.dto";
 
 
 @Injectable()
@@ -35,6 +36,7 @@ export class UserExpenseReportsDetailsService implements ResetableService {
     processedBy: string = null;
     amountAccepted: number = null;
     amount: number = null;
+    expenseTaskCode: string = null;
 
 
     currentReport: ExpenseReportDTO = null;
@@ -63,6 +65,11 @@ export class UserExpenseReportsDetailsService implements ResetableService {
             this.madeBy =  this.buildNameSurnameAndEmail(this.currentReport.madeBy);
             this.processedBy = this.buildNameSurnameAndEmail(this.currentReport.processedBy);
             this.status = this.currentReport.status;
+            this.expenseTaskCode = ''
+            
+            if(this.currentReport.workTask!=null){
+                this.expenseTaskCode = this.currentReport.workTask.taskCode
+            }
         }
     }
 
@@ -98,6 +105,7 @@ export class UserExpenseReportsDetailsService implements ResetableService {
         this.inChargeBy = null;
         this.madeBy = null;
         this.processedBy = null;
+        this.expenseTaskCode = null;
     }
 
     areDataLoaded(): boolean {
@@ -116,7 +124,7 @@ export class UserExpenseReportsDetailsService implements ResetableService {
 
         this.resetData();
 
-        this.expenseReportId = routeParams.expenseReportId;
+        this.expenseReportId = routeParams['expenseReportId'];
        
         return this.loadReport();
     }
@@ -190,12 +198,12 @@ export class UserExpenseReportsDetailsService implements ResetableService {
             notes: notes
         };
 
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.getUpdateExpenseReportUrl(), updateReq).pipe(
+        return this.datasource.makePostJsonObject<GenericResponse<ExpenseReportDTO>>(this.backendUrlsSrv.getUpdateExpenseReportUrl(), updateReq).pipe(
             map(
                 (response: GenericResponse<ExpenseReportDTO>) => {
                     this.currentReport = response.data;
 
-                    console.log(this.currentReport)
+                    //console.log(this.currentReport)
                     if(this.currentReport!=null){
                         this.currentReport.dateOfExpence = DateUtils.buildDateFromStrOrDate(this.currentReport.dateOfExpence);
                     }
@@ -215,7 +223,8 @@ export class UserExpenseReportsDetailsService implements ResetableService {
         let params: HttpParams = new HttpParams();
         params = params.append('reportElementId', elem.id+'');
 
-        return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadExpenseReportOfUserElementUrl(), params)
+        return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>
+                (this.backendUrlsSrv.getDownloadExpenseReportOfUserElementUrl(), params)
     }
 
     acceptExpenseReportElement(currentSelectedExpenseReportElementId: number): Observable<GenericResponse<ExpenseReportElementDTO>>{

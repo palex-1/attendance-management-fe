@@ -22,6 +22,7 @@ import { StringDTO } from "../../dtos/string-dto.model";
 import { ComponenteIncaricoDTO } from "../../dtos/incarico/componente-incarico.dto";
 import { ComponenteTeamUpdateDTO } from "../../dtos/incarico/componente-team-update.dto";
 import { Page } from 'src/app/util/querying/page.model';
+import { WorkTaskBudgetSummaryService } from "./work-task-budget-summary.service";
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -32,6 +33,7 @@ export class DettagliIncaricoService implements ResetableService{
     currentIncaricoLoaded: IncaricoDetailsDTO = null;
     updateOperationInProgress: boolean = false;
     currentGrantedPermissionOnIncarico: GrantedPermissionsDTO = null;
+    currentGrantedPermissionOnBudgetSummary: GrantedPermissionsDTO = null;
     currentTaskId: number = null;
     
     public currentSortBy: OrderEvent = new OrderEvent("", "");
@@ -66,7 +68,7 @@ export class DettagliIncaricoService implements ResetableService{
         value: null, type: FilterType.TEXT
     }
     
-    constructor(private exceptionHandler: ChainExceptionHandler,
+    constructor(private exceptionHandler: ChainExceptionHandler, private workTaskBudgetSummaryService: WorkTaskBudgetSummaryService,
                     private router: Router, private backendUrlsSrv: BackendUrlsService,
                         private datasource: RestDataSource, private predicateBuider: SPredicateBuilder){
 
@@ -76,6 +78,8 @@ export class DettagliIncaricoService implements ResetableService{
         this.dataAreLoaded = false;
         this.resetFilters();
         this.resetPagingAndData();
+
+        this.workTaskBudgetSummaryService.reset()
     }
 
     resetPagingAndData(){
@@ -126,6 +130,9 @@ export class DettagliIncaricoService implements ResetableService{
           let taskId: number = routeParams['taskId'];
           this.currentTaskId = taskId;
           
+          //WORK TASK BUDGET SUMMARY
+          this.workTaskBudgetSummaryService.resetTaskId(taskId);
+          
           return this.loadIncaricoDetails(taskId);
     }
 
@@ -134,7 +141,8 @@ export class DettagliIncaricoService implements ResetableService{
             (observer) => {
               forkJoin(
                   this.getIncarico(taskId),
-                  this.loadCurrentPermissionAndTeamOfIncarico(taskId)
+                  this.loadCurrentPermissionAndTeamOfIncarico(taskId),
+                  this.loadBudgetSummaryPermission(taskId)
                 )
                 .subscribe(
                   (successful) => {
@@ -156,6 +164,22 @@ export class DettagliIncaricoService implements ResetableService{
                 );
             }
         );
+    }
+
+    private loadBudgetSummaryPermission(taskId: number): Observable<any>{
+        return this.datasource.sendGetRequest<GenericResponse<GrantedPermissionsDTO>>(
+            this.backendUrlsSrv.getBudgetSummaryPermissionGrantedUrl(taskId+''), new HttpParams(), true, false, true
+        ).pipe(
+            map((response: GenericResponse<GrantedPermissionsDTO>) => {
+                this.currentGrantedPermissionOnBudgetSummary = response.data;
+
+                return this.currentGrantedPermissionOnBudgetSummary;
+              }),
+              catchError((err) =>  {
+                this.dataAreLoaded = false;
+                return throwError(err); 
+              })
+        )
     }
 
 
@@ -185,8 +209,8 @@ export class DettagliIncaricoService implements ResetableService{
         return this.loadTeamComponents(taskId, this.buildQueryPredicate());
     }
 
+
     private loadCurrentPermissionAndTeamOfIncarico(taskId: number): Observable<any>{
-        
         return Observable.create(
             (observer) => {
                 this.datasource.sendGetRequest<GenericResponse<GrantedPermissionsDTO>>(
@@ -207,9 +231,11 @@ export class DettagliIncaricoService implements ResetableService{
                                         (err)=>{
                                             observer.next(false);
                                             observer.complete();
-                                            Observable.throw(err);
+                                            throwError(err);
                                         }
                                     )
+
+                                    return false;
                         
                             }else{
                                 observer.next(true);
@@ -224,7 +250,9 @@ export class DettagliIncaricoService implements ResetableService{
 
                             observer.next(false);
                             observer.complete();
-                            Observable.throw(err);
+                            throwError(err);
+
+                            return false;
                         }
                     )
                 

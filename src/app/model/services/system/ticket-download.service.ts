@@ -18,6 +18,7 @@ export class TicketDownloadService {
     a.target = '_blank';
     //a.download = url.substr(url.lastIndexOf('/') + 1);
     document.body.appendChild(a);
+    a.focus();
     a.click();
     document.body.removeChild(a);
   }

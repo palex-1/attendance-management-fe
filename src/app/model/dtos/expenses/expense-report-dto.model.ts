@@ -1,3 +1,4 @@
+import { WorkTaskDTO } from '../incarico/work-task-dto.model';
 import { UserProfileDTO } from '../profile/user-profile.dto';
 
 export class ExpenseReportDTO {
@@ -12,4 +13,5 @@ export class ExpenseReportDTO {
 	public madeBy ?: UserProfileDTO;
 	public processedBy ?: UserProfileDTO;
 	public processingBy ?: UserProfileDTO;
+	public workTask ?: WorkTaskDTO;
 }

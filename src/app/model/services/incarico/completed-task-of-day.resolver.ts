@@ -23,7 +23,7 @@ export class CompletedTaskOfDayResolver extends AbstractResolver{
         return this.completedTaskOfDayService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.completedTaskOfDayService.reset();
 
         return super.resolve(route, state);

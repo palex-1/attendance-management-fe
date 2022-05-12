@@ -86,7 +86,7 @@ export class TurnstileAttedanceService implements ResetableService {
             return of(true);
         }
         
-        this.currentTurnstileId = routeParams.turnstileId;
+        this.currentTurnstileId = routeParams['turnstileId'];
 
         return this.loadTurnstileAttendances();
     }
@@ -121,7 +121,8 @@ export class TurnstileAttedanceService implements ResetableService {
 
 
     loadCompanyId(): Observable<any> {
-        return this.datasource.sendGetRequest(this.backendUrlsSrv.getCompanyIdBadgeUrl()).pipe(
+        return this.datasource.sendGetRequest<GenericResponse<StringDTO>>
+        (this.backendUrlsSrv.getCompanyIdBadgeUrl()).pipe(
             map(
                 (succ: GenericResponse<StringDTO>)=>{
                     this.companyId = succ.data.value;
@@ -136,7 +137,7 @@ export class TurnstileAttedanceService implements ResetableService {
         let params: HttpParams = new HttpParams()
         params = params.set('turnstileId', this.currentTurnstileId+'');
 
-        return this.datasource.sendGetRequest(this.backendUrlsSrv.findTurnstileDetailsUrl(), params).pipe(
+        return this.datasource.sendGetRequest<GenericResponse<TurnstileDTO>>(this.backendUrlsSrv.findTurnstileDetailsUrl(), params).pipe(
             map(
                 (succ: GenericResponse<TurnstileDTO>)=>{
                     this.turnstileDetails = succ.data;
@@ -198,6 +199,25 @@ export class TurnstileAttedanceService implements ResetableService {
         return this.datasource.sendDeleteRequest(this.backendUrlsSrv.deleteUserAttendanceUrl(), params);
     }
 
+
+    registerNewAttendaceWithSwitchingType(userProfileId: string, turnstileId: number){
+        let request = {
+            userProfileId: userProfileId,
+            turnstileId: turnstileId,
+        };
+
+        return this.datasource.makePostJsonObject<GenericResponse<UserAttendanceDTO>>(
+            this.backendUrlsSrv.createUserSwitchedAttendanceUrl(), request).pipe(
+            map(
+                (res: GenericResponse<UserAttendanceDTO>)=>{
+                    this.currentLoadedData.unshift(res.data);
+              
+                    return res;
+                }
+            )
+        )
+    }
+
     registerNewAttendace(userProfileId: string, turnstileId: number, type: string, timestamp?: Date){
         let request = {
             timestamp: timestamp,
@@ -206,7 +226,7 @@ export class TurnstileAttedanceService implements ResetableService {
             type: type
         };
 
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.createUserAttendanceUrl(), request).pipe(
+        return this.datasource.makePostJsonObject<GenericResponse<UserAttendanceDTO>>(this.backendUrlsSrv.createUserAttendanceUrl(), request).pipe(
             map(
                 (res: GenericResponse<UserAttendanceDTO>)=>{
                     this.currentLoadedData.unshift(res.data);

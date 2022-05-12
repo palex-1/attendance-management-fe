@@ -56,6 +56,7 @@ import { TaskCompletionLockComponent } from './task-completion-lock/task-complet
 import { TaskCompletionLocksResolver } from '../model/services/reports/task-completion-locks.resolver';
 import { CompaniesComponent } from './companies/companies.component';
 import { CompaniesResolver } from '../model/services/settings/companies.resolver';
+import { WorkTaskExpensesResolver } from '../model/services/incarico/work-task-expenses.resolver';
 
 const routing = RouterModule.forChild([
     {path: "dashboard", component: DashboardComponent, resolve: {model: AuthoritiesResolver, TranslationLoaderResolver}, 
@@ -112,7 +113,8 @@ const routing = RouterModule.forChild([
 
 
         {path: "taskManage/:taskId", component: InfoCommessaComponent, 
-                resolve: { model: WorkTaskSummaryResolver, details: DettagliIncaricoResolver}, 
+                resolve: { model: WorkTaskSummaryResolver, expenses: WorkTaskExpensesResolver,
+                           details: DettagliIncaricoResolver }, 
                 canActivate: [HasAuthorityGuard],  
                 data: { 
                         auth: {authority: ['INCARICO_READ']}

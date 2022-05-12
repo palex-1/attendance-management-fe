@@ -26,15 +26,19 @@ import { CustomDatepickerI18n } from './util/language/datepicker-i18n';
 import { NgbDateCustomParserFormatter } from './util/language/ngb-date-custom-parser-formatter.service';
 import { CustomExceptionHandler } from './error/custom-exception-handler.service';
 import { ComponentsModule } from './dashboard/components/components.module';
+import { CustomMessageModule } from './dialogs/message/custom-message.module';
+import { environment } from 'src/environments/environment';
+
 
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json?'+environment.frontend_version);
 }
 
 @NgModule({
   
   imports: [CustomConfirmationModule, NotificationsModule, LoadingModule,
+            CustomMessageModule,
             BrowserModule, HttpClientModule, BrowserAnimationsModule, 
             DashboardModule, ValidatorsModule,
             ModelModule, LoginStuffModule, ThemingModule,  
@@ -55,7 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
 
                     {
                       path: "dashboard",
-                      loadChildren: "./dashboard/dashboard.module#DashboardModule"
+                      loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
                     }
 
 

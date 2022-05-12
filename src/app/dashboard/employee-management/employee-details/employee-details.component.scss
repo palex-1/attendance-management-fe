@@ -11,7 +11,31 @@
 }
 
 @media(max-width:768px){
+    #myTab .nav-link{
+        font-size: 14px;
+    }
     .profile-card-container{
         width: 250px;
     }
+}
+
+.image-button-container {
+    position: relative;
+}
+
+.image-button-container{
+    min-height: 100px;
+}
+
+/* Make the image responsive */
+.image-button-container img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+}
+
+.image-button-container .image-div-button-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }

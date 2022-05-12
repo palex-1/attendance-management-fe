@@ -22,7 +22,7 @@ export class UserLevelsResolver extends AbstractResolver {
         return this.userLevelsService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.userLevelsService.reset();
 
         return super.resolve(route, state)

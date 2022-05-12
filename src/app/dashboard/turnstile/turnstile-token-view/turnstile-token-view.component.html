@@ -1,0 +1,26 @@
+<div class="modal fade" #tokenTurnstileModal tabindex="-1" role="dialog" aria-labelledby="addViewEditTurnstileModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+            <h5 class="modal-title">{{ "label.token-turnstile" | translate }}:</h5>
+
+        </div>
+        <div class="modal-body">
+            <div>{{ "message.copy-turnstyle-auth-token-1" | translate }}</div>
+            <div>{{ "message.copy-turnstyle-auth-token-2" | translate }}</div>
+            <div>{{ "message.copy-turnstyle-auth-token-3" | translate }} 
+                <b>{{ token }}</b>
+            </div>
+
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" 
+          (click)="closeDialog()">{{ "general.button.close" | translate }}</button>
+          
+  
+        </div>
+      </div>
+    </div>
+  </div>

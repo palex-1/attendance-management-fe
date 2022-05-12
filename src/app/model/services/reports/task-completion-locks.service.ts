@@ -165,7 +165,8 @@ export class TaskCompletionLocksService implements ResetableService {
             hoursCalculationExecutionRequested: hoursCalculationExecutionRequested
         }
 
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.getCreateTaskCompletionLockUrl(), body)
+        return this.datasource.makePostJsonObject<GenericResponse<TaskCompletionsLocksDTO>>
+        (this.backendUrlsSrv.getCreateTaskCompletionLockUrl(), body)
         .pipe(
             map(
               (res: GenericResponse<TaskCompletionsLocksDTO>)=>{
@@ -180,13 +181,15 @@ export class TaskCompletionLocksService implements ResetableService {
         let params: HttpParams = new HttpParams()
         params = params.append('taskCompletionLockId', taskCompletionLock.id+'');
 
-        return this.datasource.sendDeleteRequest(this.backendUrlsSrv.getDeleteTaskCompletionLockUrl(), params);
+        return this.datasource.sendDeleteRequest<GenericResponse<TaskCompletionsLocksDTO>>
+                    (this.backendUrlsSrv.getDeleteTaskCompletionLockUrl(), params);
     }
 
     requestHoursCalculationExecution(taskCompletionLock: TaskCompletionsLocksDTO) {
         let params: HttpParams = new HttpParams()
         params = params.append('taskCompletionLockId', taskCompletionLock.id+'');
 
-        return this.datasource.makePutJsonObject(this.backendUrlsSrv.getRequestHoursCalculationCompletionLockUrl(), {}, params);
+        return this.datasource.makePutJsonObject<GenericResponse<TaskCompletionsLocksDTO>>
+        (this.backendUrlsSrv.getRequestHoursCalculationCompletionLockUrl(), {}, params);
     }
 }

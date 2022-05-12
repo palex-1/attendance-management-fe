@@ -22,9 +22,15 @@
                               <i class="fa fa-plus"></i>
               </a>
                 
-                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link mr-1"
                     (click)="refreshAttendance()">
                     <i class="fas fa-sync-alt"></i>
+                </a>
+
+                
+                <a href="javascript:void(0)" title="{{ 'label.start-totem' | translate }}" class="refresh-link float-right"
+                    (click)="openTotem()">
+                    <i class="fas fa-hamsa"></i>
                 </a>
                 
             </div>
@@ -34,22 +40,27 @@
                     <table class="table table-sm table-striped">
                         <thead>
                             <tr>
-                                <th sortable-td [status]="0" [sortByValue]="'timestamp'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'timestamp'" class="min-width-table-column"
+                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.timestamp" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.id'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.id'" class="min-width-table-column"
+                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.user-id" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.name'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.name'" class="min-width-table-column"
+                                [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.name" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.surname'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.surname'" class="min-width-table-column"
+                                 [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.surname" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'type'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'type'" class="min-width-table-column"
+                                 [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.type" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.actions" | translate }}
                                 </th>
                             </tr>
@@ -139,6 +150,12 @@
     </div>
   </div>
 
+
+
+
+<app-turnstile-totem-modal #turnstileTotem>
+
+</app-turnstile-totem-modal>
 
 
 

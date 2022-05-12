@@ -296,3 +296,25 @@ label{
 .go-back-button:hover{
     color: $primary;
 }
+
+
+@media (min-width: 1200px){
+    .col-xl-05 {
+        flex: 0 0 4.1666666665%;
+        max-width: 4.1666666665%;
+    }
+    .col-xl-75 {
+        flex: 0 0 62.499999999%;
+        max-width: 62.499999999%;
+    }
+}
+
+
+.color-gray{
+    color: gray !important;
+}
+
+
+.min-width-table-column {
+    min-width: 100px;
+}

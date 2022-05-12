@@ -76,9 +76,22 @@
 
     <div class="col-md-3 col-xl-2 mb-3 mb-sm-3 order-first order-sm-first order-md-last profile-card-container">
       <div class="card">
-          <div class="image-button-container">
-                  <img class="card-img-top" [src]="imgURL" alt="Profile Image">
-          </div>
+        
+        <input type="file" accept="image/*" style="display: none"  (change)="fileChange($event)" #fileChooser/>
+    
+        <div class="image-button-container">
+                <img class="card-img-top add-cursor-pointer" [src]="imgURL" alt="Profile Image" #imageProfile>
+                
+                <div class="image-div-button-container">
+                    <button class="btn btn-sm btn-secondary mr-1" *ngIf="wantToUpdateProfileImage" (click)="cancelUpdateImage()">
+                        {{ "button.cancel" | translate }}
+                    </button>
+                    <button class="btn btn-sm btn-danger" *ngIf="wantToUpdateProfileImage" (click)="updateImage()">
+                        {{ "button.save" | translate }}
+                    </button>
+                </div>
+                
+        </div>
 
 
          

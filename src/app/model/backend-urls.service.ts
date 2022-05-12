@@ -5,6 +5,7 @@ import { BackendConfigService } from './services/configs/backend-config.service'
 
 @Injectable()
 export class BackendUrlsService {
+    
          
   constructor(private backendConfigService: BackendConfigService) {
   }
@@ -107,6 +108,39 @@ export class BackendUrlsService {
   getTeamIncaricoPermissionGrantedUrl(){
     return this.baseURL+environment.TEAM_INCARICO_PERMISSION_GRANTES_URL;
   }
+
+  getTaskExpensesPermissionGrantedUrl(taskId: string){
+    return this.baseURL+environment.TASK_EXPENSES_PERMISSION_GRANTES_URL+"/"+taskId;
+  }
+
+  getTaskExpensesAddUrl(taskId: string){
+    return this.baseURL+environment.TASK_EXPENSES_ADD_URL+"/"+taskId;
+  }
+
+  getTaskExpensesUpdateUrl(taskId: string){
+    return this.baseURL+environment.TASK_EXPENSES_UPDATE_URL+"/"+taskId;
+  }
+
+  getTaskExpensesFindAll(taskId: string){
+    return this.baseURL+environment.TASK_EXPENSES_FIND_ALL_URL+"/"+taskId;
+  }
+
+  getTaskExpensesDeleteUrl(taskId: string, taskExpenseId: string){
+    return this.baseURL+environment.TASK_EXPENSES_DELETE_URL+"/"+taskId+"/"+taskExpenseId;
+  }
+  
+  getBudgetSummaryPermissionGrantedUrl(taskId: string) {
+    return this.baseURL+environment.BUDGET_SUMMARY_PERMISSION_GRANTED_URL+"/"+taskId
+  }
+
+  getBudgetSummaryCreateUrl(taskId: string) {
+    return this.baseURL+environment.BUDGET_SUMMARY_CREATE_URL+"/"+taskId
+  }
+
+  getTaskExpensesTypeFindAll(){
+    return this.baseURL+environment.TASK_EXPENSES_TYPES_FIND_ALL_URL;
+  }
+
   
   getTeamIncaricoAddSimpleComponentGrantedUrl(){
     return this.baseURL+environment.TEAM_INCARICO_ADD_SIMPLE_COMPONENTS;
@@ -145,6 +179,10 @@ export class BackendUrlsService {
   }
   getUpdateProfileResidence(): string {
     return this.baseURL+environment.USER_PROFILE_UPDATE_RESIDENCE;
+  }
+
+  getUploadEmployeeProfileImage(): string {
+    return this.baseURL+environment.UPDATE_EMPLOYEE_PROFILE_IMAGE;
   }
   
   buildUrlForUserProfileImageLink(userProfileImageDownloadToken: string) {
@@ -366,6 +404,10 @@ export class BackendUrlsService {
     return this.baseURL+environment.ADD_TURNSTILE;
   }
 
+  getExportDailyAttendance(): string {
+    return this.baseURL+environment.EXPORT_ATTENDANCE;
+  }
+
   findTurnstileDetailsUrl(): string {
     return this.baseURL+environment.FIND_TURNSTILE_DETAILS;
   }
@@ -384,6 +426,10 @@ export class BackendUrlsService {
 
   createUserAttendanceUrl(): string {
     return this.baseURL+environment.CREATE_USER_ATTENDANCE;
+  }
+
+  createUserSwitchedAttendanceUrl(): string {
+    return this.baseURL+environment.CREATE_USER_SWITCHED_ATTENDANCE;
   }
 
   getLoadAllTurnstileAttendancesUrl(): string {

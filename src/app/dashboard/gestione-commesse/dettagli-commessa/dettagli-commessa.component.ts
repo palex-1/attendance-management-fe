@@ -33,6 +33,7 @@ export class DettagliCommessaComponent implements OnInit {
   nameSurnameQAReviewer: string = '';
   isEnabledForAllUserCheckCommessaDetails: boolean = false;
   isAbsenceTask: boolean = false;
+  totalBudgetCommessaDetails: number = 0
 
   currentUserCanEditCommessa: boolean = false;
 
@@ -73,6 +74,7 @@ export class DettagliCommessaComponent implements OnInit {
     
     if(this.dettagliCommessaService.currentIncaricoLoaded!=null){
       let incarico: IncaricoDetailsDTO = this.dettagliCommessaService.currentIncaricoLoaded;
+
       if(incarico.task!=null){
         this.codiceCommessaDetails = incarico.task.taskCode;
         this.pivaCommessaDetails = incarico.task.clientVat;
@@ -82,6 +84,7 @@ export class DettagliCommessaComponent implements OnInit {
         this.dataDisattivazioneCommessaDetails = DateUtils.buildDateFromStrOrDate(incarico.task.deactivationDate);
         this.isEnabledForAllUserCheckCommessaDetails = incarico.task.isEnabledForAllUsers;
         this.isAbsenceTask = incarico.task.isAbsenceTask;
+        this.totalBudgetCommessaDetails = incarico.task.totalBudget
       }
       
       this.nameSurnameProjectManager = this.composeNameAndSurname(incarico.projectManager);
@@ -117,6 +120,7 @@ export class DettagliCommessaComponent implements OnInit {
     commessa.billable= this.fatturabileCheckCommessaDetails;
     commessa.activationDate = this.dataAttivazioneCommessaDetails==null ? null: DateUtils.buildStartOfDayOfDate(this.dataAttivazioneCommessaDetails);
     commessa.deactivationDate = this.dataDisattivazioneCommessaDetails==null ? null: DateUtils.buildEndOfDayOfDate(this.dataDisattivazioneCommessaDetails);
+    commessa.totalBudget = this.totalBudgetCommessaDetails
 
     if(commessa.taskDescription==null || commessa.taskDescription.length < 1){
         this.notifier.notifyWarningWithI18nAndStandardTitle("generic.missing-data-to-continue");
@@ -131,7 +135,7 @@ export class DettagliCommessaComponent implements OnInit {
       this.notifier.notifyWarningWithI18nAndStandardTitle("generic.message-wait-for-completion");
       return;
     }
-    console.log(commessa)
+    //console.log(commessa)
     this.dettagliCommessaService.updateOperationInProgress = true;
     this.gestioneCommesseSrv.updateIncarico(commessa).subscribe(
       (succ: GenericResponse<WorkTaskDTO>)=>{

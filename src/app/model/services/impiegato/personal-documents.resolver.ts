@@ -24,7 +24,7 @@ export class PersonalDocumentsResolver extends AbstractResolver {
         return this.myPaychecksService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.myPaychecksService.reset();
         this.myPersonalDocumentService.reset();
 

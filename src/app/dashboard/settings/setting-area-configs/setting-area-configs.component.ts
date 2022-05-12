@@ -39,7 +39,8 @@ export class SettingAreaConfigsComponent implements OnInit {
   }
 
   editConfig(config: GlobalConfigurationDTO){
-    this.addSettingModalComp.openEditDialogWithAreaAndKeyLocked(config.settingArea, config.settingKey, config.settingValue);
+    this.addSettingModalComp.openEditDialogWithAreaAndKeyLocked(config.settingArea, config.settingKey, 
+      config.settingValue, config.secret);
   }
 
   deleteConfig(config: GlobalConfigurationDTO){

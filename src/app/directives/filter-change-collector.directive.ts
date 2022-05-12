@@ -27,12 +27,12 @@ export class FilterChangeCollectorDirective implements OnChanges{
     }
 
     ngOnChanges(changes: SimpleChanges){
-        if(changes.valueToFilter){
+        if(changes["valueToFilter"]){
             if(this.isFirstChange){
-                this.currentValue = changes.valueToFilter.currentValue;
+                this.currentValue = changes["valueToFilter"].currentValue;
                 this.isFirstChange = false;
             }else{
-                this.onFilterChange(changes.valueToFilter.currentValue);
+                this.onFilterChange(changes["valueToFilter"].currentValue);
             }
         }
     }

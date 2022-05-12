@@ -44,7 +44,7 @@ export class BasicEmployeeInfoComponent implements OnInit {
     return this.employeeDetailsService.currentLoadedCompanies;
   }
 
-  get levels(): CompanyDTO[]{
+  get levels(): UserLevelDTO[]{
     if(this.employeeDetailsService.currentLoadedUserLeves==null){
       return [];
     }
@@ -125,6 +125,14 @@ export class BasicEmployeeInfoComponent implements OnInit {
 
   set leaveHoursField(value: number){
     this.currentContractInfo.leaveHours =  value;
+  }
+
+  get hourlyCostField(){
+    return this.currentContractInfo.hourlyCost;
+  }
+
+  set hourlyCostField(value: number){
+    this.currentContractInfo.hourlyCost =  value;
   }
 
   get employmentOfficeField(){
@@ -342,8 +350,14 @@ export class BasicEmployeeInfoComponent implements OnInit {
 
     if(this.companyIdField==null || this.companyIdField+''==''  
         || this.workedHoursField==null || this.vacationDaysField==null
-          || this.levelIdField==null || this.levelIdField+''=='' || this.leaveHoursField==null ){
+          || this.levelIdField==null || this.levelIdField+''=='' || this.leaveHoursField==null 
+          || this.hourlyCostField==null){
       this.notifier.notifyWarningWithI18nAndStandardTitle("message.missing-data-to-continue");
+      return;
+    }
+
+    if(this.hourlyCostField < 0){
+      this.notifier.notifyErrorWithI18nAndStandardTitle("message.bad-data")
       return;
     }
 
@@ -355,7 +369,8 @@ export class BasicEmployeeInfoComponent implements OnInit {
     this.updatingOtherInfo = true;
     
     this.employeeDetailsService.updateOtherUserInfo(this.currentUserProfile.id, this.levelIdField, this.companyIdField, 
-                      this.workedHoursField, this.leaveHoursField, this.vacationDaysField, this.employmentOfficeField)
+                      this.workedHoursField, this.leaveHoursField, this.vacationDaysField, 
+                      this.employmentOfficeField, this.hourlyCostField)
         .subscribe(
           succ=>{
               this.updatingOtherInfo = false;
@@ -391,8 +406,11 @@ export class BasicEmployeeInfoComponent implements OnInit {
 
     this.employeeDetailsService.updateDomicileOfUser(
                           this.currentUserProfile.id,
-                          streetDomicileFieldPark, cityDomicileFieldPark,
-                          provinceDomicileFieldPark, nationDomicileFieldPark, zipCodeDomicileFieldPark)
+                          StringUtils.toUpperCase(streetDomicileFieldPark), 
+                          StringUtils.toUpperCase(cityDomicileFieldPark),
+                          StringUtils.toUpperCase(provinceDomicileFieldPark), 
+                          StringUtils.toUpperCase(nationDomicileFieldPark), 
+                          zipCodeDomicileFieldPark)
         .subscribe(
           succ=>{
             this.updatingDomicile = false;
@@ -427,8 +445,12 @@ export class BasicEmployeeInfoComponent implements OnInit {
     
     this.updatingResidence = true;
 
-    this.employeeDetailsService.updateDomicileOfUser(this.currentUserProfile.id, streetResidenceFieldPark, cityResidenceFieldPark,
-              provinceResidenceFieldPark, nationResidenceFieldPark, zipCodeResidenceFieldPark)
+    this.employeeDetailsService.updateResidenceOfUser(this.currentUserProfile.id, 
+              StringUtils.toUpperCase(streetResidenceFieldPark), 
+              StringUtils.toUpperCase(cityResidenceFieldPark),
+              StringUtils.toUpperCase(provinceResidenceFieldPark), 
+              StringUtils.toUpperCase(nationResidenceFieldPark), 
+              zipCodeResidenceFieldPark)
         .subscribe(
           succ=>{
             this.notifier.notifySuccessWithI18nAndStandardTitle("message.successfully-updated");

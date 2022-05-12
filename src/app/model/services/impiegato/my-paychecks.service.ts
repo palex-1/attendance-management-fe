@@ -15,6 +15,7 @@ import { map, catchError } from 'rxjs/operators';
 import { PagingAndSorting } from 'src/app/util/querying/paging-and-sorting.model';
 import { QueryParameter } from 'src/app/util/querying/query-parameter.model';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { TicketDownloadDTO } from '../../dtos/ticket-download.dto';
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -147,7 +148,8 @@ export class MyPaychecksService {
     let params: HttpParams = new HttpParams();
     params = params.append('paycheckId', paycheck.id+'');
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadMyPaycheckUrl(), params)
+    return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>
+            (this.backendUrlsSrv.getDownloadMyPaycheckUrl(), params)
   }
 
 

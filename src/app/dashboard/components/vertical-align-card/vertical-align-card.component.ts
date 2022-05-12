@@ -18,7 +18,7 @@ export class VerticalAlignCardComponent implements OnInit {
   title: string;
 
   @Input()
-  stringValue: string;
+  stringValue: string | number;
 
   @Input()
   color: string = 'red';

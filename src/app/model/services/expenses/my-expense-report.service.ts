@@ -17,6 +17,7 @@ import { Page } from 'src/app/util/querying/page.model';
 import { ReportDTO } from '../../dtos/reports/report-dto.model';
 import { ExpenseReportDTO } from '../../dtos/expenses/expense-report-dto.model';
 import { DateUtils } from 'src/app/util/dates/date-utils';
+import { StringDTO } from "../../dtos/string-dto.model";
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -169,7 +170,8 @@ export class MyExpenseReportsService implements ResetableService {
         let params: HttpParams = new HttpParams();
         params = params.append('reportId', elem.id+'');
 
-        return this.datasource.sendDeleteRequest(this.backendUrlsSrv.getDeleteExpenseReportUrl(), params);
+        return this.datasource.sendDeleteRequest<GenericResponse<StringDTO>>
+                        (this.backendUrlsSrv.getDeleteExpenseReportUrl(), params);
     }
 
 }

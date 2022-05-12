@@ -23,7 +23,7 @@ export class UserExpenseReportsResolver extends AbstractResolver{
         return this.reportsService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.reportsService.reset();
 
         return super.resolve(route, state);

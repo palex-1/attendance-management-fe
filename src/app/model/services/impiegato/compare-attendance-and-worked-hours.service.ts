@@ -64,16 +64,16 @@ export class CompareAttendanceAndWorkedHours implements ResetableService {
 
 
     loadInitialInformation(routeParams: Params, forceReload: boolean = false): Observable<boolean> {
-        if (this.dataAreLoaded && !forceReload && routeParams.idEmployee==this.currentEmployeeId) {
+        if (this.dataAreLoaded && !forceReload && routeParams['idEmployee']==this.currentEmployeeId) {
             return of(true);
         }
     
         //if employee is different reset page old content
-        if(routeParams.idEmployee!=this.currentEmployeeId){
+        if(routeParams['idEmployee']!=this.currentEmployeeId){
             this.reset();
         }
     
-        this.currentEmployeeId = routeParams.idEmployee;
+        this.currentEmployeeId = routeParams['idEmployee'];
 
 
         //retrive this data only when is requested in the component

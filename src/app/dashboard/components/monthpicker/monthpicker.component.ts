@@ -71,9 +71,9 @@ export class MonthpickerComponent implements OnInit, OnChanges {
     if(this.initializingComponent){
       return;
     }
-    if(changes.initialValue!=null && changes.initialValue.previousValue!=changes.initialValue.currentValue){
+    if(changes['initialValue']!=null && changes['initialValue'].previousValue!=changes['initialValue'].currentValue){
       //if date is changed
-      if(this.currentDateSelected!=changes.initialValue.currentValue){
+      if(this.currentDateSelected!=changes['initialValue'].currentValue){
         this.initializeComponent();
       }      
     }

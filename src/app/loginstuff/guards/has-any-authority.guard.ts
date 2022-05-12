@@ -15,7 +15,7 @@ export class HasAnyAuthorityGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean{
-        let authParams = route.data.auth;
+        let authParams = route.data["auth"];
 
         if(!this.authService.authenticated){
             return false;

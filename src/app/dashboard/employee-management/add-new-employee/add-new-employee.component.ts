@@ -46,6 +46,7 @@ export class AddNewEmployeeComponent implements OnInit {
   vacationDaysField: number = null;
   leaveHoursField: number = null;
   employmentOffice: string = null;
+  hourlyCost: number = 0;
 
   permissionsUserGroupsLabels: PermissionUserGroupLabel[] = [];
   companies: CompanyDTO[] = [];
@@ -136,6 +137,9 @@ export class AddNewEmployeeComponent implements OnInit {
     this.vacationDaysField = null;
     this.leaveHoursField = null;
     this.employmentOffice = null;
+    this.hourlyCost = 0;
+    this.birthDate = null;
+	  this.dateOfEmployment = null
   }
 
   get showLoader(){
@@ -185,9 +189,14 @@ export class AddNewEmployeeComponent implements OnInit {
           || this.birthDate+''=='' || this.permissionGroupLabelId==null || this.permissionGroupLabelId+''==''
           || this.companyId==null || this.companyId+''=='' || this.workedHoursField==null
           || this.levelIdField==null || this.levelIdField+''=='' 
-          || this.workedHoursField==null || this.vacationDaysField==null){
+          || this.workedHoursField==null || this.vacationDaysField==null || this.hourlyCost==null){
 
       this.notifier.notifyWarningWithI18nAndStandardTitle("message.missing-data-to-continue");
+      return;
+    }
+
+    if(this.hourlyCost < 0){
+      this.notifier.notifyErrorWithI18nAndStandardTitle("message.bad-data")
       return;
     }
 
@@ -214,7 +223,8 @@ export class AddNewEmployeeComponent implements OnInit {
       workDayHours: this.workedHoursField,
       initialLeaveHours: this.leaveHoursField,
       initialVacationDays: this.vacationDaysField,
-      employmentOffice: this.employmentOffice
+      employmentOffice: this.employmentOffice,
+      hourlyCost: this.hourlyCost
     }
 
 

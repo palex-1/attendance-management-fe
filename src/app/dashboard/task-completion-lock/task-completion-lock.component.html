@@ -38,9 +38,10 @@
 
 
                     <div class="col-12">
-                        <small>{{ "label.note" | translate }}: {{ "message.tip-to-request-hours-calculation" | translate }}</small>
+                        <small>{{ "label.note" | translate }}: {{ "message.tip-to-request-hours-calculation" | translate
+                            }}</small>
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -82,8 +83,9 @@
         <div class="card mb-5">
             <div class="card-header">
 
-                <a href="javascript:void(0)" title="{{ 'label.add-completion-lock' | translate }}" class="refresh-link mr-1"
-                    *ngIf="hasAuthority(['TASK_COMPLETION_LOCK_CREATE'])" (click)="openCreateDialog()">
+                <a href="javascript:void(0)" title="{{ 'label.add-completion-lock' | translate }}"
+                    class="refresh-link mr-1" *ngIf="hasAuthority(['TASK_COMPLETION_LOCK_CREATE'])"
+                    (click)="openCreateDialog()">
                     <i class="fa fa-plus"></i>
                 </a>
 
@@ -100,23 +102,24 @@
                         <thead>
                             <tr>
                                 <th sortable-td [status]="0" [sortByValue]="'year'" [sortBy]="sortBy"
-                                    (onSortChange)="onSortChange($event)">
+                                    class="min-width-table-column" (onSortChange)="onSortChange($event)">
                                     {{ "label.year" | translate }}
                                 </th>
                                 <th sortable-td [status]="0" [sortByValue]="'month'" [sortBy]="sortBy"
-                                    (onSortChange)="onSortChange($event)">
+                                    class="min-width-table-column" (onSortChange)="onSortChange($event)">
                                     {{ "label.month" | translate }}
                                 </th>
                                 <th sortable-td [status]="0" [sortByValue]="'hoursCalculationExecutionRequested'"
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    class="min-width-table-column" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
                                     {{ "label.hours-calculation-requested" | translate }}
                                 </th>
 
                                 <th sortable-td [status]="0" [sortByValue]="'status'" [sortBy]="sortBy"
-                                    (onSortChange)="onSortChange($event)">
+                                    class="min-width-table-column" (onSortChange)="onSortChange($event)">
                                     {{ "label.status" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.actions" | translate }}
                                 </th>
                             </tr>
@@ -141,8 +144,9 @@
                                     </button>
 
                                     <button class="btn btn-warning btn-sm add-cursor-pointer mr-1" type="button"
-                                        (click)="requestHoursCalculation(elem)" title="{{ 'label.request-hours-calculation' | translate}}"
-                                            *ngIf="hasAuthority(['TASK_COMPLETION_LOCK_UPDATE']) && elem.hoursCalculationExecutionRequested==false">
+                                        (click)="requestHoursCalculation(elem)"
+                                        title="{{ 'label.request-hours-calculation' | translate}}"
+                                        *ngIf="hasAuthority(['TASK_COMPLETION_LOCK_UPDATE']) && elem.hoursCalculationExecutionRequested==false">
                                         <i class="fas fa-calculator"></i>
                                     </button>
 

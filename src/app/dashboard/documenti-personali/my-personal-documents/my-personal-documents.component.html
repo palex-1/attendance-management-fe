@@ -89,10 +89,11 @@
                                 <th>
                                     {{ "label.document-type-label" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'uploadDate'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'uploadDate'"  class="min-width-table-column"
+                                 [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.upload-date" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                   {{ "label.actions" | translate }}
                                 </th>
                             </tr>

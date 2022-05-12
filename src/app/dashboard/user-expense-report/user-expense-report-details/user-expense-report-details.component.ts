@@ -289,6 +289,10 @@ export class UserExpenseReportDetailsComponent implements OnInit {
     return this.userExpenseReportDetailsService.madeBy;
   }
 
+  get expenseTaskCode(){
+    return this.userExpenseReportDetailsService.expenseTaskCode;
+  }
+
   get processedBy(){
     return this.userExpenseReportDetailsService.processedBy;
   } 

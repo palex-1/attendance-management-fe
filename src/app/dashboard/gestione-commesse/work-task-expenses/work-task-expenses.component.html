@@ -1,0 +1,171 @@
+<div class="row">
+
+
+    <div class="col-md-8 col-xl-9">
+        <div class="card mb-5">
+            <div class="card-header">
+                <i class="fas fa-cash-register" aria-hidden="true"></i> {{ "label.task-expenses" | translate }}
+
+                <a href="javascript:void(0)" title="{{ 'label.add-expense' | translate }}" class="refresh-link mr-1"
+                  *ngIf="canAddWorkExpenses()" (click)="openAddDialog()">
+                        <i class="fa fa-plus"></i>
+                </a>
+
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+                    (click)="refreshData()">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th sortable-td [status]="0" [sortByValue]="'day'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.date" | translate }}
+                                </th>
+                                <th sortable-td [status]="0" [sortByValue]="'title'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.title" | translate }}
+                                </th>
+
+                                <th sortable-td [status]="0" [sortByValue]="'expenseType'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.type" | translate }}
+                                </th>
+
+                                <th sortable-td [status]="0" [sortByValue]="'amount'" class="min-width-table-column"
+                                  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                  {{ "label.amount" | translate }}
+                                </th>
+
+                                <th sortable-td [status]="0" [sortByValue]="'description'" class="min-width-table-column"
+                                        [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    {{ "label.description" | translate }}
+                                </th>
+
+                                
+                                <th class="min-width-table-column">
+                                    {{ "label.actions" | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="expenses.length==0">
+                                <td colspan="7" class="td-empty-records">{{ "general.table-empty" | translate }}</td>
+                            </tr>
+                            <tr *ngFor="let elem of expenses">
+                                <td>{{ elem.day | dateFormat:'short' }}</td>
+                                <td>{{ elem.title }}</td>
+                                <td>{{ convertExpenseType(elem.expenseType) }}</td>
+                                <td>{{ elem.amount }}</td>
+                                <td>{{ elem.description | ellipsesDropperPipe: 70 }}</td>
+                                
+                                <td class="min-width-3-button-in-table">
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" 
+                                            *ngIf="canUpdateWorkExpenses()"
+                                            (click)="openWorkTaskUpdateModal(elem)" title="{{ 'general.action.edit' | translate}}">
+                                        
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+
+                                    <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="delete(elem)"
+                                          *ngIf="canDeleteWorkExpenses()" title="{{ 'label.delete' | translate}}">
+                                          <i class="fa fa-trash" aria-hidden="true"></i>
+                                      </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
+                        [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+                        (onPageChange)="changePage($event)">
+
+                </app-custom-paginator>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
+        <!-- Example DataTables Card-->
+        <app-show-hide-area [collapseAreaContent]="collapseAreaContentWTSummary">
+            <ng-template #collapseAreaContentWTSummary>
+                    <div class="filter-table-form-container">
+  
+                            <form noavalidate #form="ngForm" (ngSubmit)="refreshData()">
+                              <div class="row">
+          
+                                <div class="form-group col-md-12 mb-1">
+                                    <label for="f1" class="col-form-label">{{ "label.title" | translate }}</label>
+                                    <input type="text" class="form-control" [(ngModel)]="titleFilter" name="kjhad78" />
+                                </div>
+
+                                <div class="form-group col-md-12 mb-1">
+                                    <label class="col-form-label">{{ "label.type" | translate }}</label>
+                                    <select class="form-control" [(ngModel)]="expenseTypeFilter" name="sdfs23p9guj">
+                                        <option value="" selected></option>
+                                        <option *ngFor="let type of expenseTypesMap | keyvalue" [ngValue]="type.key">
+                                            {{ type.value }}
+                                        </option>
+                                    </select>
+                                  </div>
+
+
+                                <div class="form-group col-md-12 mb-1">
+                                    <label for="f1" class="col-form-label">{{ "label.date-from" | translate }}</label>
+                                    <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}" [initialValue]="dateStartFilter"
+                                            (onSelectDate)="onChangeDateFromFilter($event)" [isAMonthpicker]="false" >
+                                    </app-monthpicker>
+                                </div>
+            
+                                <div class="form-group col-md-12 mb-1">
+                                    <label for="f1" class="col-form-label">{{ "label.date-to" | translate }}</label>
+                                    <app-monthpicker placeholder="{{ 'general.date-placeholder' | translate }}" [initialValue]="dateEndFilter"
+                                            (onSelectDate)="onChangeDateToFilter($event)" [isAMonthpicker]="false" >
+                                    </app-monthpicker>
+                                </div>
+            
+                              </div>
+                            </form>
+            
+                            <div class="text-right">
+                                <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                                  {{ "button.clear-all" | translate }}
+                                </button>
+                                <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="refreshData()">
+                                  {{ "label.apply" | translate }}
+                                </button>
+                            </div>
+                        </div>
+                
+                </ng-template>
+            </app-show-hide-area>
+        <!-- /.container-fluid-->
+    </div>
+</div>
+
+
+
+
+
+
+<app-add-work-task-expense-modal #addExpenseModalRef *ngIf="canAddWorkExpenses()" 
+        (onSaveClick)="onAddNewExpense($event)">
+
+</app-add-work-task-expense-modal>
+
+<app-update-work-task-expense-modal #updateExpenseModalRef *ngIf="canUpdateWorkExpenses()" 
+        (onUpdateCompleted)="onUpdateExpense($event)">
+
+</app-update-work-task-expense-modal>

@@ -21,9 +21,21 @@
     </a>
   </li>
 
+  <li class="nav-item" *ngIf="canSeeExpensesArea()">
+    <a class="nav-link" href="#app-work-task-expenses-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(3)">
+      {{ "label.task-expenses" | translate }}
+    </a>
+  </li>
+  
   <li class="nav-item">
-    <a class="nav-link" href="#app-work-task-summary-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(3)">
-      {{ "label.summary" | translate }}
+    <a class="nav-link" href="#app-work-task-summary-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(4)">
+      {{ "label.summary-hours" | translate }}
+    </a>
+  </li>
+
+  <li class="nav-item" *ngIf="canSeeBudgetSummaryArea()">
+    <a class="nav-link" href="#app-work-task-budget-summary-tab" aria-selected="false" role="tab" data-toggle="tab" (click)="selectTab(5)">
+      {{ "label.budget-report" | translate }}
     </a>
   </li>
 
@@ -39,8 +51,18 @@
     <app-team-commessa *ngIf="tabSelected==2"></app-team-commessa>
   </div>
 
-  <div class="tab-pane fade" id="app-work-task-summary-tab" role="tabpanel" aria-labelledby="app-work-task-summary-tab">
-      <app-work-task-summary *ngIf="tabSelected==3"></app-work-task-summary>
+
+  <div class="tab-pane fade" id="app-work-task-expenses-tab" role="tabpanel" *ngIf="canSeeExpensesArea()" aria-labelledby="app-work-task-expenses-tab">
+    <app-work-task-expenses *ngIf="tabSelected==3"></app-work-task-expenses>
   </div>
+
+  
+  <div class="tab-pane fade" id="app-work-task-summary-tab" role="tabpanel" aria-labelledby="app-work-task-summary-tab">
+      <app-work-task-summary *ngIf="tabSelected==4"></app-work-task-summary>
+  </div>
+
+  <div class="tab-pane fade" id="app-work-task-budget-summary-tab" role="tabpanel" *ngIf="canSeeBudgetSummaryArea()" aria-labelledby="app-work-task-summary-tab">
+    <app-work-task-budget-summary *ngIf="tabSelected==5"></app-work-task-budget-summary>
+</div>
   
 </div>

@@ -313,8 +313,11 @@ export class PersonalInfoComponent implements OnInit,  AfterViewInit{
     this.updatingDomicile = true;
 
 
-    this.userProfileInfoService.updateDomicile(streetDomicileFieldPark, cityDomicileFieldPark,
-                          provinceDomicileFieldPark, nationDomicileFieldPark, zipCodeDomicileFieldPark)
+    this.userProfileInfoService.updateDomicile(StringUtils.toUpperCase(streetDomicileFieldPark), 
+                          StringUtils.toUpperCase(cityDomicileFieldPark),
+                          StringUtils.toUpperCase(provinceDomicileFieldPark), 
+                          StringUtils.toUpperCase(nationDomicileFieldPark), 
+                          zipCodeDomicileFieldPark)
         .subscribe(
           succ=>{
             this.updatingDomicile = false;
@@ -348,8 +351,12 @@ export class PersonalInfoComponent implements OnInit,  AfterViewInit{
     
     this.updatingResidence = true;
 
-    this.userProfileInfoService.updateResidence(streetResidenceFieldPark, cityResidenceFieldPark,
-              provinceResidenceFieldPark, nationResidenceFieldPark, zipCodeResidenceFieldPark)
+    this.userProfileInfoService.updateResidence(
+                StringUtils.toUpperCase(streetResidenceFieldPark), 
+                StringUtils.toUpperCase(cityResidenceFieldPark),
+                StringUtils.toUpperCase(provinceResidenceFieldPark), 
+                StringUtils.toUpperCase(nationResidenceFieldPark), 
+                zipCodeResidenceFieldPark)
         .subscribe(
           succ=>{
             this.notifier.notifySuccessWithI18nAndStandardTitle("message.successfully-updated");

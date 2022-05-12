@@ -24,7 +24,7 @@ export class UserProfileInfoResolver extends AbstractResolver {
         return this.userProfileInfoSrv;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.userProfileInfoSrv.reset(); //reset every time
         return super.resolve(route, state);
     }

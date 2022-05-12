@@ -22,7 +22,7 @@
           <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="updateUsernameInfo()"
                         [disabled]="updatingUsernameInfo" *ngIf="canEditUserData">
                   <span  class="spinner-button-border float-left" *ngIf="updatingUsernameInfo"></span>
-              {{ "label.button-update" | translate }}
+              {{ "label.save" | translate }}
           </button>
           <div class="clearfix"></div>
       </form>
@@ -111,7 +111,7 @@
           <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" (click)="updatePersonalInfo()"
                         [disabled]="updatingPersonalInfo" *ngIf="canEditUserData">
                   <span  class="spinner-button-border float-left" *ngIf="updatingPersonalInfo"></span>
-              {{ "label.button-update" | translate }}
+              {{ "label.save" | translate }}
           </button>
           <div class="clearfix"></div>
       </form>
@@ -179,7 +179,7 @@
           <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" 
                         (click)="updateDomicile()" [disabled]="updatingDomicile" *ngIf="canEditUserData">
               <span  class="spinner-button-border float-left" *ngIf="updatingDomicile"></span>
-              {{ "label.button-update" | translate }}
+              {{ "label.save" | translate }}
           </button>
           <div class="clearfix"></div>
       </form>
@@ -248,7 +248,7 @@
             <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" *ngIf="canEditUserData"
                           [disabled]="updatingResidence" (click)="updateResidence()">
                 <span  class="spinner-button-border float-left" *ngIf="updatingResidence"></span>
-                {{ "label.button-update" | translate }}
+                {{ "label.save" | translate }}
             </button>
             <div class="clearfix"></div>
         </form>
@@ -307,6 +307,12 @@
                 </div>
 
                 <div class="form-group col-md-6">
+                    <label class="control-label">{{ "label.hourly-cost" | translate }} *</label>
+                    <input type="number" class="form-control" name="mcbdf8356abgdui" [disabled]="!canEditUserData"
+                          [(ngModel)]="hourlyCostField" step="0.01">
+                </div>
+
+                <div class="form-group col-md-6">
                     <label class="control-label">{{ "label.employment-office" | translate }}</label>
                     <select class="form-control" [(ngModel)]="employmentOfficeField" name="lkdjs982173mssd8923">
                         <option *ngFor="let elem of employmentOffices" [ngValue]="elem">
@@ -324,7 +330,7 @@
               <button type="submit" class="btn btn-danger float-right add-cursor-pointer mt-3" *ngIf="canEditUserData"
                             [disabled]="updatingOtherInfo" (click)="updateOtherInfo()">
                   <span  class="spinner-button-border float-left" *ngIf="updatingOtherInfo"></span>
-                  {{ "label.button-update" | translate }}
+                  {{ "label.save" | translate }}
               </button>
               <div class="clearfix"></div>
           </form>

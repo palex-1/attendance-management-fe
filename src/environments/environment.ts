@@ -18,7 +18,7 @@ export const environment = {
   log_in_console_enabled: window["env"]["debug"] || false,
   log_in_backend_enabled: window["env"]["debug"] || false,
   
-  frontend_version: "1.0.0",
+  frontend_version: "2.0.0",
   primary_product_color: '#68b1f0',
 
   TOKEN_LOC_STRING_MAP: "auth_token_loc",
@@ -54,6 +54,8 @@ export const environment = {
   UPDATE_EMPLOYEE_PROFILE: AUTH_PATH+'users/updateProfile',
   UPDATE_EMPLOYEE_OTHER_INFO: AUTH_PATH+'users/updateOtherProfileInfo',
   UPDATE_EMPLOYEE_USERNAME: AUTH_PATH+'users/updateUserEmail',
+  UPDATE_EMPLOYEE_PROFILE_IMAGE: AUTH_PATH+"users/image", 
+
 
   EMPLOYEE_WORK_TASK_FIND_ALL: CORE_PATH+'userProfile/allTasksOfUser',
   FIND_MY_TASK_ENABLE: CORE_PATH+'userProfile/allMyTasksEnabled',
@@ -110,8 +112,10 @@ export const environment = {
   CHANGE_TURNSTILE_SECRET: CORE_PATH+'turnstile/changeSecret',
   UPDATE_TURNSTILE: CORE_PATH+'turnstile/update',
 
+  EXPORT_ATTENDANCE: CORE_PATH+'attendance/exportAttendanceOfDay',
   DELETE_USER_ATTENDANCE: CORE_PATH+'attendance/delete',
   CREATE_USER_ATTENDANCE: CORE_PATH+'attendance/create',
+  CREATE_USER_SWITCHED_ATTENDANCE: CORE_PATH+'attendance/switch',
   FIND_ALL_USER_ATTENDANCE: CORE_PATH+'attendance/findAll',
 
   FIND_USER_COMPLETED_TASK_OF_MONTH: CORE_PATH+'userTask/findCompletedTaskOfMonth',
@@ -172,7 +176,6 @@ export const environment = {
   IMPIEGATO_CHANGE_EMAIL_URL: CORE_PATH+"impiegato/changeEmail",
   IMPIEGATO_CONFIRM_EMAIL_URL:  CORE_PATH+"impiegato/confirmEmailChange",
   
-
   
   TEAM_INCARICO_URL: CORE_PATH+'teamIncarico',
   IMPIEGATI_NOT_OF_TEAM_INCARICO: CORE_PATH+'teamIncarico/allImpiegatiNotOf',
@@ -181,6 +184,18 @@ export const environment = {
   TEAM_INCARICO_DELETE_SPECIAL_COMPONENT: CORE_PATH+'teamIncarico/deleteSpecialComponent',
   TEAM_INCARICO_DELETE_SIMPLE_COMPONENT: CORE_PATH+'teamIncarico/deleteStandardComponent',
   TEAM_INCARICO_PERMISSION_GRANTES_URL: CORE_PATH+'teamIncarico/permissionsGranted',
+
+  TASK_EXPENSES_FIND_ALL_URL: CORE_PATH+'task-expenses',
+  TASK_EXPENSES_ADD_URL: CORE_PATH+'task-expenses',
+  TASK_EXPENSES_UPDATE_URL: CORE_PATH+'task-expenses',
+  TASK_EXPENSES_DELETE_URL: CORE_PATH+'task-expenses',
+  TASK_EXPENSES_PERMISSION_GRANTES_URL: CORE_PATH+'task-expenses/permissionsGranted',
+  TASK_EXPENSES_TYPES_FIND_ALL_URL: CORE_PATH+'task-expenses/expensesTypes/findAll',
+
+  BUDGET_SUMMARY_PERMISSION_GRANTED_URL: CORE_PATH+'budget-summary/permissionsGranted',
+  BUDGET_SUMMARY_CREATE_URL: CORE_PATH+'budget-summary',
+  
+
   INCARICO_URL: CORE_PATH+"task",
   DISATTIVA_INCARICO_URL: CORE_PATH+"task/deactivate",
   SEDI_LAVORATIVE_URL: CORE_PATH+"sede",

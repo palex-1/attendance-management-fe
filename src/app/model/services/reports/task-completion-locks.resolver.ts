@@ -23,7 +23,7 @@ export class TaskCompletionLocksResolver extends AbstractResolver{
         return this.taskCompletionLocksService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.taskCompletionLocksService.reset();
 
         return super.resolve(route, state);

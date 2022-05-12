@@ -22,7 +22,7 @@ export class MyProfileResolver extends AbstractResolver{
         return this.myProfileService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         //this.myProfileService.reset();
         return super.resolve(route, state);
     }

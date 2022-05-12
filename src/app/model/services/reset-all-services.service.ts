@@ -13,6 +13,8 @@ import { EmployeePersonalDocumentService } from './impiegato/employee-personal-d
 import { UserLevelsService } from './settings/user-levels.service';
 import { HomeService } from './home/home.service';
 import { CompaniesService } from "./settings/companies.service";
+import { WorkTaskExpensesService } from "./incarico/work-task-expenses.service";
+import { WorkTaskSummaryService } from "./incarico/work-task-summary.service";
 
 
 @Injectable()
@@ -30,7 +32,9 @@ export class ResetAllServicesService {
                 private employeePersonalDocumentService: EmployeePersonalDocumentService,
                 private userLevelsService: UserLevelsService,
                 private homeService: HomeService,
-                private companiesService: CompaniesService
+                private companiesService: CompaniesService,
+                private workTaskExpensesService: WorkTaskExpensesService,
+                private workTaskSummaryService: WorkTaskSummaryService
                         ){
 
     }
@@ -49,6 +53,8 @@ export class ResetAllServicesService {
         this.userLevelsService.reset();
         this.homeService.reset();
         this.companiesService.reset();
+        this.workTaskExpensesService.reset();
+        this.workTaskSummaryService.reset();
     }
 
 }

@@ -10,43 +10,57 @@
     <div class="col-md-8 col-xl-9">
         <div class="card mb-5">
             <div class="card-header">
-                
-              <a href="javascript:void(0)" title="{{ 'label.add-turnstile' | translate }}" class="refresh-link mr-1"
-                  *ngIf="hasAuthority(['TURNSTILE_CREATE'])" (click)="openCreateDialog()">
-                              <i class="fa fa-plus"></i>
-              </a>
-                
-                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
+
+                <a href="javascript:void(0)" title="{{ 'label.add-turnstile' | translate }}" class="refresh-link mr-1"
+                    *ngIf="hasAuthority(['TURNSTILE_CREATE'])" (click)="openCreateDialog()">
+                    <i class="fa fa-plus"></i>
+                </a>
+
+                <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link mr-1"
                     (click)="refreshTurnstile()">
                     <i class="fas fa-sync-alt"></i>
                 </a>
-                
+
+                <a href="javascript:void(0)" title="{{ 'label.export-data' | translate }}"
+                    class="refresh-link float-right" (click)="openExportDailyAttendanceModal()">
+                    <i class="fas fa-file-excel"></i>
+                </a>
+
+
             </div>
-  
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-sm table-striped">
                         <thead>
                             <tr>
-                                <th sortable-td [status]="0" [sortByValue]="'id'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'id'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.id" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'title'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'title'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.title" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'description'" [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'description'"
+                                    class="min-width-table-column" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
                                     {{ "label.description" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'position'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'position'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.position" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'type'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'type'" class="min-width-table-column"
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.type" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'deactivated'"  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                <th sortable-td [status]="0" [sortByValue]="'deactivated'"
+                                    class="min-width-table-column" [sortBy]="sortBy"
+                                    (onSortChange)="onSortChange($event)">
                                     {{ "label.enabled" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.actions" | translate }}
                                 </th>
                             </tr>
@@ -64,96 +78,105 @@
                                 <td>{{ !elem.deactivated | trueFalsePipe }}</td>
 
                                 <td class="min-width-3-button-in-table">
-                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" (click)="openEditDialog(elem)"
-                                        *ngIf="hasAuthority(['TURNSTILE_READ'])" title="{{ 'label.info' | translate}}">
-                                        <i class="fa fa-info" aria-hidden="true"></i>
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="openEditDialog(elem)" *ngIf="hasAuthority(['TURNSTILE_READ'])"
+                                        title="{{ 'label.info' | translate}}">
+                                        <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                                     </button>
-                                      
-                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="openDetails(elem)"
-                                        *ngIf="hasAuthority(['USER_ATTENDANCE_READ'])" title="{{ 'label.turnstile-signature' | translate}}">
+
+                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button"
+                                        (click)="openDetails(elem)" *ngIf="hasAuthority(['USER_ATTENDANCE_READ'])"
+                                        title="{{ 'label.turnstile-signature' | translate}}">
                                         <i class="fas fa-external-link-alt"></i>
                                     </button>
-                                    
-                                 </td>
+
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-  
+
                 </div>
-  
-                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()" 
-                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]" 
+
+                <app-custom-paginator [initialRowsToShow]="getCurrentPageSize()" [totalRecords]="getTotalRecords()"
+                    [initialSelectedPage]="initialSelectedPage" [rowsPerPageOptions]="[3,5,7,10]"
                     (onPageChange)="changePage($event)">
-  
+
                 </app-custom-paginator>
-  
-  
+
+
             </div>
-  
-            
-  
+
+
+
         </div>
-        
+
     </div>
-  
-  
+
+
     <div class="col-md-4 col-xl-3 order-first order-sm-first order-md-last">
         <app-show-hide-area [collapseAreaContent]="collapseAreaContentULC">
             <ng-template #collapseAreaContentULC>
-              <div class="filter-table-form-container">
-  
-                  <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
-                    <div class="row">
-                    
-                        <div class="form-group col-md-12 mb-1">
-                            <label for="f1" class="col-form-label">{{ "label.title" | translate }}</label>
-                            <input type="text" class="form-control" name="fdfdf" [(ngModel)]="titleFilter">
-                        </div>
-                        <div class="form-group col-md-12 mb-1">
-                            <label for="f1" class="col-form-label">{{ "label.position" | translate }}</label>
-                            <input type="text" class="form-control" name="yug7szkjey871" [(ngModel)]="positionFilter">
-                        </div>
-                        <div class="form-group col-md-12 mb-1">
-                            <label for="f1" class="col-form-label">{{ "label.description" | translate }}</label>
-                            <input type="text" class="form-control" name="wet4e97wd" [(ngModel)]="descriptionFilter">
-                        </div>
+                <div class="filter-table-form-container">
+
+                    <form noavalidate #form="ngForm" (ngSubmit)="filtersChanged()">
+                        <div class="row">
+
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.title" | translate }}</label>
+                                <input type="text" class="form-control" name="fdfdf" [(ngModel)]="titleFilter">
+                            </div>
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.position" | translate }}</label>
+                                <input type="text" class="form-control" name="yug7szkjey871"
+                                    [(ngModel)]="positionFilter">
+                            </div>
+                            <div class="form-group col-md-12 mb-1">
+                                <label for="f1" class="col-form-label">{{ "label.description" | translate }}</label>
+                                <input type="text" class="form-control" name="wet4e97wd"
+                                    [(ngModel)]="descriptionFilter">
+                            </div>
 
 
-                        <div class="form-group col-md-12 mb-1">
-                            <label class="col-form-label">{{ "label.include-disabled" | translate }}</label>
-                            <select class="form-control" [(ngModel)]="includeDisabledFilter" name="po83u85621">
-                                <option [ngValue]="true" selected>{{ true | trueFalsePipe }}</option>
-                                <option [ngValue]="false" selected>{{ false | trueFalsePipe }}</option>
-                            </select>
+                            <div class="form-group col-md-12 mb-1">
+                                <label class="col-form-label">{{ "label.include-disabled" | translate }}</label>
+                                <select class="form-control" [(ngModel)]="includeDisabledFilter" name="po83u85621">
+                                    <option [ngValue]="true" selected>{{ true | trueFalsePipe }}</option>
+                                    <option [ngValue]="false" selected>{{ false | trueFalsePipe }}</option>
+                                </select>
+                            </div>
+
                         </div>
-                    
+                    </form>
+
+                    <div class="text-right">
+                        <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
+                            {{ "button.clear-all" | translate }}
+                        </button>
+                        <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
+                            {{ "label.apply" | translate }}
+                        </button>
                     </div>
-                  </form>
-  
-                  <div class="text-right">
-                      <button class="btn btn-sm btn-secondary mt-3 mb-3 mr-1 to-upper-case" (click)="resetFilters()">
-                        {{ "button.clear-all" | translate }}
-                      </button>
-                      <button class="btn btn-sm btn-primary mt-3 mb-3 mr-1 to-upper-case" (click)="filtersChanged()">
-                        {{ "label.apply" | translate }}
-                      </button>
-                  </div>
-              </div>
-              
-  
-                        
-  
-              </ng-template>
-          </app-show-hide-area>
+                </div>
+
+
+
+
+            </ng-template>
+        </app-show-hide-area>
         <!-- /.container-fluid-->
     </div>
-  </div>
-
-  
+</div>
 
 
 
 
-<app-add-view-edit-turnstile-modal #turnstileModal (onUpdateTurnstile)="refreshTurnstile()">
-    
+<app-turnstile-token-view #turnstileTokenViewModal>
+</app-turnstile-token-view>
+
+<app-add-view-edit-turnstile-modal #turnstileModal (onUpdateTurnstile)="refreshTurnstile()"
+    (onAddTurnstile)="turnstileAdded($event)">
 </app-add-view-edit-turnstile-modal>
+
+<app-export-daily-attendance #exportDailyAttendanceModal>
+
+</app-export-daily-attendance>

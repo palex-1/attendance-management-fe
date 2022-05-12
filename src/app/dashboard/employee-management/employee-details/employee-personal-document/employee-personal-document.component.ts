@@ -140,6 +140,8 @@ export class EmployeePersonalDocumentComponent implements OnInit {
         }
       }
     }
+
+    return '*';
   }
 
   notSelectedAnyDocumentType(): boolean{
