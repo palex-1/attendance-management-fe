@@ -24,7 +24,7 @@ export class TurnstileAttendanceResolver extends AbstractResolver{
         return this.turnstileAttendanceSrv;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.turnstileAttendanceSrv.reset();
 
         return super.resolve(route, state);

@@ -9,4 +9,6 @@ export class CompletedTaskDTO {
 	public editable ?: boolean;
 	public taskCode ?: WorkTaskDTO
 	public userProfile ?: UserProfileDTO;
+	public activityDescription ?: string;
+	public totalCost ?: number;
 }

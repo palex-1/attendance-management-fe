@@ -49,6 +49,7 @@ export class PlannerGiornalieroComponent implements OnInit {
   outsideDays = 'visible';
 
   taskCodeToAdd: string = '';
+  descriptionActivityToAdd: string = '';
   totalHoursTaskToAdd: number = 0;
   currentTaskToAddSmartWorked: boolean = false;
 
@@ -72,7 +73,9 @@ export class PlannerGiornalieroComponent implements OnInit {
                   private exceptionHandler: ChainExceptionHandler, private notifier: MessageNotifierService,
                     private confirmer: CustomConfirmationService) {
 
-    config.markDisabled = (date: NgbDate) => this.isNonAssunto(date);
+    config.markDisabled = (date: NgbDateStruct) => {
+      return this.isNonAssunto(date);
+    }
   }
 
   isDisabled = (date: NgbDate, current: {month: number}) => date.month !== current.month;
@@ -358,6 +361,7 @@ export class PlannerGiornalieroComponent implements OnInit {
     this.taskCodeToAdd = '';
     this.totalHoursTaskToAdd = 0;
     this.currentTaskToAddSmartWorked = false;
+    this.descriptionActivityToAdd = '';
   }
 
   addWorkTask(){
@@ -377,7 +381,8 @@ export class PlannerGiornalieroComponent implements OnInit {
     this.addTaskOperationInProgress = true;
 
     this.completedTaskOfDateService.addNewWorkedTask(this.taskCodeToAdd, this.currentTaskToAddSmartWorked, 
-      this.totalHoursTaskToAdd, this.completedTaskOfDateService.currentSelectedDay).subscribe(
+      this.totalHoursTaskToAdd, this.completedTaskOfDateService.currentSelectedDay,
+        this.descriptionActivityToAdd).subscribe(
         succ=>{
 
           succ.data.day = DateUtils.buildDateFromStrOrDate(succ.data.day);
@@ -530,11 +535,18 @@ export class PlannerGiornalieroComponent implements OnInit {
     return this.completedTaskOfDateService.specialTasksConfig;
   }
   
+
+  isSelected(day){
+    if(this.currentSelectedDay!=null && this.currentSelectedDay.getDate()==day){
+      return true;
+    }
+    return false;
+  }
+
   getColorOfDay(day){
     if(this.refreshingTask){
       return null;
     }
-
     if(this.mappaGiorniLavoratiMensili[day]!=null && this.mappaGiorniLavoratiMensili[day].colors!=null ){
         
       if(this.mappaGiorniLavoratiMensili[day].colors.length>0){
@@ -615,7 +627,7 @@ export class PlannerGiornalieroComponent implements OnInit {
 
 
 
-  isNonAssunto(date: NgbDate){
+  isNonAssunto(date: NgbDateStruct){
     if(date==null || date.day==null || date.month==null || date.year==null){
       return false;
     }

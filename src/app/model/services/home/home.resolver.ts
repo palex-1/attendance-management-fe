@@ -21,7 +21,7 @@ export class HomeResolver extends AbstractResolver {
         return this.homeService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.homeService.reset();
 
         return super.resolve(route, state);

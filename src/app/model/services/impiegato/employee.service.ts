@@ -20,6 +20,7 @@ import { StringDTO } from '../../dtos/string-dto.model';
 @Injectable()
 export class EmployeeService implements ResetableService {
     
+    
     dataAreLoaded: boolean = false;
     currentLoadedEmployeeInfo: EmployeeInfoDTO = new EmployeeInfoDTO();
     currentLoadedCompanies: CompanyDTO[] = [];
@@ -44,21 +45,21 @@ export class EmployeeService implements ResetableService {
 
     loadInitialInformation(routeParams: Params, forceReload : boolean = false): Observable<any> {
 
-        if (this.dataAreLoaded && !forceReload && routeParams.idEmployee==this.currentEmployeeId) {
+        if (this.dataAreLoaded && !forceReload && routeParams['idEmployee']==this.currentEmployeeId) {
             return of(true);
         }
     
         //if employee is different reset page old content
-        if(routeParams.idEmployee!=this.currentEmployeeId){
+        if(routeParams['idEmployee']!=this.currentEmployeeId){
             this.reset();
         }
     
-        this.currentEmployeeId = routeParams.idEmployee;
+        this.currentEmployeeId = routeParams['idEmployee'];
         
         return Observable.create(
             (observer) => {
             forkJoin(
-                    this.loadUserProfileDetails(routeParams.idEmployee),
+                    this.loadUserProfileDetails(routeParams['idEmployee']),
                     this.loadAllCompanies(),
                     this.loadAllUserLevels(),
                     this.loadAllEmploymentOffices()
@@ -149,7 +150,7 @@ export class EmployeeService implements ResetableService {
     }
 
     updateOtherUserInfo(userProfileId: number, level: number, companyId: number, workedHoursField: number, leaveHoursField: number,
-        vacationDaysField: number, employmentOfficeField: string){
+        vacationDaysField: number, employmentOfficeField: string, hourlyCostField: number){
         let form = {
             userProfileId: userProfileId,
             levelId: level,
@@ -157,7 +158,8 @@ export class EmployeeService implements ResetableService {
             workDayHours: workedHoursField,
             leaveHours: leaveHoursField,
             vacationDays: vacationDaysField,
-            employmentOffice: employmentOfficeField
+            employmentOffice: employmentOfficeField,
+            hourlyCost: hourlyCostField
         };
 
 
@@ -288,6 +290,14 @@ export class EmployeeService implements ResetableService {
         ); 
     }
 
+
+    updateProfileImage(choosenFile: File, userId) {
+        let formData: FormData = new FormData();
+        formData.set('image', choosenFile);
+        formData.set('userId', userId);
+
+        return this.datasource.uploadWithPost(this.backendUlrsSrv.getUploadEmployeeProfileImage(), formData);
+    }
 
 
     generateUserProfileBadge(): Observable<any> {

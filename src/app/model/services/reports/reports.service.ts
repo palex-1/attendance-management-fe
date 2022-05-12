@@ -15,6 +15,7 @@ import { SPredicateBuilder } from "src/app/util/querying/s-predicate-builder.ser
 import { QueryParameter } from "src/app/util/querying/query-parameter.model";
 import { Page } from 'src/app/util/querying/page.model';
 import { ReportDTO } from '../../dtos/reports/report-dto.model';
+import { TicketDownloadDTO } from "../../dtos/ticket-download.dto";
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -159,7 +160,8 @@ export class ReportsService implements ResetableService {
         params = params.append('month', selectedMonth+'');
         params = params.append('year', selectedYear+'');
 
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.getCreateReportUrl(), {}, params)
+        return this.datasource.makePostJsonObject<GenericResponse<ReportDTO>>
+        (this.backendUrlsSrv.getCreateReportUrl(), {}, params)
         .pipe(
             map(
               (res: GenericResponse<ReportDTO>)=>{
@@ -174,13 +176,13 @@ export class ReportsService implements ResetableService {
         let params: HttpParams = new HttpParams()
         params = params.append('reportId', report.id+'');
 
-        return this.datasource.sendDeleteRequest(this.backendUrlsSrv.getDeleteReportUrl(), params);
+        return this.datasource.sendDeleteRequest<GenericResponse<ReportDTO>>(this.backendUrlsSrv.getDeleteReportUrl(), params);
     }
 
     downloadReport(report: ReportDTO) {
         let params: HttpParams = new HttpParams()
         params = params.append('reportId', report.id+'');
 
-        return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadReportUrl(), params);
+        return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>(this.backendUrlsSrv.getDownloadReportUrl(), params);
     }
 }

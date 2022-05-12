@@ -23,7 +23,7 @@ export class SuccessfullyLoginLogsResolver extends AbstractResolver{
         return this.succLoginLogsSrv;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.succLoginLogsSrv.reset();
         
         return super.resolve(route, state);

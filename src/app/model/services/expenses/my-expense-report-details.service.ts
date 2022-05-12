@@ -20,6 +20,8 @@ import { MessageNotifierService } from 'src/app/dialogs/notifications/message-no
 import { ExpenseReportDetailsDTO } from '../../dtos/expenses/expense-report-details-dto.model';
 import { ExpenseReportElementDTO } from '../../dtos/expenses/expense-report-element-dto.model';
 import { DateUtils } from 'src/app/util/dates/date-utils';
+import { StringDTO } from "../../dtos/string-dto.model";
+import { TicketDownloadDTO } from "../../dtos/ticket-download.dto";
 
 
 @Injectable()
@@ -37,6 +39,7 @@ export class MyExpenseReportsDetailsService implements ResetableService {
 
     description: string = null;
     amount: number = null;
+    taskCode: string = null;
 
 
     currentReport: ExpenseReportDTO = null;
@@ -60,6 +63,11 @@ export class MyExpenseReportsDetailsService implements ResetableService {
             this.location = this.currentReport.location;
             this.dateOfExpence = this.currentReport.dateOfExpence;
             this.status = this.currentReport.status;
+
+            if(this.currentReport.workTask!=null){
+                this.taskCode = this.currentReport.workTask.taskCode;
+                console.log(this.taskCode)
+            }
         }
     }
 
@@ -76,6 +84,7 @@ export class MyExpenseReportsDetailsService implements ResetableService {
         this.location = null;
         this.dateOfExpence = null;
         this.status = null;
+        this.taskCode = null;
         
         //report element to add data
         this.resetExpenseReportElementData();
@@ -102,11 +111,11 @@ export class MyExpenseReportsDetailsService implements ResetableService {
 
         this.resetData();
 
-        if(routeParams.expenseReportId=='NEW'){
+        if(routeParams['expenseReportId']=='NEW'){
             this.expenseReportId = null;
             this.creationMode = true;
         }else{
-            this.expenseReportId = routeParams.expenseReportId;
+            this.expenseReportId = routeParams['expenseReportId'];
             this.creationMode = false;
         }
         
@@ -190,26 +199,28 @@ export class MyExpenseReportsDetailsService implements ResetableService {
         return this.datasource.uploadWithPost(this.backendUrlsSrv.getAddExpenseReportElementUrl(), formData)
     }
 
-    createNewExpenseReport(title: string, location: string, dateOfExpence: Date, 
-                                ) {
+    createNewExpenseReport(title: string, location: string, dateOfExpence: Date, taskCode: string) {
         let addRequestReport = {
             dateOfExpence: dateOfExpence,
             location: StringUtils.trim(location),
-            title: StringUtils.trim(title)
+            title: StringUtils.trim(title),
+            taskCode: StringUtils.transformToNullIfWithespaceOrNullAndTrim(taskCode)
         };
     
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.getCreateExpenseReportUrl(), addRequestReport);
+        return this.datasource.makePostJsonObject<GenericResponse<ExpenseReportDTO>>
+                    (this.backendUrlsSrv.getCreateExpenseReportUrl(), addRequestReport);
     }
 
-    updateExpenseReport(reportId: number, title: string, location: string, dateOfExpence: Date) {
+    updateExpenseReport(reportId: number, title: string, location: string, dateOfExpence: Date, taskCode: string) {
         let updateReq = {
             expenseReportId: reportId,
             title: StringUtils.trim(title),
             location: StringUtils.trim(location),
             dateOfExpence: dateOfExpence,
+            taskCode: StringUtils.transformToNullIfWithespaceOrNullAndTrim(taskCode)
         };
 
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.getUpdateMyExpenseReportUrl(), updateReq);
+        return this.datasource.makePostJsonObject<GenericResponse<ExpenseReportDTO>>(this.backendUrlsSrv.getUpdateMyExpenseReportUrl(), updateReq);
     }
    
 
@@ -217,14 +228,14 @@ export class MyExpenseReportsDetailsService implements ResetableService {
         let params: HttpParams = new HttpParams();
         params = params.append('reportElementId', elem.id+'');
 
-        return this.datasource.sendDeleteRequest(this.backendUrlsSrv.getDeleteExpenseReportElementUrl(), params);
+        return this.datasource.sendDeleteRequest<GenericResponse<StringDTO>>(this.backendUrlsSrv.getDeleteExpenseReportElementUrl(), params);
     }
       
     downloadExpenseElement(elem: ExpenseReportElementDTO) {
         let params: HttpParams = new HttpParams();
         params = params.append('reportElementId', elem.id+'');
 
-        return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadExpenseReportElementUrl(), params)
+        return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>(this.backendUrlsSrv.getDownloadExpenseReportElementUrl(), params)
     }
 
 }

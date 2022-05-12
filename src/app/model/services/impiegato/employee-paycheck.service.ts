@@ -16,6 +16,8 @@ import { Page } from 'src/app/util/querying/page.model';
 import { QueryParameter } from 'src/app/util/querying/query-parameter.model';
 import { PagingAndSorting } from 'src/app/util/querying/paging-and-sorting.model';
 import { DateUtils } from 'src/app/util/dates/date-utils';
+import { StringDTO } from '../../dtos/string-dto.model';
+import { TicketDownloadDTO } from '../../dtos/ticket-download.dto';
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -71,16 +73,16 @@ export class EmployeePaycheckService implements ResetableService {
   }
 
   loadInitialInformation(routeParams: Params, forceReload: boolean = false): Observable<boolean> {
-    if (this.dataAreLoaded && !forceReload && routeParams.idEmployee==this.currentEmployeeId) {
+    if (this.dataAreLoaded && !forceReload && routeParams['idEmployee']==this.currentEmployeeId) {
       return of(true);
     }
 
     //if employee is different reset page old content
-    if(routeParams.idEmployee!=this.currentEmployeeId){
+    if(routeParams['idEmployee']!=this.currentEmployeeId){
       this.reset();
     }
 
-    this.currentEmployeeId = routeParams.idEmployee;
+    this.currentEmployeeId = routeParams['idEmployee'];
     
     return Observable.create(
       (observer) => {
@@ -180,14 +182,15 @@ export class EmployeePaycheckService implements ResetableService {
     let params: HttpParams = new HttpParams();
     params = params.append('paycheckId', paycheck.id+'');
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadPaycheckUrl(), params)
+    return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>
+                (this.backendUrlsSrv.getDownloadPaycheckUrl(), params)
   }
 
   deletePaycheck(paycheck: PaycheckDTO) {
     let params: HttpParams = new HttpParams();
     params = params.append('paycheckId', paycheck.id+'');
 
-    return this.datasource.sendDeleteRequest(this.backendUrlsSrv.getDeletePaycheckUrl(), params)
+    return this.datasource.sendDeleteRequest<GenericResponse<StringDTO>>(this.backendUrlsSrv.getDeletePaycheckUrl(), params)
   }
 
 }

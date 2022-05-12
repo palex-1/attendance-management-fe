@@ -136,7 +136,7 @@ export class CompaniesService implements ResetableService {
 
 
   addNewCompany(company: CompanyDTO): Observable<GenericResponse<CompanyDTO>>{
-    return this.datasource.makePostJsonObject(this.backendUrlsSrv.getAddCompanyUrl(), company)
+    return this.datasource.makePostJsonObject<GenericResponse<CompanyDTO>>(this.backendUrlsSrv.getAddCompanyUrl(), company)
     .pipe(
         map(
           (res: GenericResponse<CompanyDTO>)=>{
@@ -148,7 +148,7 @@ export class CompaniesService implements ResetableService {
   }
 
   updateCompany(company: CompanyDTO) {
-    return this.datasource.makePutJsonObject(this.backendUrlsSrv.getUpdateCompanyUrl(), company);
+    return this.datasource.makePutJsonObject<GenericResponse<CompanyDTO>>(this.backendUrlsSrv.getUpdateCompanyUrl(), company);
   }
 
   deleteCompany(company: CompanyDTO) {

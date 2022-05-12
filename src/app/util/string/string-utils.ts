@@ -15,6 +15,14 @@ export class StringUtils{
         if(park==null || park==''){
             return null;
         }
+        return park;
+    }
+
+    public static transformToNullIfWithespaceOrNull(str: string): string{
+        let park = StringUtils.trim(str);
+        if(park==null || park==''){
+            return null;
+        }
         return str;
     }
 

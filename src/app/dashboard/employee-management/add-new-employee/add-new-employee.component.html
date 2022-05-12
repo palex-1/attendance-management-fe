@@ -112,6 +112,11 @@
                       [(ngModel)]="leaveHoursField">
             </div>
 
+            <div class="form-group col-md-6 col-lg-4  mb-1">
+              <label for="f1" class="col-form-label">{{ "label.hourly-cost" | translate }}</label>
+              <input type="number" step="0.01" class="form-control" [(ngModel)]="hourlyCost" min="0">
+          </div>
+
 
             <div class="form-group col-md-6 col-lg-4  mb-1">
                 <label for="f1" class="col-form-label">{{ "label.fiscal-code" | translate }}</label>

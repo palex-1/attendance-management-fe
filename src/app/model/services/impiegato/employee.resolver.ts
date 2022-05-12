@@ -30,7 +30,7 @@ export class EmployeeResolver extends AbstractResolver {
         return this.employeeService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.employeeService.reset();
         this.employeeTeamsService.reset();
         this.employeePaycheckService.reset();

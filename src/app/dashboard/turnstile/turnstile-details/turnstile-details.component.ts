@@ -11,6 +11,7 @@ import { UserAttendanceDTO } from 'src/app/model/dtos/turnstile/user-attendance-
 import { MonthPickEvent } from '../../components/monthpicker/monthpicker.component';
 import { CustomConfirmationService } from 'src/app/dialogs/confirmation/custom-confirmation.service';
 import { RegisterAttendanceModalComponent } from '../register-attendance-modal/register-attendance-modal.component';
+import { TurnstileTotemModalComponent } from '../turnstile-totem-modal/turnstile-totem-modal.component';
 
 @Component({
   selector: 'app-turnstile-details',
@@ -22,6 +23,9 @@ export class TurnstileDetailsComponent implements OnInit {
   @ViewChild('registerAttendanceModal', { static: false })
   registerAttendanceModal: RegisterAttendanceModalComponent;
 
+  @ViewChild('turnstileTotem', { static: false })
+  turnstileTotem: TurnstileTotemModalComponent;
+  
   
   public sortBy = new OrderEvent();
 
@@ -34,6 +38,14 @@ export class TurnstileDetailsComponent implements OnInit {
 
   openCreateDialog(){
     this.registerAttendanceModal.openRegisterAttendanceModal();
+  }
+
+  openTotem(){
+    let that = this;
+
+    this.confirmer.askConfirmationWithStandardTitleI18nNoRejectCallback("message.sure-to-open-totem",
+      ()=>{ that.turnstileTotem.openTotem(); }
+     )
   }
 
   delete(elem: UserAttendanceDTO){

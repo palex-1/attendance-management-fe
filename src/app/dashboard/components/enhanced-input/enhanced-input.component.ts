@@ -86,8 +86,8 @@ export class EnhancedInputComponent implements OnInit, OnChanges {
     if(!this.initializedComponent){
       return;
     }
-    if(changes.formSubmitted){
-      if(changes.formSubmitted.currentValue){
+    if(changes['formSubmitted']){
+      if(changes['formSubmitted'].currentValue){
         this.validateField();
       }
     }

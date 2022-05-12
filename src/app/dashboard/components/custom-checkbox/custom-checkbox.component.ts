@@ -36,9 +36,9 @@ export class CustomCheckboxComponent implements OnInit, OnChanges {
     if(this.initializingComponent){
       return;
     }
-    if(changes.checked!=null && changes.checked!=undefined){
-        if(this.status!=changes.checked.currentValue){
-          this.status = changes.checked.currentValue;
+    if(changes['checked']!=null && changes['checked']!=undefined){
+        if(this.status!=changes['checked'].currentValue){
+          this.status = changes['checked'].currentValue;
           this.updateCheckboxStatus();
         }
     }

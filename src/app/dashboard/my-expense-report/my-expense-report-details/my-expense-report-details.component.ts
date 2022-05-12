@@ -16,6 +16,8 @@ import { ExpenseReportElementDTO } from 'src/app/model/dtos/expenses/expense-rep
 import { StringDTO } from 'src/app/model/dtos/string-dto.model';
 import { TicketDownloadDTO } from 'src/app/model/dtos/ticket-download.dto';
 import { TicketDownloadService } from 'src/app/model/services/system/ticket-download.service';
+import { TaskOfUserModalComponent } from '../../planner-giornaliero/task-of-user-modal/task-of-user-modal.component';
+import { WorkTaskDTO } from 'src/app/model/dtos/incarico/work-task-dto.model';
 
 declare const $: any;
 
@@ -32,6 +34,9 @@ export class MyExpenseReportDetailsComponent implements OnInit {
   
   @ViewChild('expenseElemFileInput', { static: false }) 
   expenseElemFileInput: FileInputUploadComponent;
+
+  @ViewChild('findEnabledTaskOfUser', { static: false })
+  findEnabledTaskOfUser: TaskOfUserModalComponent;
 
   private expenseReportElemFile: File = null;
   fileProgress: number = 0;
@@ -55,6 +60,20 @@ export class MyExpenseReportDetailsComponent implements OnInit {
     this.myExpenseReportsDetailsService.resetExpenseReportElementData();
   }
 
+  openFindEnabledTaskDialog(){
+    this.findEnabledTaskOfUser.openDialog();
+  }
+
+  selectedTask(task: WorkTaskDTO){
+    if(this.updatingReportInProgress){
+      return;
+    }
+    //console.log(task)
+    if(task!=null){
+      this.expenseTaskCode = task.taskCode;
+    }
+  }
+  
   reloadData(){
     this.loader.startLoading();
 
@@ -223,7 +242,7 @@ export class MyExpenseReportDetailsComponent implements OnInit {
     let reportId = this.myExpenseReportsDetailsService.currentReport.id;
 
     this.myExpenseReportsDetailsService.updateExpenseReport(reportId, this.title, this.location, 
-      this.myExpenseReportsDetailsService.dateOfExpence)
+      this.myExpenseReportsDetailsService.dateOfExpence, this.expenseTaskCode)
       .subscribe(
           (succ: GenericResponse<ExpenseReportDTO>)=>{
             this.loader.endLoading();
@@ -288,7 +307,7 @@ export class MyExpenseReportDetailsComponent implements OnInit {
 
 
     this.myExpenseReportsDetailsService.createNewExpenseReport(this.title, this.location, 
-      this.myExpenseReportsDetailsService.dateOfExpence)
+      this.myExpenseReportsDetailsService.dateOfExpence, this.expenseTaskCode)
       .subscribe(
         (succ: GenericResponse<ExpenseReportDTO>)=>{
           let generatedReport: ExpenseReportDTO = succ.data;
@@ -417,5 +436,12 @@ export class MyExpenseReportDetailsComponent implements OnInit {
     return '';
   }
 
+  get expenseTaskCode(){
+    return this.myExpenseReportsDetailsService.taskCode;
+  }
+
+  set expenseTaskCode(value: string){
+    this.myExpenseReportsDetailsService.taskCode = value;
+  }
 
 }

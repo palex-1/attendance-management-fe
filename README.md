@@ -1,27 +1,18 @@
-# GestionePresenze
+# Introduzione
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
+Questo documento ha lo scopo di fornire le informazioni principali per configurare e eseguire il frontend del software _Time Sheet_. 
 
-## Development server
+### 1 Configurazione ed esecuzione del frontend dell'applicativo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Se hai deciso di installare il frontend nel web server tomcat dovrai estrarre il contenuto del file zip `frontend.zip` nella cartella ROOT di Tomcat. (Se si usa un hosting scompattare il pacchetto nella root folder in modo )  
+Nota: Tomcat ha una cartella ROOT dove sono presenti le pagine di amministrazione. Rinominare questa cartella e creare una nuova cartella ROOT dove scompattare il pacchetto zip. Rinominando la ROOT di tomcat le pagine di amministrazione risponderanno al path ${hostname}/folder_name.  
 
-## Code scaffolding
+Una volta scompattata la cartella si dovrà editare il contenuto del file `/assets/config/externalized-configs.json`. Inserire qui l'indirizzo dove può essere raggiunto il backend (IMPORTANTE: non modificare il formato. Lasciare lo / finale):
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```json
+{
+    "serverPath": "http://localhost:8080/"
+}
+```
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Se si vuole installare un certificato SSL per il frontend seguire la guida ufficiale di Tomcat.  

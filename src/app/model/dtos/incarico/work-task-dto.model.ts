@@ -9,4 +9,5 @@ export class WorkTaskDTO {
     public isEnabledForAllUsers ?: boolean;    
     public isAbsenceTask ?: boolean;  
     public currentUserCanSeeDetails ?: boolean;
+    public totalBudget ?: number;
 }

@@ -2,7 +2,7 @@ import { Injectable, OnInit } from "@angular/core";
 import { ResetableService } from "../resetable-service.model";
 import { AuthService } from "./auth.service";
 import { Params } from "@angular/router";
-import { Observable, forkJoin, throwError } from "rxjs";
+import { Observable, forkJoin, throwError, of } from "rxjs";
 import { ChainExceptionHandler } from "src/app/util/exceptions/chain-exception-handler.service";
 import { RestDataSource } from "../../rest.datasource";
 import { map, catchError } from "rxjs/operators";
@@ -93,7 +93,7 @@ export class AuthoritiesService implements ResetableService, OnInit{
 
     loadInitialInformation(routeParams: Params): Observable<boolean>{
         if(this.dataAreLoaded){
-          return;
+          return of(true);
         }
         return Observable.create(
             (observer) => {

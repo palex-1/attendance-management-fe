@@ -5,9 +5,10 @@ import { LoadingService } from '../../dialogs/loading/loading.service';
 import { HomeService } from 'src/app/model/services/home/home.service';
 import { PieChartComponent, PieChartData } from '../components/charts/pie-chart/pie-chart.component';
 import { IsMobileService } from 'src/app/util/sizing/is-mobile-service.service';
+import { LayoutPosition } from 'chart.js';
 
 
-const ALL_COLORS: string[] = ['#ffcd56','#ff6384', '#36a2eb', '#4bc0c0', '#c9cbcf', '#c45850', '#e8c3b9', '#8e5ea2', '#1f4954'];
+const ALL_COLORS: string[] = ['#ffcd33', '#c196ff', '#ff7fc6', '#8e5ea2', '#9de3fe', '#4bc0c0', '#e8c3b9', '#c45850', '#1f4954'];
 
 const LEGEND_POSITION_ON_SM = 'bottom';
 const LEGEND_POSITION_OVER_SM = 'right';
@@ -25,11 +26,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   private chartData: PieChartData;
 
-  legendPosition: string = 'right';
+  legendPosition: LayoutPosition = 'right';
 
   constructor(private translate: TranslateService, private confirm: CustomConfirmationService,
                 private loader: LoadingService, private homeService: HomeService, private isMobileService: IsMobileService) { 
-                
+                  
   }
 
   ngOnInit() {  
@@ -75,7 +76,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
 
-  private calculateLegendPosition(): string{
+  private calculateLegendPosition(){
     if(this.isMobileService.isLessThan_SM_Screen()){
       return LEGEND_POSITION_ON_SM;
     }
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    
     //every click check if the sidebar is show in desktop version
     if (this.isMobileService.isLessThan_SM_Screen()) {//if is desktop
       if(this.legendPosition!=LEGEND_POSITION_ON_SM){

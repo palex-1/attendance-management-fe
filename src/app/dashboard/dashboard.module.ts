@@ -18,7 +18,6 @@ import { AccessDataComponent } from './access-data/access-data.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { DirectiveModule } from '../directives/directive.module';
 import { PlannerGiornalieroComponent } from './planner-giornaliero/planner-giornaliero.component';
-import { IncarichiGiornalieriComponent } from './planner-giornaliero/incarichi-giornalieri/incarichi-giornalieri.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UtilsModule } from '../util/utils.module';
@@ -61,6 +60,13 @@ import { TaskCompletionLockComponent } from './task-completion-lock/task-complet
 import { ShowHideSidebarService } from './showHideSidebar.service';
 import { CompaniesComponent } from './companies/companies.component';
 import { CompanyModalComponent } from './companies/companies-modal/company-modal.component';
+import { TurnstileTokenViewComponent } from './turnstile/turnstile-token-view/turnstile-token-view.component';
+import { TurnstileTotemModalComponent } from './turnstile/turnstile-totem-modal/turnstile-totem-modal.component';
+import { WorkTaskExpensesComponent } from './gestione-commesse/work-task-expenses/work-task-expenses.component';
+import { AddWorkTaskExpenseModalComponent } from './gestione-commesse/add-work-task-expense-modal/add-work-task-expense-modal.component';
+import { UpdateWorkTaskExpenseModalComponent } from './gestione-commesse/update-work-task-expense-modal/update-work-task-expense-modal.component';
+import { ExportDailyAttendanceComponent } from './turnstile/export-daily-attendance/export-daily-attendance.component';
+import { WorkTaskBudgetSummaryComponent } from './gestione-commesse/work-task-budget-summary/work-task-budget-summary.component';
 
 
 @NgModule({
@@ -76,7 +82,7 @@ import { CompanyModalComponent } from './companies/companies-modal/company-modal
   declarations: [
                   DashboardComponent, HomeComponent, SettingsComponent,
                   GuideComponent, AccessDataComponent, PersonalInfoComponent, 
-                  PlannerGiornalieroComponent, IncarichiGiornalieriComponent, GestioneCommesseComponent, 
+                  PlannerGiornalieroComponent, GestioneCommesseComponent, 
                   SediLavorativeComponent, InfoCommessaComponent, TeamCommessaComponent, 
                   AccessLogsComponent, DettagliCommessaComponent, AddTeamMemberModalComponent, 
                   DocumentiPersonaliComponent, GestioneDocumentiComponent, 
@@ -91,7 +97,7 @@ import { CompanyModalComponent } from './companies/companies-modal/company-modal
                   MontlyReportsComponent, SettingAddEditModalComponent, SettingAreaConfigsComponent, 
                   MyExpenseReportComponent, MyExpenseReportDetailsComponent, UserExpenseReportComponent, 
                   UserExpenseReportDetailsComponent, TaskCompletionLockComponent,  
-                  CompaniesComponent, CompanyModalComponent
+                  CompaniesComponent, CompanyModalComponent, TurnstileTokenViewComponent, TurnstileTotemModalComponent, WorkTaskExpensesComponent, AddWorkTaskExpenseModalComponent, UpdateWorkTaskExpenseModalComponent, ExportDailyAttendanceComponent, WorkTaskBudgetSummaryComponent
                 ],
   bootstrap: [
                   DashboardComponent

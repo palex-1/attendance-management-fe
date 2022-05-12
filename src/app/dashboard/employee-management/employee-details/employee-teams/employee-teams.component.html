@@ -15,21 +15,21 @@
                         <thead>
                             <tr>
                                 <th sortable-td [status]="0" [sortByValue]="'teamComponentTask.taskCode.taskCode'" [sortBy]="sortBy"
-                                    (onSortChange)="onSortChange($event)">
+                                    (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "label.codice-commessa" | translate }}
                                 </th>
                                 <th sortable-td [status]="0" [sortByValue]="'teamComponentTask.taskCode.taskDescription'" [sortBy]="sortBy"
-                                    (onSortChange)="onSortChange($event)">
+                                    (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "label.descrizione-commessa" | translate }}
                                 </th>
                                 
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "gestione-commesse.activation-date" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "gestione-commesse.deactivation-date" | translate }}
                                 </th>
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.billable" | translate }}
                                 </th>
                             </tr>

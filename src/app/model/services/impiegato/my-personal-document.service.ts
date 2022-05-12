@@ -18,6 +18,7 @@ import { PagingAndSorting } from 'src/app/util/querying/paging-and-sorting.model
 import { DateUtils } from 'src/app/util/dates/date-utils';
 import { PersonalDocumentDTO } from '../../dtos/impiegato/personal-document-dto.model';
 import { PersonalDocumentTypeDTO } from '../../dtos/impiegato/personal-document-type-dto.model';
+import { TicketDownloadDTO } from '../../dtos/ticket-download.dto';
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -104,7 +105,8 @@ export class MyPersonalDocumentService implements ResetableService {
   
 
   loadAllPersonalDocumentType(): Observable<any>{
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getFindAllPersonalDocumentType())
+    return this.datasource.sendGetRequest<GenericResponse<PersonalDocumentTypeDTO[]>>
+    (this.backendUrlsSrv.getFindAllPersonalDocumentType())
     .pipe(
       map((response: GenericResponse<PersonalDocumentTypeDTO[]>) => {
         this.currentAllDocumentType = response.data;
@@ -120,7 +122,8 @@ export class MyPersonalDocumentService implements ResetableService {
   loadMyNotUploadedDocumentType(): Observable<any>{
     let params: HttpParams = new HttpParams();
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getFindAllMyNotUploadedDocumentType(), params)
+    return this.datasource.sendGetRequest<GenericResponse<PersonalDocumentTypeDTO[]>>
+    (this.backendUrlsSrv.getFindAllMyNotUploadedDocumentType(), params)
     .pipe(
       map((response: GenericResponse<PersonalDocumentTypeDTO[]>) => {
         this.currentNotUploadedTypeOfDocument = response.data;
@@ -201,7 +204,7 @@ export class MyPersonalDocumentService implements ResetableService {
     let params: HttpParams = new HttpParams();
     params = params.append('personalDocumentId', doc.id+'');
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadMyPersonalDocument(), params)
+    return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>(this.backendUrlsSrv.getDownloadMyPersonalDocument(), params)
   }
 
   deletePersonalDocument(doc: PersonalDocumentDTO) {

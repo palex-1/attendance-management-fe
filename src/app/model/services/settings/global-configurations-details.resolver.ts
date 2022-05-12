@@ -22,7 +22,7 @@ export class GlobalConfigurationDetailsResolver extends AbstractResolver {
         return this.globalConfigurationDetailsService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.globalConfigurationDetailsService.reset();
 
         return super.resolve(route, state)

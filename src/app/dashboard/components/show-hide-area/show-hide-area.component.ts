@@ -80,21 +80,23 @@ export class ShowHideAreaComponent implements OnInit {
   private setSelectedSize(): string {
     if(this.size=='xs'){
       this.selectedSize = 'xs';
-      return;
+      return this.selectedSize;
     }
     if(this.size=='md'){
       this.selectedSize = 'md';
-      return;
+      return this.selectedSize;
     }
     if(this.size=='lg'){
       this.selectedSize = 'lg';
-      return;
+      return this.selectedSize;
     }
     if(this.size=='xl'){
       this.selectedSize = 'xl';
-      return;
+      return this.selectedSize;
     }
     this.selectedSize = 'sm';
+
+    return this.selectedSize;
   }
 
 }

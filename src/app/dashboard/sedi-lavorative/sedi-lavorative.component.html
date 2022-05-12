@@ -232,27 +232,27 @@
                   <table class="table table-sm table-striped">
                       <thead>
                           <tr>
-                              <th sortable-td [status]="0" [sortByValue]="'officeName'"
+                              <th sortable-td [status]="0" [sortByValue]="'officeName'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "gestione-sedi-lavorative.name-office" | translate }}
                               </th>
-                              <th sortable-td [status]="0" [sortByValue]="'street'"
+                              <th sortable-td [status]="0" [sortByValue]="'street'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "gestione-sedi-lavorative.street" | translate }}
                               </th>
-                              <th sortable-td [status]="0" [sortByValue]="'city'"
+                              <th sortable-td [status]="0" [sortByValue]="'city'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "gestione-sedi-lavorative.city" | translate }}
                               </th>
-                              <th sortable-td [status]="0" [sortByValue]="'province'"
+                              <th sortable-td [status]="0" [sortByValue]="'province'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "gestione-sedi-lavorative.province" | translate }}
                               </th>
-                              <th sortable-td [status]="0" [sortByValue]="'nation'"
+                              <th sortable-td [status]="0" [sortByValue]="'nation'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "gestione-sedi-lavorative.nation" | translate }}
                               </th>
-                              <th sortable-td [status]="0" [sortByValue]="'companyBranchType'"
+                              <th sortable-td [status]="0" [sortByValue]="'companyBranchType'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "gestione-sedi-lavorative.sede-type" | translate }}
                               </th>
@@ -276,12 +276,12 @@
                               <td>{{ sede.tipoSede | ellipsesDropperPipe: 50 }}</td>
 
                               <td  class=" min-width-3-button-in-table">
-                                  <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="openDetailsDialog(sede)"
+                                  <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" (click)="openDetailsDialog(sede)"
                                       *ngIf="authoritiesService.hasAuthority(['SEDE_LAVORATIVA_READ'])" title="{{ 'general.action.details' | translate}}">
                                       <i class="fa fa-search" aria-hidden="true"></i>
                                   </button>
 
-                                  <button class="btn btn-secondary btn-sm add-cursor-pointer" type="button" (click)="openEditDialog(sede)"
+                                  <button class="btn btn-info btn-sm add-cursor-pointer" type="button" (click)="openEditDialog(sede)"
                                       *ngIf="authoritiesService.hasAuthority(['SEDE_LAVORATIVA_UPDATE'])" title="{{ 'general.action.edit' | translate}}">
                                       <i class="fas fa-pencil-alt"></i>
                                   </button>

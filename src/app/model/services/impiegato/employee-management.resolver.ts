@@ -22,7 +22,7 @@ export class EmployeeManagementResolver extends AbstractResolver {
         return this.employeeManagementService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.employeeManagementService.reset();
         
         return super.resolve(route, state);

@@ -20,5 +20,7 @@ export class TrueFalsePipe{
         if(value==false){
             return this.translate.instant("generic.false");
         }
+
+        return '';
     }
 }

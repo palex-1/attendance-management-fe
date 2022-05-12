@@ -137,11 +137,12 @@ export class GlobalConfigurationAreaService implements ResetableService {
   }
 
 
-  createSetting(area: string, key: string, value: string): Observable<any>{
+  createSetting(area: string, key: string, value: string, secret: boolean): Observable<any>{
     let form: GlobalConfigurationDTO = new GlobalConfigurationDTO();
     form.settingArea = area;
     form.settingKey = key;
     form.settingValue = value;
+    form.secret = secret
 
     return this.datasource.makePostJsonObject(this.backendUrlsSrv.getCreateSettingUrl(), form);
   }

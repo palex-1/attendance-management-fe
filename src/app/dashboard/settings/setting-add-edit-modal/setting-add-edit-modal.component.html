@@ -29,20 +29,39 @@
       
                     <div class="form-group col-md-12">
                           <label class="col-form-label">{{ "label.value" | translate }}</label>
-                          <input type="text" class="form-control" name="jdsh87r23" [(ngModel)]="value">
+                          <input *ngIf="!isSecret" type="text" class="form-control" name="jdsh87r23" [(ngModel)]="value">
+                          <input *ngIf="isSecret" type="password" class="form-control" name="jdsh87r23" [(ngModel)]="value">
+                          
                     </div>
       
-      
+                    <!-- For security reason the field on update cannot be done. Because a bad user can make visible to see the secret -->
+                    <div class="col-12 mt-3">
+                      <div class="form-check">
+                          <input type="checkbox" class="form-check-input" name="j89sdlap92" 
+                              [(ngModel)]="isSecret" [disabled]="!createMode">
+                          <label class="form-check-label">
+                            {{ "label.hide-value" | translate }} **
+                          </label>
+                      </div>
+                  </div>
                 </div>
                 
               </form>
+              
             </div>
-      
+
+            <div class="col-12 mt-1">
+              <small class="color-gray">
+                ** {{ "message.hide-password-value" | translate }}
+              </small>
+            </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal" [disabled]="addOrUpdateOperationInProgress" 
               (click)="closeDialog()">{{ "general.button.close" | translate }}</button>
               
-              <button type="button" class="btn btn-primary" (click)="updateSetting()" [disabled]="addOrUpdateOperationInProgress" 
+              <button type="button" class="btn btn-primary" (click)="updateSetting()" 
+              [disabled]="addOrUpdateOperationInProgress || valueNotUpdated()" 
                   *ngIf="editMode">
                   <span class="spinner-button-border float-left" *ngIf="addOrUpdateOperationInProgress"></span>
                   {{ "general.button.update" | translate }}

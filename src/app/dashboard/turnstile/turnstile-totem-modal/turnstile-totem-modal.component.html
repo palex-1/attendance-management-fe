@@ -1,0 +1,38 @@
+<div class="turnstile-totem-wrapper" #turnstileModal>
+
+    <div class="loader-for-modal" *ngIf="addOperationInProgress">
+        <span class="fa fa-spinner fa-spin fa-6x spinner-for-loader-modal">
+        </span> 
+    </div>
+
+    <div class="centered-div">
+
+        
+
+        <div class="centered-div-content">
+
+            <h1 class="opacity-minor mb-3">
+                {{ "label.attendance-registration" | translate }}<br>
+
+                <i class="fas fa-hamsa" aria-hidden="true"></i>
+                
+            </h1>
+
+            <div class="input-container">
+                <form (ngSubmit)="registerAttendance()">
+                    <input type="text" class="form-control" name="lp083a-0122" [(ngModel)]="employeeIdInternal" 
+                            #continuousCicleInput (clickOutside)="refocusOnInput()">
+
+                    <button type="button" class="btn btn-link" (click)="closeTotem()" [disabled]="addOperationInProgress">
+                        {{ "label.close-totem" | translate }}
+                    </button>
+                </form>
+                
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>

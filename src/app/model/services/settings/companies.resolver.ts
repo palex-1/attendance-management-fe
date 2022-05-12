@@ -22,7 +22,7 @@ export class CompaniesResolver extends AbstractResolver {
         return this.companiesService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.companiesService.reset();
 
         return super.resolve(route, state)

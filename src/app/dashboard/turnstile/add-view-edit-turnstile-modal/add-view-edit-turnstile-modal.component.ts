@@ -26,6 +26,9 @@ export class AddViewEditTurnstileModalComponent implements OnInit {
   @Output()
   onUpdateTurnstile: EventEmitter<TurnstileDTO> = new EventEmitter();
 
+  @Output()
+  onAddTurnstile: EventEmitter<TurnstileDTO> = new EventEmitter();
+
   addOperationInProgress: boolean = false;
   updateOperationInProgress: boolean = false;
   credentialsOperationInProgress: boolean = false;
@@ -176,11 +179,13 @@ export class AddViewEditTurnstileModalComponent implements OnInit {
     this.addOperationInProgress = true;
 
 
-    this.turnstileService.addNewTurnstile(this.title, this.description, this.position, this.enabled, this.type).subscribe(
-      succ=>{
+    this.turnstileService.addNewTurnstile(this.title, this.description, this.position, this.enabled, this.type)
+    .subscribe(
+      (succ: GenericResponse<TurnstileDTO>)=>{
         this.notifier.notifySuccessWithI18nAndStandardTitle("message.turnstile-successfully-added")
         this.addOperationInProgress = false;
         this.closeDialog();
+        this.onAddTurnstile.emit(succ.data)
       },
       (err: HttpErrorResponse)=>{
         this.addOperationInProgress = false;

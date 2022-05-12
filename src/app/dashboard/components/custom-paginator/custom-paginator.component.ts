@@ -118,9 +118,10 @@ export class CustomPaginatorComponent implements OnInit, AfterViewInit, OnChange
     if(this.initializingComponent){
       return;
     }
-    if(changes.totalRecords!=null && changes.totalRecords!=undefined){
-        if(changes.totalRecords.currentValue!=null && this.totalRecordsInternal!=changes.totalRecords.currentValue){
-          this.totalRecordsInternal = changes.totalRecords.currentValue;
+    if(changes['totalRecords']!=null && changes['totalRecords']!=undefined){
+        if(changes['totalRecords'].currentValue!=null && 
+              this.totalRecordsInternal!=changes['totalRecords'].currentValue){
+          this.totalRecordsInternal = changes['totalRecords'].currentValue;
           this.refreshParametersValues()
         }
     }

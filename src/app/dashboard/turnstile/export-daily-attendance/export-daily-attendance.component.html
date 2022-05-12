@@ -1,0 +1,68 @@
+<div class="modal fade" #modalRef tabindex="-1" role="dialog" aria-labelledby="modalRef" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <h5 class="modal-title">{{ "label.export-attendance" | translate }}:</h5>
+            </div>
+
+
+            <div class="modal-body">
+
+
+                <div *ngIf="showLoader" class="loader-for-modal">
+                    <span class="fa fa-spinner fa-spin fa-3x spinner-for-loader-modal">
+                    </span>
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="form-group col-md-12 mb-2">
+                        <label class="col-form-label">{{ "label.day" | translate }} *</label>
+
+                        <app-monthpicker tooltip="{{ 'label.day' | translate }}" [initialValue]="currentDay"
+                            (onSelectDate)="dayChanged($event)" [isAMonthpicker]="false">
+                        </app-monthpicker>
+                    </div>
+
+                    <div class="form-group col-md-12 mb-4">
+                        <label class="control-label">{{ "label.time-zone" | translate }} *</label>
+                        <select class="form-control" [(ngModel)]="zoneField">
+                            <option value="Europe/Rome">{{ "label.europe-rome-zone" | translate }}</option>
+                            <option value="UTC">{{ "label.utc-zone" | translate }}</option>
+                        </select>
+
+                        <small class="color-gray">{{ "message.choose-time-zone" | translate }}</small>
+                    </div>
+
+
+
+                </div>
+
+
+                <small>*{{ "label.required-field" | translate }}</small>
+            </div>
+
+
+
+
+
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" [disabled]="exportOperationInProgress"
+                    (click)="closeExportDialog()">{{ "general.button.close" | translate }}</button>
+
+                <button type="button" class="btn btn-primary" (click)="exportAttendances()"
+                    [disabled]="exportOperationInProgress">
+                    <span class="spinner-button-border float-left" *ngIf="exportOperationInProgress"></span>
+                    {{ "label.export" | translate }}
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

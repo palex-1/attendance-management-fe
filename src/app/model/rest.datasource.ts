@@ -272,7 +272,7 @@ export class RestDataSource {
     }
 
 
-    public sendDeleteRequest<T>(url: string, params: HttpParams, authenticated: boolean = true, 
+    public sendDeleteRequest<T>(url: string, params: HttpParams = new HttpParams(), authenticated: boolean = true, 
         withCredentials: boolean = false, disableInterceptor: boolean = false): Observable<T> {
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers.append('Content-Type', 'application/json');

@@ -14,11 +14,12 @@ import { QueryParameter } from 'src/app/util/querying/query-parameter.model';
 import { map, catchError } from 'rxjs/operators';
 import { GenericResponse } from '../../dtos/generic-response.model';
 import { Page } from 'src/app/util/querying/page.model';
+import { ResetableService } from '../resetable-service.model';
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
 @Injectable()
-export class WorkTaskSummaryService {
+export class WorkTaskSummaryService implements ResetableService {
   
 
   dataAreLoaded: boolean = false;
@@ -118,7 +119,8 @@ export class WorkTaskSummaryService {
   loadTaskCodeSummary(): Observable<any> {
     let predicate: SPredicate = this.buildQueryPredicate();
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.buildTaskSummaryEndpoint(this.currentTaskId), predicate.params, true, 
+    return this.datasource.sendGetRequest<GenericResponse<Page<WorkTaskSummaryDTO>>>
+    (this.backendUrlsSrv.buildTaskSummaryEndpoint(this.currentTaskId), predicate.params, true, 
     false, true)
       .pipe(
         map(
@@ -139,7 +141,8 @@ export class WorkTaskSummaryService {
   }
 
   findWorkedHoursDetails(taskId: number, predicate: SPredicate) {
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.buildTaskSummaryDetailsEndpoint(taskId), predicate.params)
+    return this.datasource.sendGetRequest<GenericResponse<Page<WorkTaskSummaryDTO>>>
+            (this.backendUrlsSrv.buildTaskSummaryDetailsEndpoint(taskId), predicate.params)
   }
 
 

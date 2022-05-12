@@ -4,7 +4,7 @@ import { Params, Router } from "@angular/router";
 import { RestDataSource } from "../../rest.datasource";
 import { ResetableService } from "../resetable-service.model";
 import { JwtHelper } from "src/app/util/jwt-helper.model";
-import { HttpParams } from "@angular/common/http";
+import { HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { AuthoritiesService } from "./authorities.service";
 import { ResetAllServicesService } from "../reset-all-services.service";
 import { AuthenticationDTO } from "../../dtos/authentication-dto.model";
@@ -27,7 +27,9 @@ export class AuthService{
        let params: HttpParams = new HttpParams();
        let authDTO: AuthenticationDTO = new AuthenticationDTO(username, password);
 
-       return this.datasource.makePostJsonObjectObservingResponse(this.backendUrlSrv.getLoginUrl(), authDTO, params);
+       return this.datasource.makePostJsonObjectObservingResponse<GenericResponse<any>>
+                                  (this.backendUrlSrv.getLoginUrl(), authDTO, params, new HttpHeaders(), true, 
+                                    false, false, true);
     }
 
     saveAuthToken(token: string, mustResetPassword: boolean = false, twoFactorAuthenticationInProgress: boolean = false){

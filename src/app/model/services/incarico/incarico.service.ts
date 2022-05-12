@@ -156,7 +156,8 @@ export class IncaricoService implements ResetableService{
     }
 
     updateIncarico(incarico: WorkTaskDTO): Observable<any>{
-        return this.datasource.makePutJsonObject(this.backendUrlsSrv.getIncaricoUrl(), incarico, new HttpParams(), new HttpHeaders(), true).pipe(
+        return this.datasource.makePutJsonObject<GenericResponse<WorkTaskDTO>>
+        (this.backendUrlsSrv.getIncaricoUrl(), incarico, new HttpParams(), new HttpHeaders(), true).pipe(
             map((succ: GenericResponse<WorkTaskDTO>)=>{
                 let trovato: boolean = false;
                 for(let i=0; i<this.currentLoadedCommesse.length && !trovato;i++){

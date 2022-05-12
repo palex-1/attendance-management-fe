@@ -65,6 +65,9 @@ import { TaskCompletionLocksResolver } from './services/reports/task-completion-
 import { BackendConfigService } from './services/configs/backend-config.service';
 import { CompaniesResolver } from "./services/settings/companies.resolver";
 import { CompaniesService } from "./services/settings/companies.service";
+import { WorkTaskExpensesResolver } from "./services/incarico/work-task-expenses.resolver";
+import { WorkTaskExpensesService } from "./services/incarico/work-task-expenses.service";
+import { WorkTaskBudgetSummaryService } from "./services/incarico/work-task-budget-summary.service";
 
 @NgModule({
     imports : [
@@ -99,6 +102,9 @@ import { CompaniesService } from "./services/settings/companies.service";
                  UserExpenseReportsDetailsResolver, UserExpenseReportsDetailsService,
                  TaskCompletionLocksResolver, TaskCompletionLocksService,
                  CompaniesResolver, CompaniesService,
+                 WorkTaskExpensesResolver, WorkTaskExpensesService,
+
+                 WorkTaskBudgetSummaryService,
 
                  BackendConfigService
                  

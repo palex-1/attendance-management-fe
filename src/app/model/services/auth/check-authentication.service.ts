@@ -16,7 +16,8 @@ export class CheckAuthenticationService {
     }
 
     checkIfImLoggedUser(): Observable<any>{
-       return this.datasource.sendGetRequest(this.backendUrlsSrv.getCheckAuthenticationUrl(), new HttpParams(), true).
+       return this.datasource.sendGetRequest<GenericResponse<BooleanDTO>>
+        (this.backendUrlsSrv.getCheckAuthenticationUrl(), new HttpParams(), true).
             pipe(
                 map(
                     (res: GenericResponse<BooleanDTO>) => {

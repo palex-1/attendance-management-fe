@@ -1,0 +1,30 @@
+.expense-value{
+    color: #3c4043;
+    font-size: 1.875rem;
+    line-height: 1;
+    margin: 0;
+}
+
+
+.chart-title {
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 0px;
+    color: #3c4043;
+}
+
+@media (min-width: 768px){
+    .chart-title {
+        margin-bottom: -25px;
+    }
+}
+
+.custom-chart-box {
+    min-height: 300px;
+}
+
+.select-days-range {
+    float: right;
+    max-width: 200px;
+}

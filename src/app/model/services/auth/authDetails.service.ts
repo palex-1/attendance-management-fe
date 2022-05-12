@@ -22,7 +22,7 @@ export class AuthDetailsService {
         // authenticated: boolean = false, withCredentials: boolean = false)
         
         return this.datasource.makePutJsonObject<GenericResponse<any>>(this.backendUlrSrv.getChangePasswordUrl(), 
-                    changePSWDTO, params, new HttpHeaders(), true);
+                    changePSWDTO, params, new HttpHeaders(), true, false, true);
     }
     
     forcePasswordChangeToLogin(newPsw: string): Observable<GenericResponse<any>>{
@@ -30,7 +30,7 @@ export class AuthDetailsService {
         let changePSWDTO: ChangePasswordDTO = new ChangePasswordDTO(null, newPsw);
         
         return this.datasource.makePutJsonObject<GenericResponse<any>>(this.backendUlrSrv.getForcePasswordChangeToLogin(), 
-                    changePSWDTO, params, new HttpHeaders(), true);
+                    changePSWDTO, params, new HttpHeaders(), true, false, true);
     }
 
     requestPasswordRecovery(username: string): Observable<GenericResponse<any>>{
@@ -40,7 +40,7 @@ export class AuthDetailsService {
         let headers: HttpHeaders = new HttpHeaders();
 
         return this.datasource.makePostJsonObject<GenericResponse<any>>(
-            this.backendUlrSrv.getRequestChangePasswordUrl(), null, params, headers, false
+            this.backendUlrSrv.getRequestChangePasswordUrl(), null, params, headers, false, false, true
             );
     }
     

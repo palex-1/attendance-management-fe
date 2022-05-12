@@ -27,14 +27,14 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
             tap(
                 (event) => {
                     if (event instanceof HttpResponse) {
-                        if(event.status==ChainExceptionHandler.UNAUTHORIZED){
+                        if(event.status === ChainExceptionHandler.UNAUTHORIZED){
                             this.manageUnauthorizedAccess();
                         }
                     }
                 },
                 (error: any) => {
                     if (error instanceof HttpErrorResponse) {
-                        if (error.status == ChainExceptionHandler.UNAUTHORIZED) {
+                        if (error.status === ChainExceptionHandler.UNAUTHORIZED) {
                             this.manageUnauthorizedAccess();
                         }
                     }

@@ -2,7 +2,7 @@ import { Injectable, Predicate, OnInit, AfterViewInit } from '@angular/core';
 import { RestDataSource } from '../../rest.datasource';
 import { ResetableService } from '../resetable-service.model';
 import { Params } from '@angular/router';
-import { Observable, forkJoin, Subject, throwError } from 'rxjs';
+import { Observable, forkJoin, Subject, throwError, of } from 'rxjs';
 import { ChainExceptionHandler } from 'src/app/util/exceptions/chain-exception-handler.service';
 import { GenericResponse } from '../../dtos/generic-response.model';
 import { SPredicate } from 'src/app/util/querying/s-predicate.model';
@@ -99,7 +99,7 @@ export class SuccessfullyLoginLogsService implements ResetableService, OnInit{
       this.initializeFilters();
     }
     if(this.dataAreLoaded && !forceReload){
-      return;
+      return of(true);
     }
     return Observable.create(
         (observer) => {

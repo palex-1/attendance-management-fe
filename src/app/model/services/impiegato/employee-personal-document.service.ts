@@ -18,6 +18,7 @@ import { PagingAndSorting } from 'src/app/util/querying/paging-and-sorting.model
 import { DateUtils } from 'src/app/util/dates/date-utils';
 import { PersonalDocumentDTO } from '../../dtos/impiegato/personal-document-dto.model';
 import { PersonalDocumentTypeDTO } from '../../dtos/impiegato/personal-document-type-dto.model';
+import { TicketDownloadDTO } from '../../dtos/ticket-download.dto';
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
@@ -75,16 +76,16 @@ export class EmployeePersonalDocumentService implements ResetableService {
   }
 
   loadInitialInformation(routeParams: Params, forceReload: boolean = false): Observable<boolean> {
-    if (this.dataAreLoaded && !forceReload && routeParams.idEmployee==this.currentEmployeeId) {
+    if (this.dataAreLoaded && !forceReload && routeParams['idEmployee']==this.currentEmployeeId) {
       return of(true);
     }
 
     //if employee is different reset page old content
-    if(routeParams.idEmployee!=this.currentEmployeeId){
+    if(routeParams['idEmployee']!=this.currentEmployeeId){
       this.reset();
     }
 
-    this.currentEmployeeId = routeParams.idEmployee;
+    this.currentEmployeeId = routeParams['idEmployee'];
     
     return Observable.create(
       (observer) => {
@@ -113,7 +114,7 @@ export class EmployeePersonalDocumentService implements ResetableService {
   
 
   loadAllPersonalDocumentType(): Observable<any>{
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getFindAllPersonalDocumentType())
+    return this.datasource.sendGetRequest<GenericResponse<PersonalDocumentTypeDTO[]>>(this.backendUrlsSrv.getFindAllPersonalDocumentType())
     .pipe(
       map((response: GenericResponse<PersonalDocumentTypeDTO[]>) => {
         this.currentAllDocumentType = response.data;
@@ -130,7 +131,8 @@ export class EmployeePersonalDocumentService implements ResetableService {
     let params: HttpParams = new HttpParams();
     params = params.append("userProfileId", this.currentEmployeeId+'');
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getFindAllNotUploadedDocumentTypeOfUser(), params)
+    return this.datasource.sendGetRequest<GenericResponse<PersonalDocumentTypeDTO[]>>
+    (this.backendUrlsSrv.getFindAllNotUploadedDocumentTypeOfUser(), params)
     .pipe(
       map((response: GenericResponse<PersonalDocumentTypeDTO[]>) => {
         this.currentNotUploadedTypeOfDocument = response.data;
@@ -214,7 +216,8 @@ export class EmployeePersonalDocumentService implements ResetableService {
     let params: HttpParams = new HttpParams();
     params = params.append('personalDocumentId', doc.id+'');
 
-    return this.datasource.sendGetRequest(this.backendUrlsSrv.getDownloadPersonalDocument(), params)
+    return this.datasource.sendGetRequest<GenericResponse<TicketDownloadDTO>>
+                (this.backendUrlsSrv.getDownloadPersonalDocument(), params)
   }
 
   deletePersonalDocument(doc: PersonalDocumentDTO) {
@@ -228,14 +231,16 @@ export class EmployeePersonalDocumentService implements ResetableService {
     let params: HttpParams = new HttpParams();
     params = params.append('personalDocumentId', doc.id+'');
     
-    return this.datasource.makePutJsonObject(this.backendUrlsSrv.getDisablePersonalDocumentEdit(), {}, params)
+    return this.datasource.makePutJsonObject<GenericResponse<PersonalDocumentDTO>>
+                (this.backendUrlsSrv.getDisablePersonalDocumentEdit(), {}, params)
   }
 
   enableEditOfDocument(doc:PersonalDocumentDTO){
     let params: HttpParams = new HttpParams();
     params = params.append('personalDocumentId', doc.id+'');
     
-    return this.datasource.makePutJsonObject(this.backendUrlsSrv.getEnablePersonalDocumentEdit(), {}, params)
+    return this.datasource.makePutJsonObject<GenericResponse<PersonalDocumentDTO>>
+                (this.backendUrlsSrv.getEnablePersonalDocumentEdit(), {}, params)
   }
   
 

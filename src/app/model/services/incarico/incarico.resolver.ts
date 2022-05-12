@@ -23,7 +23,7 @@ export class IncaricoResolver extends AbstractResolver{
         return this.incaricoSrv;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.incaricoSrv.reset();
         
         return super.resolve(route, state);

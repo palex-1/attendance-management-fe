@@ -16,12 +16,13 @@ import { QueryParameter } from "src/app/util/querying/query-parameter.model";
 import { Page } from 'src/app/util/querying/page.model';
 import { TurnstileDTO } from '../../dtos/turnstile/turnstile-dto.model';
 import { StringUtils } from 'src/app/util/string/string-utils';
+import { TicketDownloadDTO } from "../../dtos/ticket-download.dto";
 
 const DEFAULT_PAGE_SIZE: number = 5;
 
 @Injectable()
 export class TurnstileService implements ResetableService {
-   
+       
   
     public currentSortBy: OrderEvent = new OrderEvent("", "");
 
@@ -147,7 +148,10 @@ export class TurnstileService implements ResetableService {
         return queryParameters;
     }
 
-
+    exportAttendance(exportRequest) {
+        return this.datasource.makePostJsonObject<GenericResponse<TicketDownloadDTO>>(
+                                     this.backendUrlsSrv.getExportDailyAttendance(), exportRequest)
+    }
 
     buildQueryPredicate(): SPredicate {
         let pagingAndSorting = new PagingAndSorting(this.pageIndex, this.currentPageSize, this.currentSortBy.getSortBy(), this.currentSortBy.getDir());
@@ -155,7 +159,7 @@ export class TurnstileService implements ResetableService {
         return this.predicateBuider.buildPredicate(this.buildFilters(), pagingAndSorting);
     }
 
-    addNewTurnstile(title: string, description: string, position: string, enabled: boolean, type: string) {
+    addNewTurnstile(title: string, description: string, position: string, enabled: boolean, type: string): Observable<GenericResponse<TurnstileDTO>> {
         let request = {
             title: StringUtils.trim(title),
             description: StringUtils.trim(description),
@@ -164,7 +168,8 @@ export class TurnstileService implements ResetableService {
             type: StringUtils.trim(type),
         };
 
-        return this.datasource.makePostJsonObject(this.backendUrlsSrv.getAddTurnstileUrl(), request)
+        return this.datasource.makePostJsonObject<GenericResponse<TurnstileDTO>>(
+            this.backendUrlsSrv.getAddTurnstileUrl(), request)
         .pipe(
             map(
               (res: GenericResponse<TurnstileDTO>)=>{
@@ -181,13 +186,15 @@ export class TurnstileService implements ResetableService {
         let params: HttpParams = new HttpParams()
         params = params.set('turnstileId', currentTurnstileId+'');
 
-        return this.datasource.sendGetRequest(this.backendUrlsSrv.findTurnstileDetailsUrl(), params);
+        return this.datasource.sendGetRequest<GenericResponse<TurnstileDTO>>
+        (this.backendUrlsSrv.findTurnstileDetailsUrl(), params);
     }
 
     updateTurnstile(request: TurnstileDTO) {
         let params: HttpParams = new HttpParams()
 
-        return this.datasource.makePutJsonObject(this.backendUrlsSrv.updateTurnstileUrl(), request, params);
+        return this.datasource.makePutJsonObject<GenericResponse<TurnstileDTO>>
+        (this.backendUrlsSrv.updateTurnstileUrl(), request, params);
     }
 
 

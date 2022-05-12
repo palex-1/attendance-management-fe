@@ -22,15 +22,15 @@
                         <thead>
                             <tr>
                                 <th sortable-td [status]="0" [sortByValue]="'successfullyLoginLogsPK.userAgent'"
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "logUserAccess.table-user-agent" | translate }}
                                 </th>
                                 <th sortable-td [status]="0" [sortByValue]="'successfullyLoginLogsPK.loginDate'"
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "logUserAccess.table-access-date" | translate }}
                                 </th>
                                 <th sortable-td [status]="0" [sortByValue]="'successfullyLoginLogsPK.ip'" 
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "logUserAccess.table-ip" | translate }}
                                 </th>
                             </tr>

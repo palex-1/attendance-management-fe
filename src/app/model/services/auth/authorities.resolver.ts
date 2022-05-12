@@ -23,7 +23,7 @@ export class AuthoritiesResolver extends AbstractResolver{
         return this.authService;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.authService.reset();
         return super.resolve(route, state);
     }

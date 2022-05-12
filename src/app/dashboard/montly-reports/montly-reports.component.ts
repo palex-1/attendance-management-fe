@@ -12,7 +12,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { GenericResponse } from 'src/app/model/dtos/generic-response.model';
 import { TicketDownloadService } from 'src/app/model/services/system/ticket-download.service';
 import { MonthpickerComponent, MonthPickEvent } from '../components/monthpicker/monthpicker.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CustomConfirmationService } from 'src/app/dialogs/confirmation/custom-confirmation.service';
 
 declare const $: any;
@@ -123,7 +122,7 @@ export class MontlyReportsComponent implements OnInit {
 
     this.reportService.deleteReport(report)
     .subscribe(
-      (succ: GenericResponse<TicketDownloadDTO>) => {
+      (succ: GenericResponse<ReportDTO>) => {
         this.loader.endLoading();
         this.notifier.notifySuccessWithI18nAndStandardTitle("message.report-deleted")
         this.refreshReports();

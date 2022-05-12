@@ -114,34 +114,34 @@
                     <table class="table table-sm table-striped">
                         <thead>
                             <tr>
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.name'"
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.name'" class="min-width-table-column"
                                     [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.name" | translate }}
                                 </th>
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.surname'"
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.surname'" class="min-width-table-column"
                                     [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.surname" | translate }}
                                 </th>
 
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.email'"
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.email'" class="min-width-table-column"
                                     [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                     {{ "label.email" | translate }}
                                 </th>
 
-                                <th sortable-td [status]="0" [sortByValue]="'userProfile.phoneNumber'"
+                                <th sortable-td [status]="0" [sortByValue]="'userProfile.phoneNumber'" class="min-width-table-column"
                                   [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
                                   {{ "label.phone-number" | translate }}
                                 </th>
 
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.role" | translate }}
                                 </th>
 
-                                <th>
+                                <th class="min-width-table-column">
                                   {{ "label.company-name" | translate }}
                                 </th>
                                 
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "general.azioni" | translate }}
                                 </th>
                             </tr>
@@ -159,14 +159,14 @@
                                 <td>{{ getNomeAziendaComponente(componente) }}</td>
 
                                 <td class="min-width-3-button-in-table">
-                                    <button class="btn btn-danger btn-sm add-cursor-pointer mr-1" type="button" (click)="deleteComponente(componente)"
-                                        *ngIf="canDeleteComponente(componente)" title="{{ 'label.delete' | translate}}">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" (click)="openDetails(componente)"
+                                        *ngIf="authoritiesService.hasAuthority(['TEAM_INCARICO_UPDATE'])" title="{{ 'general.action.edit' | translate}}">
+                                        <i class="fa fa-pencil-alt" aria-hidden="true"></i>
                                     </button>
 
-                                    <button class="btn btn-secondary btn-sm add-cursor-pointer" type="button" (click)="openDetails(componente)"
-                                        *ngIf="authoritiesService.hasAuthority(['TEAM_INCARICO_UPDATE'])" title="{{ 'general.action.edit' | translate}}">
-                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    <button class="btn btn-danger btn-sm add-cursor-pointer" type="button" (click)="deleteComponente(componente)"
+                                        *ngIf="canDeleteComponente(componente)" title="{{ 'label.delete' | translate}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
 
                                 </td>

@@ -17,8 +17,8 @@ export class ChangeBackgroundDirective implements AfterViewInit, OnChanges{
     if(this.initializingComponent){
       return;
     }
-    if(changes.backgroundColor!=null && changes.backgroundColor!=undefined){
-        if(changes.backgroundColor.previousValue!=changes.backgroundColor.currentValue){
+    if(changes['backgroundColor']!=null && changes['backgroundColor']!=undefined){
+        if(changes['backgroundColor'].previousValue!=changes['backgroundColor'].currentValue){
           this.setBackgroundColor();
         }
     }

@@ -16,6 +16,7 @@ export class ChainExceptionHandler {
     public static UNPROCESSABLE_ENTITY: number = 422;
     public static INTERNAL_SERVER_ERROR: number= 500; 
     public static Service_Unavailable:number = 503
+    public static ENHANCE_CALM: number = 420;
 
     public static MANAGED_STATUS : number[] = [ChainExceptionHandler.SERVER_UNREACHABLE, ChainExceptionHandler.BAD_DATA, 
             ChainExceptionHandler.UNAUTHORIZED, ChainExceptionHandler.FORBIDDEN, ChainExceptionHandler.NOT_FOUND, ChainExceptionHandler.CONFLICT_ERROR, 
@@ -95,6 +96,11 @@ export class ChainExceptionHandler {
         }
         if(status==ChainExceptionHandler.NOT_ACCEPTABLE){
             this.notifier.notifyErrorWithI18nAndStandardTitle("message.not-acceptable");
+            return;
+        }
+
+        if(status==ChainExceptionHandler.ENHANCE_CALM){
+            this.notifier.notifyErrorWithI18nAndStandardTitle("message.enhance-calm");
             return;
         }
         

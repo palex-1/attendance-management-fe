@@ -4,7 +4,7 @@
     <div class="col-md-8 col-xl-9">
         <div class="card mb-5">
             <div class="card-header">
-                <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{ "label.summary-task-hours" | translate }}
+                <i class="fas fa-history" aria-hidden="true"></i> {{ "label.summary-task-hours" | translate }}
                 
                 <a href="javascript:void(0)" title="{{ 'general.table-update' | translate }}" class="refresh-link"
                     (click)="refreshSummary()">
@@ -18,34 +18,34 @@
                         <thead>
                             <tr>
                                 <th sortable-td [status]="0" [sortByValue]="'name'"
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "label.name" | translate }}
                                 </th>
                                 <th sortable-td [status]="0" [sortByValue]="'surname'"
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "label.surname" | translate }}
                                 </th>
 
                                 <th sortable-td [status]="0" [sortByValue]="'email'"
-                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                    [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "label.email" | translate }}
                                 </th>
 
-                                <th sortable-td [status]="0" [sortByValue]="'phoneNumber'"
-                                  [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
-                                  {{ "label.phone-number" | translate }}
+                                <th sortable-td [status]="0" [sortByValue]="'sumOfCost'"
+                                        [sortBy]="sortBy" (onSortChange)="onSortChange($event)"class="min-width-table-column">
+                                  {{ "label.total-cost" | translate }}
                                 </th>
 
                                 <th sortable-td [status]="0" [sortByValue]="'sumOfWorkedHours'"
-                                        [sortBy]="sortBy" (onSortChange)="onSortChange($event)">
+                                        [sortBy]="sortBy" (onSortChange)="onSortChange($event)" class="min-width-table-column">
                                     {{ "label.registered-hours" | translate }}
                                 </th>
 
-                                <th>
+                                <th class="min-width-table-column">
                                   {{ "label.company-name" | translate }}
                                 </th>
                                 
-                                <th>
+                                <th class="min-width-table-column">
                                     {{ "label.details" | translate }}
                                 </th>
                             </tr>
@@ -58,16 +58,15 @@
                                 <td>{{ elem.userProfile==null ? '':elem.userProfile.name }}</td>
                                 <td>{{ elem.userProfile==null ? '':elem.userProfile.surname }}</td>
                                 <td>{{ elem.userProfile==null ? '':elem.userProfile.email }}</td>
-                                <td>{{ elem.userProfile==null ? '':elem.userProfile.phoneNumber }}</td>
+                                <td>{{ elem.totalCost | number : '1.2-2' }}</td>
                                 <td>{{ elem.workedHours }}</td>
 
                                 <td>{{ (elem.userProfile==null || elem.userProfile.company==null) ? '':elem.userProfile.company.name }}</td>
                                 
                                 <td>
-                                    <button class="btn btn-info btn-sm add-cursor-pointer mr-1" type="button" 
+                                    <button class="btn btn-primary btn-sm add-cursor-pointer mr-1" type="button" 
                                             (click)="openWorkedHoursDetailsModal(elem)" title="{{ 'general.action.details' | translate}}">
-                                        
-                                        
+                                                                                
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </button>
                                 </td>

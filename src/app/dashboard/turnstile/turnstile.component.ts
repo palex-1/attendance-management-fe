@@ -10,6 +10,9 @@ import { PaginationEvent } from '../components/custom-paginator/custom-paginator
 import { TurnstileDTO } from 'src/app/model/dtos/turnstile/turnstile-dto.model';
 import { AddViewEditTurnstileModalComponent } from './add-view-edit-turnstile-modal/add-view-edit-turnstile-modal.component';
 import { Router } from '@angular/router';
+import { CustomMessageService } from 'src/app/dialogs/message/custom-message.service';
+import { TurnstileTokenViewComponent } from './turnstile-token-view/turnstile-token-view.component';
+import { ExportDailyAttendanceComponent } from './export-daily-attendance/export-daily-attendance.component';
 
 @Component({
   selector: 'app-turnstile',
@@ -21,11 +24,18 @@ export class TurnstileComponent implements OnInit {
   @ViewChild('turnstileModal', { static: false })
   turnstileModal: AddViewEditTurnstileModalComponent;
   
+  @ViewChild('turnstileTokenViewModal', { static: false })
+  turnstileTokenViewModal: TurnstileTokenViewComponent;
+
+  @ViewChild('exportDailyAttendanceModal', { static: false })
+  exportDailyAttendanceModal: ExportDailyAttendanceComponent;
+
+  
   public sortBy = new OrderEvent();
   
   constructor(private turnstileService: TurnstileService, private authoritiesService: AuthoritiesService, 
                 private exceptionHandler: ChainExceptionHandler, private notifier: MessageNotifierService,
-                  private loader: LoadingService, private router: Router) { 
+                  private loader: LoadingService, private router: Router, private messagingModalSrv: CustomMessageService) { 
   }
 
   ngOnInit(): void {
@@ -33,6 +43,10 @@ export class TurnstileComponent implements OnInit {
 
   openDetails(turnstile: TurnstileDTO){
     this.router.navigateByUrl('dashboard/turnstile/'+turnstile.id)
+  }
+
+  openExportDailyAttendanceModal(){
+    this.exportDailyAttendanceModal.openDialog()
   }
 
   openEditDialog(turnstile: TurnstileDTO){
@@ -91,6 +105,12 @@ export class TurnstileComponent implements OnInit {
         this.exceptionHandler.manageErrorWithLongChain(err.status)
       }
     );
+  }
+
+  turnstileAdded(event: TurnstileDTO){
+    if(event.authToken!=null){
+      this.turnstileTokenViewModal.openDialog(event.authToken)
+    }
   }
 
   changePage(event: PaginationEvent) {

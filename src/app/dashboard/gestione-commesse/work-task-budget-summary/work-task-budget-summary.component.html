@@ -1,0 +1,105 @@
+<div class="row">
+
+    <div class="col-12">
+        <div class="row">
+
+            
+
+
+            <div class="col-12">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-3">
+                        <span class="color-gray d-block">
+                            {{ "label.total-budget" | translate }}
+                        </span>
+                        <span class="expense-value">
+                            {{ totalBudget==null ? '-' : totalBudget | number : '1.2-2'}}
+                        </span>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <span class="color-gray d-block">
+                            {{ "label.residual-budget" | translate }}
+                        </span>
+                        <span class="expense-value">
+                            {{ residualBudget==null ? '-' : residualBudget | number : '1.2-2'}}
+                        </span>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <span class="color-gray d-block">                            
+                            {{ "label.total-expenses" | translate }}
+                        </span>
+                        <span class="expense-value">
+                            {{ totalExpenses==null ? '-' : totalExpenses | number : '1.2-2'}}
+                        </span>
+                    </div>
+
+                    <div class="col-sm-6 col-md-3">
+                        <span class="color-gray d-block">
+                            {{ "label.total-hr-costs" | translate }}
+                        </span>
+                        <span class="expense-value">
+                            {{ totalHrCost==null ? '-' : totalHrCost | number : '1.2-2'}}
+                        </span>
+                        
+                    </div>
+
+                </div>
+                
+
+            </div>
+
+
+            <div class="col-12 mt-4">
+                <div class="row">
+                    
+                    <div class="col-12">
+                        <div class="chart-title">
+                            {{ "label.budget-evolution" | translate }}
+                        </div>
+
+                        <div class="form-group select-days-range">
+                            <select class="form-control" [(ngModel)]="daysToView">
+                                <option [value]="30">{{ "label.lasts" | translate }} 30 {{ "label.days" | translate }}</option>
+                                <option [value]="60" *ngIf="taskCreationDays > 60">
+                                    {{ "label.lasts" | translate }} 60 {{ "label.days" | translate }}
+                                </option>
+                                <option [value]="90" *ngIf="taskCreationDays > 90">
+                                    {{ "label.lasts" | translate }} 90 {{ "label.days" | translate }}
+                                </option>
+                                <option [value]="365" *ngIf="taskCreationDays > 365">
+                                    {{ "label.last-year" | translate }}
+                                </option>
+                                <option [value]="1827" *ngIf="taskCreationDays > 1827">
+                                    {{ "label.last-five-year" | translate }}
+                                </option>
+                                <option [value]="taskCreationDays" *ngIf="taskCreationDays > 0">
+                                    {{ "label.all" | translate }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-12 custom-chart-box">
+                        <app-line-chart #lineChartRef></app-line-chart>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-12 mt-5">
+        <small class="color-gray">
+            {{ "message.details-on-report-budget-tip" | translate }} '{{ "label.task-expenses" | translate }}' 
+            {{ "label.and" | translate }} '{{ "label.summary-hours" | translate}}'.
+        </small>
+    </div>
+
+
+</div>

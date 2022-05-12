@@ -67,6 +67,7 @@ export class MyPersonalDocumentsComponent implements OnInit {
         }
       }
     }
+    return '*';
   }
 
   notSelectedAnyDocumentType(): boolean{

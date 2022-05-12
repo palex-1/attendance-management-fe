@@ -22,7 +22,7 @@ export class SediLavorativeResolver extends AbstractResolver{
         return this.sediSrv;
     }
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
+    override resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>{
         this.sediSrv.reset();
         
         return super.resolve(route, state);

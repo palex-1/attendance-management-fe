@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {Chart} from 'chart.js';
+import Chart from 'chart.js/auto';
 
 
 @Component({
@@ -9,10 +9,10 @@ import {Chart} from 'chart.js';
 })
 export class BarChartComponent implements OnInit {
 
-    @ViewChild('barChart', { static: true }) 
-    private chartRef;
-    
-    chart: any;
+  @ViewChild('barChart', { static: true }) 
+  private chartRef;
+  
+  chart: any;
 
 
   constructor() { }
@@ -33,15 +33,13 @@ export class BarChartComponent implements OnInit {
             label: 'Opened',
             backgroundColor: '#ed1c24a6',
             data: dataPoints, // your data array
-            borderColor: '#28a7457d',
-            fill: false
+            borderColor: '#28a7457d'
           },
           {
             label: 'Closed',
             backgroundColor: '#b6babd80',
             data: dataPoints2, // your data array
-            borderColor: '#ffc1075e',
-            fill: false
+            borderColor: '#ffc1075e'
           }
         ]
       },
@@ -49,18 +47,20 @@ export class BarChartComponent implements OnInit {
         responsive: true,
         maintainAspectRatio: false,
 
-        legend: {
-          display: true
+        plugins: {
+          legend: {
+            display: true
+          }
         },
         scales: {
-          xAxes: [{
+          x: {
+            //beginAtZero: true,
+            display: true
+          },
+          y: {
             display: true,
             // stacked: true
-          }],
-          yAxes: [{
-            display: true,
-            // stacked: true
-          }],
+          },
         }
       }
     });
